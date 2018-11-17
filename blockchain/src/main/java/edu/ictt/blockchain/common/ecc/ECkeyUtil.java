@@ -15,6 +15,9 @@ import edu.ictt.blockchain.common.util.Tobyte;
 import sun.security.ec.ECPrivateKeyImpl;
 import sun.security.ec.ECPublicKeyImpl;
 
+/**  
+ * 签名和验证函数
+ */  
 public class ECkeyUtil {
 
 	
