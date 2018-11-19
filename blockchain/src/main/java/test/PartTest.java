@@ -12,5 +12,7 @@ public class PartTest {
 		Runstate rs=new Runstate("1","ss","123","1","1","12:00:00","fdf","dfdf");
 		String text=FastJsonUtil.toJSONString(rs);
 		System.out.println(text);
+		Runstate rw=FastJsonUtil.toBean(text, Runstate.class);
+		System.out.println(rw);
 	}
 }

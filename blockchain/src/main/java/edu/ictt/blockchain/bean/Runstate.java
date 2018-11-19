@@ -54,6 +54,10 @@ public class Runstate implements Serializable{
 		this.priKey=priKey;
 	}
 	
+	public Runstate(){
+		super();
+	}
+	
 	public String getId() {
 		return id;
 	}
