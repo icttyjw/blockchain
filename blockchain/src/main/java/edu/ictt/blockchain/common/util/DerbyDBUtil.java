@@ -14,6 +14,7 @@ import sun.jdbc.rowset.CachedRowSet;
 
 /**
  * Derby的接口实现，用作未上链数据的持久化以及本地信息（密钥，关联节点等）的保存
+ * executeUpdate、executeInit、query这三个方法的参数是完整的sql语句
  */
 public class DerbyDBUtil {
 
@@ -57,9 +58,12 @@ public class DerbyDBUtil {
 			return false;
 		}
 	}
-	
-	public static void execute(String sql) {
-    	Connection conn = getConnection();//从接口上避免update、delete操作可以通过判断sql语句前6个是否是insert
+	 /**  
+     * 写入修改Tabel时使用这个方法
+     * @param sql 完整的sql语句
+     */  
+	public static void executeUpdate(String sql) {
+    	Connection conn = getConnection();
     	try {
     		Statement stmt = conn.createStatement();
     		stmt.executeUpdate(sql);
@@ -79,7 +83,10 @@ public class DerbyDBUtil {
     	}
     	
     }
-    
+	 /**  
+     * 查询时使用这个方法
+     * @param sql 完整的sql语句
+     */  
     public static ResultSet query(String sql) {
     	Connection conn = getConnection();
     	ResultSet rs = null;
@@ -125,9 +132,6 @@ public class DerbyDBUtil {
     
     /**  
      * 暂时是签到的block，需要修改
-     * @param privateKey 私钥
-     * @param input  明文
-     * @return  密文
      */  
     public static void init(){
     	Connection conn = getConnection();
@@ -146,12 +150,31 @@ public class DerbyDBUtil {
 			e.printStackTrace();
 		}
     }
+    /**  
+     * 创建、删除Tabel时使用这个方法
+     * @param sql 完整的sql语句
+     */  
+    public static void executeInit(String sql){
+    	Connection conn = getConnection();
+    	try {
+    		 conn.setAutoCommit(false);
+			Statement statement =conn.createStatement();
+			statement.executeUpdate(sql);
+			//statement.executeUpdate("create table block (block_index int generated always as identity ,lastHash varchar(60),Merkle varchar(60),time int,difficulty int,"
+					//+ "nonce int,cumulativeDifficulty int ,blocknum int ,recordCount int,data varchar(2048))");
+			//statement.executeUpdate("create table record (orderStamp int,mac varchar(10),time int,lockScript varchar(60),unlockScript varchar(120),blocknum int)");
+			 conn.setAutoCommit(true);
+			statement.close();
+    		conn.close();
+    		closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     
     /**  
      * 针对的是签到中的数据库，需要修改
-     * @param privateKey 私钥
-     * @param input  明文
-     * @return  密文
      */  
     public static void drop(){
     	Connection conn = getConnection();
