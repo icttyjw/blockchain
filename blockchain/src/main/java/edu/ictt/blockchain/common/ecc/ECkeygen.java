@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import sun.security.ec.ECPrivateKeyImpl;
 import sun.security.ec.ECPublicKeyImpl;
 
+/**  
+ * 1.8以后sun.security.ec里的两个接口名可以使用但是构造方法不能用
+ * 我修改的sunec里的构造方法能用但是初始化时java.security不接受我的方法名
+ * 所以两者需要分开，这里是生成了共识钥，返回的是他们的参数，可以直接使用也可以重新生成一下
+ */  
 public class ECkeygen {
 
 	/**  

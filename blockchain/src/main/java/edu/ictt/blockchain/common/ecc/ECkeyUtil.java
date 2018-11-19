@@ -17,6 +17,8 @@ import sun.security.ec.ECPublicKeyImpl;
 
 /**  
  * 签名和验证函数
+ * 和签到里的锁定解锁有所区别：没有将公钥放入签名中
+ * 验证也没有验证公钥，这里是考虑会保存有公钥
  */  
 public class ECkeyUtil {
 
