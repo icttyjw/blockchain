@@ -25,7 +25,10 @@ public class DerbyDBUtil {
 			e.printStackTrace();
 		}
 	}
-	
+	/*
+	 * 嵌入模式的derby只能进行单例操作
+	 * 每次操作都需要完成链接和关闭链接
+	 */
 	private static Connection getConnection(){
 		try {
 			return DriverManager.getConnection("jdbc:derby:BlockDB;create=true","user","password");
