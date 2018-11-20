@@ -38,18 +38,23 @@ public class Runstate implements Serializable{
 	 */
 	private String pubKeyX;
 	private String pubKeyY;
+	/*
+	 * 节点主次
+	 */
+	private String main;
 	/**
 	 * 节点私钥
 	 */
 	private String priKey;
 	
-	public Runstate(String id,String name,String Ip,String state,String connectstate,
+	public Runstate(String id,String name,String Ip,String state,String connectstate,String main,
 					String lastConnect,String pubKeyX,String pubKeyY,String priKey){
 		this.id=id;
 		this.name=name;
 		this.Ip=Ip;
 		this.state=state;
 		this.connectstate =connectstate;
+		this.main=main;
 		this.lastConnect=lastConnect;
 		this.pubKeyX=pubKeyX;
 		this.pubKeyY=pubKeyY;
@@ -60,6 +65,14 @@ public class Runstate implements Serializable{
 		super();
 	}
 	
+	public String getMain() {
+		return main;
+	}
+
+	public void setMain(String main) {
+		this.main = main;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -123,6 +136,7 @@ public class Runstate implements Serializable{
 				"name:"+name+"\n"+
 				"Ip:"+Ip+"\n"+
 				"state："+state+"\n"+
+				"main："+main+"\n"+
 				"connectstate:"+connectstate+"\n"+
 				"lastConnect:"+lastConnect+"\n"+
 				"pubKeyX:"+pubKeyX+"\n"+
