@@ -36,21 +36,28 @@ public class Runstate implements Serializable{
 	/**
 	 * 节点公钥
 	 */
-	private String pubKey;
+	private String pubKeyX;
+	private String pubKeyY;
+	/*
+	 * 节点主次
+	 */
+	private String main;
 	/**
 	 * 节点私钥
 	 */
 	private String priKey;
 	
-	public Runstate(String id,String name,String Ip,String state,String connectstate,
-					String lastConnect,String pubKey,String priKey){
+	public Runstate(String id,String name,String Ip,String state,String connectstate,String main,
+					String lastConnect,String pubKeyX,String pubKeyY,String priKey){
 		this.id=id;
 		this.name=name;
 		this.Ip=Ip;
 		this.state=state;
 		this.connectstate =connectstate;
+		this.main=main;
 		this.lastConnect=lastConnect;
-		this.pubKey=pubKey;
+		this.pubKeyX=pubKeyX;
+		this.pubKeyY=pubKeyY;
 		this.priKey=priKey;
 	}
 	
@@ -58,6 +65,14 @@ public class Runstate implements Serializable{
 		super();
 	}
 	
+	public String getMain() {
+		return main;
+	}
+
+	public void setMain(String main) {
+		this.main = main;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -95,15 +110,23 @@ public class Runstate implements Serializable{
 		this.lastConnect = lastConnect;
 	}
 	
-	public String getPubKey() {
-		return pubKey;
+	public String getPubKeyX() {
+		return pubKeyX;
 	}
 	public String getPriKey() {
 		return priKey;
 	}
-	public void setPubKey(String pubKey) {
-		this.pubKey = pubKey;
+	public void setPubKeyX(String pubKeyX) {
+		this.pubKeyX = pubKeyX;
 	}
+	public String getPubKeyY() {
+		return pubKeyY;
+	}
+
+	public void setPubKeyY(String pubKeyY) {
+		this.pubKeyY = pubKeyY;
+	}
+
 	public void setPriKey(String priKey) {
 		this.priKey = priKey;
 	}
@@ -113,9 +136,11 @@ public class Runstate implements Serializable{
 				"name:"+name+"\n"+
 				"Ip:"+Ip+"\n"+
 				"state："+state+"\n"+
+				"main："+main+"\n"+
 				"connectstate:"+connectstate+"\n"+
 				"lastConnect:"+lastConnect+"\n"+
-				"pubKey:"+pubKey;
+				"pubKeyX:"+pubKeyX+"\n"+
+				"pubKeyY:"+pubKeyY;
 	}
 	
 }
