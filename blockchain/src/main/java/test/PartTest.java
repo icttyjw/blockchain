@@ -1,5 +1,7 @@
 package test;
 
+import java.io.UnsupportedEncodingException;
+
 import org.junit.Test;
 
 import edu.ictt.blockchain.bean.Runstate;
@@ -10,9 +12,10 @@ import edu.ictt.blockchain.manager.ManageMessage;
 public class PartTest {
 
 	@Test
-	public void jsontest(){
+	public void jsontest() throws Exception{
 		Runstate rs=new Runstate("1","ss","123","1","1","main","12:00:00","fdf","fdf","dfdf");
 		String text=FastJsonUtil.toJSONString(rs);
+		text.getBytes("utf-8");
 		System.out.println(text);
 		Runstate rw=FastJsonUtil.toBean(text, Runstate.class);
 		System.out.println(rw);

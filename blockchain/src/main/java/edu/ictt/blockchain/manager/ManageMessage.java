@@ -69,7 +69,7 @@ public class ManageMessage {
 		DerbyDBUtil.executeUpdate(sql);
 	}
 	/*
-	 * 通过Ip查询保存的记录信息
+	 * 通过name查询保存的记录信息
 	 */
 	public Runstate queryByIp(String name){
 		String sql="select * from node where name='"+name+"'";
