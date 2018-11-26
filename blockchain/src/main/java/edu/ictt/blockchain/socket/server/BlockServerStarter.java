@@ -11,7 +11,7 @@ import java.io.IOException;
 
 /**
  * server启动器
- * 仿照其中代码可以放入其他函数中，但是具体的数据处理应该在handler中
+ * 仿照其中代码可以放入其他函数中，但是具体的数据处理应该在server的handler中
  * 需要在handler中调用读取数据的函数
  *
  * @author wuweifeng wrote on 2018/3/12.
