@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ictt.blockchain.userinterface.SignUpController">
+   <children>
+      <AnchorPane layoutX="145.0" layoutY="121.0" prefHeight="188.0" prefWidth="310.0">
+         <children>
+            <Label fx:id="Ip" layoutX="22.0" layoutY="58.0" text="Ip地址:" />
+            <Label fx:id="State" layoutX="22.0" layoutY="81.0" text="运行状态:" />
+            <Label fx:id="state" contentDisplay="CENTER" layoutX="128.0" layoutY="81.0" prefHeight="15.0" prefWidth="171.0" text="state" />
+            <Label fx:id="ip" contentDisplay="CENTER" layoutX="128.0" layoutY="58.0" prefHeight="15.0" prefWidth="171.0" text="ip" />
+            <Label fx:id="pubKey" layoutX="23.0" layoutY="153.0" text="公钥:" />
+            <Label fx:id="pubkey" contentDisplay="CENTER" layoutX="129.0" layoutY="153.0" prefHeight="15.0" prefWidth="171.0" text="pubkey" />
+            <Label fx:id="Id" layoutX="22.0" layoutY="14.0" text="ID:" />
+            <Label fx:id="id" contentDisplay="CENTER" layoutX="128.0" layoutY="14.0" prefHeight="15.0" prefWidth="171.0" text="id" />
+            <Label fx:id="name" contentDisplay="CENTER" layoutX="128.0" layoutY="37.0" prefHeight="15.0" prefWidth="171.0" text="name" />
+            <Label fx:id="Name" layoutX="22.0" layoutY="37.0" text="高校:" />
+            <Label fx:id="constate" contentDisplay="CENTER" layoutX="128.0" layoutY="104.0" prefHeight="15.0" prefWidth="171.0" text="connectstate" />
+            <Label fx:id="ConState" layoutX="22.0" layoutY="104.0" text="通信状态:" />
+            <Label fx:id="lastcon" contentDisplay="CENTER" layoutX="128.0" layoutY="130.0" prefHeight="15.0" prefWidth="171.0" text="lastconnect" />
+            <Label fx:id="LastCon" layoutX="22.0" layoutY="130.0" text="最后一次通信时间:" />
+         </children>
+      </AnchorPane>
+      <MenuBar layoutY="1.0" prefHeight="25.0" prefWidth="600.0">
+        <menus>
+          <Menu fx:id="NodesInSchool" mnemonicParsing="false" text="校内节点" />
+          <Menu fx:id="NodesInGroup" mnemonicParsing="false" text="同组界点" />
+          <Menu fx:id="AllSchoolNodes" mnemonicParsing="false" text="所有高校节点" />
+        </menus>
+      </MenuBar>
+      <Pane layoutX="145.0" layoutY="96.0" prefHeight="25.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="CurNodeInfo" layoutX="21.0" layoutY="5.0" text="当前节点信息" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
