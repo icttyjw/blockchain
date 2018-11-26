@@ -24,7 +24,7 @@ public class BlockClientAioHandler extends AbstractAioHandler implements ClientA
 	static{
 		handlerMap.put(PacketType.HEART_BEAT, new HeartbeatReqHandler());
 	}
-    //@Override
+    @Override
     public BlockPacket heartbeatPacket() {
         //心跳包的内容就是隔一段时间向别的节点获取一次下一步区块（带着自己的最新Block获取别人的next Block）
         //return NextBlockPacketBuilder.build();
@@ -32,10 +32,10 @@ public class BlockClientAioHandler extends AbstractAioHandler implements ClientA
     }
 
     /**
-     * server端返回的响应会先进到该方法，将消息全丢到Disruptor中
+     * 调用handler中的具体的方法
      * @throws Exception 
      */
-    //@Override
+    @Override
     public void handler(Packet packet, ChannelContext channelContext) throws Exception  {
         BlockPacket blockPacket = (BlockPacket) packet;
         byte type=blockPacket.getType();
@@ -47,10 +47,5 @@ public class BlockClientAioHandler extends AbstractAioHandler implements ClientA
         //ApplicationContextProvider.getBean(MessageProducer.class).publish(new BaseEvent(blockPacket, channelContext));
     }
 
-	public Packet decode(ByteBuffer buffer, int limit, int position, int readableLength, ChannelContext channelContext)
-			throws AioDecodeException {
-		// TODO Auto-generated method stub
-		//System.out.println(1);
-		return null;
-	}
+	
 }

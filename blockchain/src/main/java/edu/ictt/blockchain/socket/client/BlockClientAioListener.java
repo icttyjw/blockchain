@@ -18,7 +18,7 @@ import org.tio.core.intf.Packet;
 public class BlockClientAioListener implements ClientAioListener {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    //@Override
+    @Override
     public void onAfterConnected(ChannelContext channelContext, boolean isConnected, boolean isReconnect) throws Exception {
 //        if (isConnected) {
 //            logger.info("连接成功：server地址为-" + channelContext.getServerNode());
@@ -29,28 +29,28 @@ public class BlockClientAioListener implements ClientAioListener {
         //ApplicationContextProvider.publishEvent(new NodesConnectedEvent(channelContext));
     }
 
-   // @Override
+    @Override
     public void onBeforeClose(ChannelContext channelContext, Throwable throwable, String s, boolean b) {
         logger.info("连接关闭：server地址为-" + channelContext.getServerNode());
         Tio.unbindGroup(channelContext);
     }
 
-    //@Override
+    @Override
     public void onAfterDecoded(ChannelContext channelContext, Packet packet, int i) throws Exception {
 
     }
 
-    //@Override
+    @Override
     public void onAfterReceivedBytes(ChannelContext channelContext, int i) throws Exception {
 
     }
 
-    //@Override
+    @Override
     public void onAfterSent(ChannelContext channelContext, Packet packet, boolean b) throws Exception {
 
     }
 
-    //@Override
+    @Override
     public void onAfterHandled(ChannelContext channelContext, Packet packet, long l) throws Exception {
     	System.out.println("client");
     }

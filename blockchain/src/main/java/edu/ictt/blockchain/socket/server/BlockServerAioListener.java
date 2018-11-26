@@ -15,7 +15,7 @@ import org.tio.utils.json.Json;
 public class BlockServerAioListener implements ServerAioListener {
 	private static Logger log = LoggerFactory.getLogger(BlockServerAioListener.class);
 
-	//@Override
+	@Override
 	public void onAfterConnected(ChannelContext channelContext, boolean isConnected, boolean isReconnect) {
 		log.info("onAfterConnected channelContext:{}, isConnected:{}, isReconnect:{}", channelContext, isConnected, isReconnect);
 
@@ -23,28 +23,28 @@ public class BlockServerAioListener implements ServerAioListener {
 		//channelContext.setAttribute(new ShowcaseSessionContext());
 	}
 
-	//@Override
+	@Override
 	public void onAfterDecoded(ChannelContext channelContext, Packet packet, int i) throws Exception {
 
 	}
 
-	//@Override
+	@Override
 	public void onAfterReceivedBytes(ChannelContext channelContext, int i) throws Exception {
 		log.info("onAfterReceived channelContext:{}, packet:{}, packetSize:{}");
 	}
 
 
-	//@Override
+	@Override
 	public void onAfterSent(ChannelContext channelContext, Packet packet, boolean isSentSuccess) {
 		log.info("onAfterSent channelContext:{}, packet:{}, isSentSuccess:{}", channelContext, Json.toJson(packet), isSentSuccess);
 	}
 
-	//@Override
+	@Override
 	public void onAfterHandled(ChannelContext channelContext, Packet packet, long l) throws Exception {
 		System.out.println("server");
 	}
 
-	//@Override
+	@Override
 	public void onBeforeClose(ChannelContext channelContext, Throwable throwable, String remark, boolean isRemove) {
 	}
 }

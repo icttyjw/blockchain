@@ -14,51 +14,53 @@ import java.nio.ByteBuffer;
  * 2017年3月27日 上午12:14:12
  */
 public abstract  class AbstractAioHandler implements AioHandler {
+   
     /**
-     * 解码：把接收到的ByteBuffer，解码成应用可以识别的业务消息包
-     * 消息头：type + bodyLength
-     * 消息体：byte[]
-     */
-    //@Override
-    public BlockPacket decode(ByteBuffer buffer, ChannelContext channelContext) throws AioDecodeException {
-    	System.out.println("decode");
-    	int readableLength = buffer.limit() - buffer.position();
-        if (readableLength < BlockPacket.HEADER_LENGTH) {
-            return null;
-        }
+	 * 解码：把接收到的ByteBuffer，解码成应用可以识别的业务消息包
+	 * 消息头：type + bodyLength
+	 * 消息体：byte[]
+	 */
+	@Override
+	public Packet decode(ByteBuffer buffer, int limit, int position, int readableLength, ChannelContext channelContext) throws AioDecodeException {
+		//可读数据，小于头部的固定长度，直接返回null，这样tio框架会自动把本次收到的数据暂存起来，并和下次收到的数据组合起来
+		System.out.println("decode");
+		if (readableLength < BlockPacket.HEADER_LENGTH) {
+			return null;
+		}
 
-        //消息类型
-        byte type = buffer.get();
+		//position的值不一定是0，但是
+		//消息类型
+		byte type = buffer.get();
 
-        int bodyLength = buffer.getInt();
+		int bodyLength = buffer.getInt();
 
-        if (bodyLength < 0) {
-            throw new AioDecodeException("bodyLength [" + bodyLength + "] is not right, remote:" + channelContext
-					.getClientNode());
-        }
+		if (bodyLength < 0) {
+			throw new AioDecodeException("bodyLength [" + bodyLength + "] is not right, remote:" + channelContext.getClientNode());
+		}
 
-        int neededLength = BlockPacket.HEADER_LENGTH + bodyLength;
-        int test = readableLength - neededLength;
-        // 不够消息体长度(剩下的buffer组不了消息体)
-        if (test < 0) {
-            return null;
-        }
-        BlockPacket imPacket = new BlockPacket();
-        imPacket.setType(type);
-        if (bodyLength > 0) {
-            byte[] dst = new byte[bodyLength];
-            buffer.get(dst);
-            imPacket.setBody(dst);
-        }
-        return imPacket;
-    }
+		int neededLength = BlockPacket.HEADER_LENGTH + bodyLength;
+		int test = readableLength - neededLength;
+		if (test < 0) // 不够消息体长度(剩下的buffe组不了消息体)
+		{
+			return null;
+		} else {
+			BlockPacket imPacket = new BlockPacket();
+			imPacket.setType(type);
+			if (bodyLength > 0) {
+				byte[] dst = new byte[bodyLength];
+				buffer.get(dst);
+				imPacket.setBody(dst);
+			}
+			return imPacket;
+		}
+	}
 
     /**
      * 编码：把业务消息包编码为可以发送的ByteBuffer
      * 消息头：type + bodyLength
      * 消息体：byte[]
      */
-    //@Override
+    @Override
     public ByteBuffer encode(Packet packet, GroupContext groupContext, ChannelContext channelContext) {
     	System.out.println("endcode");
     	BlockPacket showcasePacket = (BlockPacket) packet;

@@ -15,6 +15,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
+import org.tio.core.GroupContext;
 import org.tio.core.exception.AioDecodeException;
 import org.tio.core.intf.Packet;
 import org.tio.server.intf.ServerAioHandler;
@@ -35,7 +36,7 @@ public  class BlockServerAioHandler extends AbstractAioHandler  implements Serve
      * 自己是server，此处接收到客户端来的消息。这里是入口
      * @throws Exception 
      */
-    //@Override
+    @Override
     public void handler(Packet packet, ChannelContext channelContext) throws Exception {
     	System.out.println(2);
     	BlockPacket blockPacket = (BlockPacket) packet;
@@ -53,11 +54,7 @@ public  class BlockServerAioHandler extends AbstractAioHandler  implements Serve
        // ApplicationContextProvider.getBean(MessageProducer.class).publish(new BaseEvent(blockPacket, channelContext));
     }
 
-	public Packet decode(ByteBuffer buffer, int limit, int position, int readableLength, ChannelContext channelContext)
-			throws AioDecodeException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    
 
 	
 
