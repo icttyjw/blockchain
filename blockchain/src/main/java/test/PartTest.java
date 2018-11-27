@@ -8,6 +8,7 @@ import edu.ictt.blockchain.bean.Runstate;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.util.DerbyDBUtil;
 import edu.ictt.blockchain.manager.ManageMessage;
+import edu.ictt.blockchain.socket.body.StateBody;
 
 public class PartTest {
 
@@ -19,6 +20,14 @@ public class PartTest {
 		System.out.println(text);
 		Runstate rw=FastJsonUtil.toBean(text, Runstate.class);
 		System.out.println(rw);
+	}
+	@Test
+	public void fjtest(){
+		StateBody bsBody=new StateBody();
+		bsBody.setId("1");
+		bsBody.setIp("123");
+		bsBody.setName("fff");
+		System.out.println(FastJsonUtil.toJSONString(bsBody));
 	}
 	/*
 	 * 数据库查询测试

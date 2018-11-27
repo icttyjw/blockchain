@@ -38,16 +38,19 @@ public  class BlockServerAioHandler extends AbstractAioHandler  implements Serve
      */
     @Override
     public void handler(Packet packet, ChannelContext channelContext) throws Exception {
-    	System.out.println(2);
+    	System.out.println("serverhandler");
     	BlockPacket blockPacket = (BlockPacket) packet;
         byte type=blockPacket.getType();
         AbstractBlockHandler<?> blockhandler=handlerMap.get(type);
+        System.out.println(type);
+       
         if(blockhandler==null)
         {
         	
         	log.error("{}, 找不到处理类，type:{}", channelContext, type);
         	return;
         }
+        System.out.println(blockhandler.getClass());
         blockhandler.handler(blockPacket,channelContext);
         return;
         //使用Disruptor来publish消息。所有收到的消息都进入Disruptor，同BlockClientAioHandler

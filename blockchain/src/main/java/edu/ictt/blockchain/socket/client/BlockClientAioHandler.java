@@ -4,7 +4,7 @@ import edu.ictt.blockchain.socket.common.AbstractAioHandler;
 import edu.ictt.blockchain.socket.common.intf.AbstractBlockHandler;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.PacketType;
-import edu.ictt.blockchain.socket.server.handler.HeartbeatReqHandler;
+import edu.ictt.blockchain.socket.client.handler.HeartbeatHandler;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ public class BlockClientAioHandler extends AbstractAioHandler implements ClientA
 
 	private static Map<Byte, AbstractBlockHandler<?>> handlerMap = new HashMap<Byte, AbstractBlockHandler<?>>();
 	static{
-		handlerMap.put(PacketType.HEART_BEAT, new HeartbeatReqHandler());
+		handlerMap.put(PacketType.HEART_BEAT, new HeartbeatHandler());
 	}
     @Override
     public BlockPacket heartbeatPacket() {
@@ -37,11 +37,13 @@ public class BlockClientAioHandler extends AbstractAioHandler implements ClientA
      */
     @Override
     public void handler(Packet packet, ChannelContext channelContext) throws Exception  {
-        BlockPacket blockPacket = (BlockPacket) packet;
+    	System.out.println("clienthandler");
+    	BlockPacket blockPacket = (BlockPacket) packet;
         byte type=blockPacket.getType();
+        System.out.println(type);
         AbstractBlockHandler<?> blockhandler=handlerMap.get(type);
+        System.out.println(blockhandler.getClass());
         blockhandler.handler(blockPacket,channelContext);
-        System.out.println("client handler");
         return;
         //使用Disruptor来publish消息。所有收到的消息都进入Disruptor，同BlockServerAioHandler
         //ApplicationContextProvider.getBean(MessageProducer.class).publish(new BaseEvent(blockPacket, channelContext));

@@ -18,15 +18,19 @@ public abstract class AbstractBlockHandler<T extends BaseBody> implements Handle
 
 	public abstract Class<T> bodyClass();
 
-	//@Override
+	@Override
 	public Object handler(BlockPacket packet, ChannelContext channelContext) throws Exception {
+		System.out.println("abshandler");
 		String jsonStr;
 		T bsBody = null;
+		if(packet.getBody() == null)
+			System.out.println("null");
 		if (packet.getBody() != null) {
 			jsonStr = new String(packet.getBody(), Const.CHARSET);
 			bsBody = Json.toBean(jsonStr, bodyClass());
+			System.out.println("suc");
 		}
-
+		System.out.println("over");
 		return handler(packet, bsBody, channelContext);
 	}
 

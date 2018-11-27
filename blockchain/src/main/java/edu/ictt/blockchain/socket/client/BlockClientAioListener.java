@@ -52,7 +52,7 @@ public class BlockClientAioListener implements ClientAioListener {
 
     @Override
     public void onAfterHandled(ChannelContext channelContext, Packet packet, long l) throws Exception {
-    	System.out.println("client");
+    	
     }
 
 }

@@ -20,7 +20,7 @@ public class BaseBody {
     /**
      * 回复的哪条消息
      */
-	private String responseMsgId;
+	//private String responseMsgId;
     /**
      * 自己是谁
      */
@@ -50,14 +50,14 @@ public class BaseBody {
 	public void setMessageId(String messageId) {
 		this.messageId = messageId;
 	}*/
-
+	/*
     public String getResponseMsgId() {
         return responseMsgId;
     }
 
     public void setResponseMsgId(String responseMsgId) {
         this.responseMsgId = responseMsgId;
-    }
+    }*/
     /*
     public String getAppId() {
         return appId;
@@ -72,7 +72,7 @@ public class BaseBody {
         return "BaseBody{" +
                 "time=" + time +
                 //", messageId='" + messageId + '\'' +
-                ", responseMsgId='" + responseMsgId + '\'' +
+                //", responseMsgId='" + responseMsgId + '\'' +
                 '}';
     }
 }

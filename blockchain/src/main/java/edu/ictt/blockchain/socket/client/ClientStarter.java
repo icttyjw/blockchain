@@ -25,7 +25,7 @@ public class ClientStarter {
 	private static Node serverNode = new Node(serverIp, serverPort);
 
 	//用来自动连接的，不想自动连接请设为null
-	private static ReconnConf reconnConf = new ReconnConf(5000);
+	private static ReconnConf reconnConf = new ReconnConf(5000L);
 
 	private static BlockClientAioHandler bcah=new BlockClientAioHandler();
 	private static BlockClientAioListener bcal=new BlockClientAioListener();
