@@ -37,7 +37,6 @@ public class BlockClientAioHandler extends AbstractAioHandler implements ClientA
 		sb.setId("2");
 		sb.setIp("223");
 		sb.setName("sss");
-		System.out.println(FastJsonUtil.toJSONString(sb));
 		BlockPacket bs=new BlockPacket();
 		bs.setType(PacketType.HEART_BEAT);
 		try {

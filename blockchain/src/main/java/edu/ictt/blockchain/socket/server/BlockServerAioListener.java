@@ -1,11 +1,15 @@
 package edu.ictt.blockchain.socket.server;
 
+import java.util.Scanner;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
 import org.tio.core.intf.Packet;
 import org.tio.server.intf.ServerAioListener;
 import org.tio.utils.json.Json;
+
+import edu.ictt.blockchain.socket.common.BlockSessionContext;
 
 /**
  * @author wuweifeng wrote on 2018/3/12.
@@ -18,9 +22,15 @@ public class BlockServerAioListener implements ServerAioListener {
 	@Override
 	public void onAfterConnected(ChannelContext channelContext, boolean isConnected, boolean isReconnect) {
 		log.info("onAfterConnected channelContext:{}, isConnected:{}, isReconnect:{}", channelContext, isConnected, isReconnect);
-
+		/*System.out.println(channelContext.getId());
+		Scanner sc=new Scanner(System.in);
+		String t=sc.nextLine();
+		if(t.equals("s"))
+		System.out.println("true");
+		else
+			channelContext.setAttribute(new BlockSessionContext());*/
 		//连接后，需要把连接会话对象设置给channelContext
-		//channelContext.setAttribute(new ShowcaseSessionContext());
+		//
 	}
 
 	@Override

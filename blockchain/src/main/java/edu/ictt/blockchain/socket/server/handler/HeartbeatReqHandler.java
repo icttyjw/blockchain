@@ -49,13 +49,13 @@ public class HeartbeatReqHandler extends AbstractBlockHandler<StateBody>{
 	 * @author tanyaowu
 	 */
 	public Object handler(BlockPacket packet, StateBody bsBody, ChannelContext channelContext) throws Exception {
-		//心跳消息,啥也不用做
+		//心跳交流信息，顺便测试了多线程
 		System.out.println(FastJsonUtil.toJSONString(bsBody));
 		StateBody sb=new StateBody();
 		sb.setId("1");
 		sb.setIp("123");
 		sb.setName("fff");
-		System.out.println(FastJsonUtil.toJSONString(sb));
+		//System.out.println(FastJsonUtil.toJSONString(sb));
 		BlockPacket bs=new BlockPacket();
 		bs.setType(PacketType.HEART_BEAT);
 		bs.setBody(FastJsonUtil.toJSONString(sb).getBytes(Const.CHARSET));
@@ -66,6 +66,6 @@ public class HeartbeatReqHandler extends AbstractBlockHandler<StateBody>{
 	@Override
 	public Class<StateBody> bodyClass() {
 		// TODO Auto-generated method stub
-		return null;
+		return StateBody.class;
 	}
 }

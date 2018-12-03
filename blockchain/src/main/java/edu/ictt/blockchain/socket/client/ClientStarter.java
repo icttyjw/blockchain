@@ -39,7 +39,7 @@ public class ClientStarter {
 		tioClient = new TioClient(clientGroupContext);
 		clientChannelContext = tioClient.connect(serverNode);
 		BlockPacket pack=new BlockPacket();
-		pack.setType(PacketType.HEART_BEAT);//添加数据类型
+		pack.setType(PacketType.LOGIN_REQUEST);//添加数据类型
 		Tio.send(clientChannelContext, pack);
 	}
 }

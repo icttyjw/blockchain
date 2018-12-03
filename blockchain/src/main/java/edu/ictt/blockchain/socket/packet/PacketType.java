@@ -11,7 +11,7 @@ public class PacketType {
     /**
      * 已生成新的区块
      */
-    byte GENERATE_COMPLETE_REQUEST = 1;
+    public static byte LOGIN_REQUEST = 1;
     /**
      * 已生成新的区块回应
      */
