@@ -1,10 +1,18 @@
 package edu.ictt.blockchain.socket.client;
 
 
+import org.tio.client.ClientChannelContext;
 import org.tio.client.ClientGroupContext;
 import org.tio.client.ReconnConf;
+import org.tio.client.TioClient;
 import org.tio.client.intf.ClientAioHandler;
 import org.tio.client.intf.ClientAioListener;
+import org.tio.core.Node;
+import org.tio.core.Tio;
+
+import edu.ictt.blockchain.socket.common.Const;
+import edu.ictt.blockchain.socket.packet.BlockPacket;
+import edu.ictt.blockchain.socket.packet.PacketType;
 
 /**
  * 配置ClientGroupContext
@@ -29,8 +37,34 @@ public class ClientContextConfig {
         ClientGroupContext clientGroupContext = new ClientGroupContext(clientAioHandler, clientAioListener,
                 reconnConf);
 
-        //clientGroupContext.setHeartbeatTimeout(Const.TIMEOUT);
+        clientGroupContext.setHeartbeatTimeout(0);//Const.TIMEOUT);
         return clientGroupContext;
     }
+    
+    public void connect(ClientGroupContext clientGroupContext,Node servernode,String group) throws Exception{
+		
+   	 TioClient tioClient = null;
+   	 ClientChannelContext clientChannelContext = null;
+   	 
+		tioClient = new TioClient(clientGroupContext);
+		
+		clientChannelContext = tioClient.connect(servernode);
+		Tio.bindGroup(clientChannelContext, group);
+		//clientChannelContext = tioClient.connect(serverNode2);
+		//Tio.bindGroup(clientChannelContext, Const.GROUP_SCHOOL);
+		//clientChannelContext = tioClient.connect(serverNode3);
+		//connectgroup(clientGroupContext,clientChannelContext,Const.GROUP_SCHOOL,serverNode1);
+		//connectgroup(tioClient,clientChannelContext,Const.GROUP_SCHOOL,serverNode2);
+		BlockPacket pack=new BlockPacket();
+		pack.setType(PacketType.Connect_Request);//添加数据类型
+		//Tio.bindGroup(clientChannelContext, Const.GROUP_SCHOOL);
+		//Tio.send(clientChannelContext, pack);
+		//return clientGroupContext;
+		//Tio.sendToGroup(clientGroupContext, Const.GROUP_SCHOOL, pack);
+		//Tio.send( , packet)
+		
+	}
+    
+    
 
 }

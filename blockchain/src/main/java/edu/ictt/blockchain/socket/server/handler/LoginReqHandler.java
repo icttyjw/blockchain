@@ -3,6 +3,9 @@ package edu.ictt.blockchain.socket.server.handler;
 import java.util.Scanner;
 
 import org.tio.core.ChannelContext;
+import org.tio.core.GroupContext;
+import org.tio.core.Tio;
+import org.tio.utils.lock.SetWithLock;
 
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.socket.body.StateBody;
@@ -21,10 +24,14 @@ public class LoginReqHandler extends AbstractBlockHandler<StateBody>{
 	public Object handler(BlockPacket packet, StateBody bsBody, ChannelContext channelContext) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println(FastJsonUtil.toJSONString(bsBody));
-		Scanner sc=new Scanner(System.in);
-		String t=sc.nextLine();
-		if(t.equals("s"))
-		System.out.println("true");
+		//Scanner sc=new Scanner(System.in);
+		//String t=sc.nextLine();
+		//if(t.equals("s"))
+		//System.out.println("true");
+		System.out.println(channelContext.getClientNode().getIp());
+		//Tio.bindGroup(channelContext, "s");
+		//GroupContext groupContext=null;
+		//SetWithLock<ChannelContext> setWithLock=Tio.getAllChannelContexts(groupContext);
 		return null;
 	}
 

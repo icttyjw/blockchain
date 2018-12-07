@@ -59,6 +59,7 @@ public class HeartbeatReqHandler extends AbstractBlockHandler<StateBody>{
 		BlockPacket bs=new BlockPacket();
 		bs.setType(PacketType.HEART_BEAT);
 		bs.setBody(FastJsonUtil.toJSONString(sb).getBytes(Const.CHARSET));
+		System.out.println(channelContext.getClientNode().getIp());
 		Tio.send(channelContext, bs);
 		return null;
 	}

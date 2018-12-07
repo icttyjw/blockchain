@@ -32,7 +32,7 @@ public  class BlockServerAioHandler extends AbstractAioHandler  implements Serve
 
 	static{
 		handlerMap.put(PacketType.HEART_BEAT, new HeartbeatReqHandler());
-		handlerMap.put(PacketType.LOGIN_REQUEST, new LoginReqHandler());
+		handlerMap.put(PacketType.Connect_Request, new LoginReqHandler());
 	}
     /**
      * 自己是server，此处接收到客户端来的消息。这里是入口

@@ -23,4 +23,6 @@ public interface Const {
     int TIMEOUT = 5000;
 
     String CHARSET = "utf-8";
+    
+    String GROUP_SCHOOL="school_group";
 }

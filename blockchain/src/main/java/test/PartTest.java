@@ -62,4 +62,5 @@ public class PartTest {
 		String sql="drop table node";
 		DerbyDBUtil.executeInit(sql);
 	}
+	
 }
