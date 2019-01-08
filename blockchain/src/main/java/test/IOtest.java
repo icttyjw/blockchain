@@ -27,6 +27,7 @@ import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.PacketType;
 import edu.ictt.blockchain.socket.server.BlockServerAioHandler;
 import edu.ictt.blockchain.socket.server.BlockServerAioListener;
+import static edu.ictt.blockchain.socket.client.ClientContextConfig.clientGroupContext;
 
 public class IOtest {
 
@@ -63,21 +64,28 @@ public class IOtest {
    	 BlockClientAioListener bcal=new BlockClientAioListener();
    	 ClientGroupContext clientGroupContext = new ClientGroupContext(bcah, bcal, reconnConf);
    	 clientGroupContext.setHeartbeatTimeout(0);*/
+		ServerAioHandler serverAioHandler = new BlockServerAioHandler();
+        ServerAioListener serverAioListener = new BlockServerAioListener();
+        ServerGroupContext serverGroupContext = new ServerGroupContext(serverAioHandler, serverAioListener);
+        serverGroupContext.setHeartbeatTimeout(-1);
+        TioServer tioServer = new TioServer(serverGroupContext);
+        //本机启动服务
+        tioServer.start(null, Const.PORT);
 		BlockPacket pack=new BlockPacket();
  		pack.setType(PacketType.Connect_Request);//添加数据类型
  		Node serverNode1 = new Node("127.0.0.1", Const.PORT);
-		Node serverNode2 = new Node("127.0.0.1",5566);
-		Node serverNode3 = new Node("10.170.5.134",Const.PORT);
+		//Node serverNode2 = new Node("127.0.0.1",5566);
+		//Node serverNode3 = new Node("10.170.5.134",Const.PORT);
 		ClientContextConfig ccc=new ClientContextConfig();
-		ClientGroupContext clientGroupContext=ccc.clientGroupContext();
+		
 		ccc.connect(clientGroupContext, serverNode1, Const.GROUP_SCHOOL);
-		ccc.connect(clientGroupContext, serverNode2, Const.GROUP_SCHOOL);
+		//ccc.connect(clientGroupContext, serverNode2, Const.GROUP_SCHOOL);
 		//connect(clientGroupContext, serverNode1, Const.GROUP_SCHOOL);
 		//ClientGroupContext clientGroupContext1=connect(serverNode1,Const.GROUP_SCHOOL);
 		//ClientGroupContext clientGroupContext2=connect(serverNode2,Const.GROUP_NAME);
 		//Tio.sendToGroup(clientGroupContext1, Const.GROUP_SCHOOL, pack);
 		//Tio.sendToGroup(clientGroupContext2, Const.GROUP_NAME, pack);
-		Tio.sendToGroup(clientGroupContext, Const.GROUP_SCHOOL, pack);
+		//Tio.sendToGroup(clientGroupContext, Const.GROUP_SCHOOL, pack);
 	}
 	public static void connect(ClientGroupContext clientGroupContext,Node servernode,String group) throws Exception{
 		

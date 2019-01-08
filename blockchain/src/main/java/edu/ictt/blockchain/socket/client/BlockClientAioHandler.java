@@ -45,7 +45,7 @@ public class BlockClientAioHandler extends AbstractAioHandler implements ClientA
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        return bs;
+        return null;
     }
 
     /**

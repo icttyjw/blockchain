@@ -1,5 +1,7 @@
 package edu.ictt.blockchain.socket.server.handler;
 
+import static edu.ictt.blockchain.socket.client.ClientContextConfig.clientGroupContext;
+
 import java.util.Scanner;
 
 import org.tio.core.ChannelContext;
@@ -9,8 +11,11 @@ import org.tio.utils.lock.SetWithLock;
 
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.socket.body.StateBody;
+import edu.ictt.blockchain.socket.client.ClientContextConfig;
+import edu.ictt.blockchain.socket.common.Const;
 import edu.ictt.blockchain.socket.common.intf.AbstractBlockHandler;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
+import edu.ictt.blockchain.socket.packet.PacketType;
 
 public class LoginReqHandler extends AbstractBlockHandler<StateBody>{
 
@@ -29,6 +34,10 @@ public class LoginReqHandler extends AbstractBlockHandler<StateBody>{
 		//if(t.equals("s"))
 		//System.out.println("true");
 		System.out.println(channelContext.getClientNode().getIp());
+		BlockPacket pack=new BlockPacket();
+ 		pack.setType(PacketType.Connect_Request);
+ 		System.out.println(clientGroupContext.startTime);
+		//Tio.sendToGroup(clientGroupContext, Const.GROUP_SCHOOL, pack);
 		//Tio.bindGroup(channelContext, "s");
 		//GroupContext groupContext=null;
 		//SetWithLock<ChannelContext> setWithLock=Tio.getAllChannelContexts(groupContext);

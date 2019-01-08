@@ -4,14 +4,56 @@ import java.io.UnsupportedEncodingException;
 
 import org.junit.Test;
 
+import com.alibaba.fastjson.JSONObject;
+
 import edu.ictt.blockchain.bean.Runstate;
 import edu.ictt.blockchain.common.FastJsonUtil;
+import edu.ictt.blockchain.common.PairKey;
+import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
 import edu.ictt.blockchain.common.util.DerbyDBUtil;
 import edu.ictt.blockchain.manager.ManageMessage;
 import edu.ictt.blockchain.socket.body.StateBody;
+import edu.ictt.blockchain.socket.pbft.VoteType;
+import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
+import edu.ictt.blockchain.socket.pbft.msg.VotePreMsg;
+import edu.ictt.blockchain.socket.pbft.queue.BaseMsgQueue;
+import edu.ictt.blockchain.socket.pbft.queue.PreMsgQueue;
 
 public class PartTest {
 
+	@Test
+	public void basetest(){
+		BaseMsgQueue baseMsgQueue=new PreMsgQueue();
+		System.out.println(baseMsgQueue.getClass());
+	}
+	
+	@Test
+	public void votetest(){
+		VoteMsg voteMsg=new VoteMsg();
+		VoteMsg voMsg=new VotePreMsg();
+		voteMsg.setAgree(true);
+		voteMsg.setHash("111");
+		voteMsg.setVoteType(VoteType.pre);
+		//voMsg=(VotePreMsg)voteMsg;
+		VotePreMsg votePreMsg=JSONObject.parseObject(JSONObject.toJSONString(voteMsg),VotePreMsg.class);
+		System.out.println(votePreMsg);
+	}
+	
+	@Test
+	public void ecdsatest() throws UnsupportedEncodingException{
+		PairKey pk=new PairKey();
+		pk.setPrivateKey(ECDSAAlgorithm.generatePrivateKey());
+		pk.setPublicKey(ECDSAAlgorithm.generatePublicKey(pk.getPrivateKey()));
+		String sign=ECDSAAlgorithm.sign(pk.getPrivateKey(), "1234");
+		try {
+			boolean t=ECDSAAlgorithm.verify("1234", sign, pk.getPublicKey());
+			System.out.println(t);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@Test
 	public void jsontest() throws Exception{
 		Runstate rs=new Runstate("1","ss","123","1","1","main","12:00:00","fdf","fdf","dfdf");

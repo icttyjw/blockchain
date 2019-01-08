@@ -17,7 +17,7 @@ import org.tio.utils.lock.SetWithLock;
 
 public class GroupContext {
 
-	private ClientGroupContext clientgroupcontext;
+	private  ClientGroupContext clientgroupcontext;
 	
 	public ClientGroupContext getClientgroupcontext() {
 		return clientgroupcontext;

@@ -8,6 +8,7 @@ import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.PacketType;
 import edu.ictt.blockchain.socket.server.handler.HeartbeatReqHandler;
 import edu.ictt.blockchain.socket.server.handler.LoginReqHandler;
+import edu.ictt.blockchain.socket.server.handler.PbftVoteHandler;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ public  class BlockServerAioHandler extends AbstractAioHandler  implements Serve
 	static{
 		handlerMap.put(PacketType.HEART_BEAT, new HeartbeatReqHandler());
 		handlerMap.put(PacketType.Connect_Request, new LoginReqHandler());
+		handlerMap.put(PacketType.PBFT_VOTE, new PbftVoteHandler());
 	}
     /**
      * 自己是server，此处接收到客户端来的消息。这里是入口
@@ -52,7 +54,7 @@ public  class BlockServerAioHandler extends AbstractAioHandler  implements Serve
         	log.error("{}, 找不到处理类，type:{}", channelContext, type);
         	return;
         }
-        //System.out.println(blockhandler.getClass());
+        System.out.println(blockhandler.getClass());
         blockhandler.handler(blockPacket,channelContext);
         return;
         //使用Disruptor来publish消息。所有收到的消息都进入Disruptor，同BlockClientAioHandler
