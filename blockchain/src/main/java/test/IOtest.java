@@ -17,7 +17,9 @@ import org.tio.server.ServerGroupContext;
 import org.tio.server.TioServer;
 import org.tio.server.intf.ServerAioHandler;
 import org.tio.server.intf.ServerAioListener;
+import org.tio.utils.json.Json;
 
+import edu.ictt.blockchain.socket.body.VoteBody;
 import edu.ictt.blockchain.socket.client.BlockClientAioHandler;
 import edu.ictt.blockchain.socket.client.BlockClientAioListener;
 import edu.ictt.blockchain.socket.client.ClientContextConfig;
@@ -25,6 +27,7 @@ import edu.ictt.blockchain.socket.common.Const;
 import edu.ictt.blockchain.socket.common.GroupContext;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.PacketType;
+import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 import edu.ictt.blockchain.socket.server.BlockServerAioHandler;
 import edu.ictt.blockchain.socket.server.BlockServerAioListener;
 import static edu.ictt.blockchain.socket.client.ClientContextConfig.clientGroupContext;
@@ -79,6 +82,18 @@ public class IOtest {
 		ClientContextConfig ccc=new ClientContextConfig();
 		
 		ccc.connect(clientGroupContext, serverNode1, Const.GROUP_SCHOOL);
+		VoteMsg voteMsg=new VoteMsg();
+		VoteBody voteBody=new VoteBody();
+		voteMsg.setHash("111");
+		voteMsg.setNumber(1);
+		byte pre=1;
+		voteMsg.setVoteType(pre);
+		voteBody.setVoteMsg(voteMsg);
+		BlockPacket packet = new BlockPacket();
+		byte type=10;
+		packet.setType(type);
+		packet.setBody(Json.toJson(voteBody));
+		Tio.sendToGroup(clientGroupContext,Const.GROUP_SCHOOL , packet);
 		//ccc.connect(clientGroupContext, serverNode2, Const.GROUP_SCHOOL);
 		//connect(clientGroupContext, serverNode1, Const.GROUP_SCHOOL);
 		//ClientGroupContext clientGroupContext1=connect(serverNode1,Const.GROUP_SCHOOL);
