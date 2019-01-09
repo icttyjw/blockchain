@@ -7,10 +7,15 @@ import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 
 public class CommitMsgQueue extends AbstractVoteMsgQueue{
 
+	/*
+	 * 这里循环定义了，就没初始化，需要另外设置3个全局队列，运行会在下面使用preMsgQueue时终止
+	 * 要看完整跑一遍流程把Block部分注释掉就行了
+	 */
 	private PreMsgQueue preMsgQueue;//=new PreMsgQueue();
 	
 	@Override
 	void deal(VoteMsg voteMsg, List<VoteMsg> voteMsgs) {
+		System.out.println("commit");
 		 String hash = voteMsg.getHash();
 
 	        //通过校验agree数量，来决定是否在本地生成Block
