@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="blockchain/src/main/java"/>
+	<classpathentry kind="src" path="blockchain/src/test/java"/>
+	<classpathentry kind="lib" path="blockchain/lib/derby.jar"/>
+	<classpathentry kind="lib" path="blockchain/lib/rowset.jar"/>
+	<classpathentry kind="lib" path="blockchain/lib/sunec.jar"/>
+	<classpathentry kind="lib" path="D:/InstalledProgrames/IDE/Eclipse/1.7 import package/fastjson-1.2.29.jar"/>
+	<classpathentry kind="lib" path="D:/InstalledProgrames/IDE/Eclipse/1.7 import package/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="D:/InstalledProgrames/IDE/Eclipse/1.7 import package/tio-core-3.2.0.v20180918-RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/InstalledProgrames/IDE/Eclipse/apache-log4j-2.11.1-src.zip"/>
+	<classpathentry kind="lib" path="D:/InstalledProgrames/IDE/Eclipse/1.7 import package/tio-utils-3.2.0.v20180918-RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/InstalledProgrames/IDE/Eclipse/1.7 import package/slf4j-1.8.0-beta2/log4j-over-slf4j-1.8.0-beta2.jar"/>
+	<classpathentry kind="lib" path="D:/InstalledProgrames/IDE/Eclipse/1.7 import package/slf4j-1.8.0-beta2/slf4j-api-1.8.0-beta2.jar"/>
+	<classpathentry kind="lib" path="D:/InstalledProgrames/IDE/Eclipse/1.7 import package/slf4j-1.8.0-beta2/slf4j-log4j12-1.8.0-beta2.jar"/>
+	<classpathentry kind="lib" path="D:/InstalledProgrames/IDE/Eclipse/commons-beanutils-1.9.3/commons-beanutils-1.9.3.jar"/>
+	<classpathentry kind="lib" path="D:/InstalledProgrames/IDE/Eclipse/1.7 import package/bcprov-jdk15on-1.55.jar"/>
+	<classpathentry kind="lib" path="D:/InstalledProgrames/IDE/Eclipse/1.7 import package/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="D:/InstalledProgrames/IDE/Eclipse/1.7 import package/core-1.54.0.0.jar"/>
+	<classpathentry kind="lib" path="D:/InstalledProgrames/IDE/Eclipse/1.7 import package/guava-26.0-jre.jar"/>
+	<classpathentry kind="lib" path="D:/InstalledProgrames/IDE/Eclipse/1.7 import package/hutool-all-4.0.5.jar"/>
+	<classpathentry kind="output" path="blockchain/target/classes"/>
+</classpath>
