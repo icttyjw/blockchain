@@ -7,7 +7,9 @@ import edu.ictt.blockchain.socket.pbft.VoteType;
 import edu.ictt.blockchain.socket.pbft.event.MsgCommitEvent;
 import edu.ictt.blockchain.socket.pbft.listener.CommitEventListener;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
-
+/*
+ * prepare队列处理
+ */
 public class PrepareMsgQueue extends AbstractVoteMsgQueue{
 
 	private CommitMsgQueue commitMsgQueue=new CommitMsgQueue();
@@ -50,7 +52,7 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
 
 	/**
      * 判断大家是否已对其他的Block达成共识，如果true，则拒绝即将进入队列的Block
-     *
+     * 这个准备放message里
      * @param hash
      *         hash
      * @return 是否存在

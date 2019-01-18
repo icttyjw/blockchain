@@ -14,7 +14,9 @@ import org.tio.core.Node;
 import org.tio.core.Tio;
 import org.tio.server.ServerGroupContext;
 import org.tio.utils.lock.SetWithLock;
-
+/*
+ * 这个应该是实验全局使用相同context失败了，暂时没删
+ */
 public class GroupContext {
 
 	private  ClientGroupContext clientgroupcontext;

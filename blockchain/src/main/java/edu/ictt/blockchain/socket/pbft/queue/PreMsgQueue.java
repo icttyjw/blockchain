@@ -14,13 +14,18 @@ import edu.ictt.blockchain.socket.pbft.listener.PrepareEventListener;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 import edu.ictt.blockchain.socket.pbft.msg.VotePreMsg;
 
+import static edu.ictt.blockchain.socket.pbft.Message.blockConcurrentHashMap;
+/*
+ * pre队列处理
+ */
+
 public class PreMsgQueue extends BaseMsgQueue{
 
 	private PrepareMsgQueue prepareMsgQueue=new PrepareMsgQueue();
 	
 	private ListenerManager listenerManager=new ListenerManager();
 	
-	private ConcurrentHashMap<String, VotePreMsg> blockConcurrentHashMap=new ConcurrentHashMap<String, VotePreMsg>();
+	
 	
 	@Override
 	public void push(VoteMsg voteMsg) {

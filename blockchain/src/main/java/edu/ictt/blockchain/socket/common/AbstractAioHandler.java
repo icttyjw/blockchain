@@ -10,8 +10,7 @@ import org.tio.core.intf.Packet;
 import java.nio.ByteBuffer;
 
 /**
- * @author tanyaowu
- * 2017年3月27日 上午12:14:12
+ * 编码解码函数
  */
 public abstract  class AbstractAioHandler implements AioHandler {
    

@@ -1,7 +1,7 @@
 package edu.ictt.blockchain.socket.common;
 
 /**
- * @author wuweifeng wrote on 2018/3/9.
+ * 部分网络常数
  */
 public interface Const {
     /**

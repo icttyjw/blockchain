@@ -21,7 +21,7 @@ import org.tio.core.exception.AioDecodeException;
 import org.tio.core.intf.Packet;
 
 /**
- * @author wuweifeng wrote on 2018/3/12.
+ * 客户端handler分发处
  */
 public class BlockClientAioHandler extends AbstractAioHandler implements ClientAioHandler {
 

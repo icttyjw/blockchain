@@ -26,7 +26,7 @@
                               <Label fx:id="Name" layoutX="105.0" layoutY="38.0" text="高校:" />
                               <Label fx:id="ConState" layoutX="105.0" layoutY="105.0" text="通信状态:" />
                               <Label fx:id="LastCon" layoutX="107.0" layoutY="131.0" text="最后一次通信时间:" />
-                              <Label fx:id="ip" layoutX="214.0" layoutY="15.0" prefHeight="15.0" prefWidth="163.0" text="id" />
+                              <Label fx:id="ip" layoutX="214.0" layoutY="15.0" prefHeight="15.0" prefWidth="163.0" text="id1" />
                               <Label fx:id="state" layoutX="214.0" layoutY="38.0" prefHeight="15.0" prefWidth="163.0" text="schoolname" />
                               <Label fx:id="pubkey" layoutX="214.0" layoutY="81.0" prefHeight="15.0" prefWidth="163.0" text="state" />
                               <Label fx:id="id" layoutX="214.0" layoutY="60.0" prefHeight="15.0" prefWidth="163.0" text="ip" />

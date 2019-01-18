@@ -10,7 +10,6 @@ import static edu.ictt.blockchain.socket.common.Const.GROUP_NAME;
 
 /**
  * 发送消息的工具类
- * @author wuweifeng wrote on 2018/3/12.
  */
 
 public class PacketSender {

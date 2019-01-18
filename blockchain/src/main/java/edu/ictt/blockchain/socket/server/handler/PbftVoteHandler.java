@@ -8,7 +8,9 @@ import edu.ictt.blockchain.socket.common.intf.AbstractBlockHandler;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 import static edu.ictt.blockchain.socket.pbft.Message.msgQueueManager;
-
+/*
+ * 收到pbft投票信息的处理
+ */
 public class PbftVoteHandler extends AbstractBlockHandler<VoteBody>{
 
 	@Override
