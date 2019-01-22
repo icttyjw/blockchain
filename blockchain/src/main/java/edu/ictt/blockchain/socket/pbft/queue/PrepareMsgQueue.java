@@ -23,7 +23,7 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
         VoteMsg commitMsg = new VoteMsg();
         BeanUtil.copyProperties(voteMsg, commitMsg);
         commitMsg.setVoteType(VoteType.commit);
-        //commitMsg.setAppId(AppId.value);
+        commitMsg.setAppId("f");
         //开始校验并决定是否进入commit阶段
         //校验该vote是否合法
         System.out.println(4);
@@ -33,20 +33,18 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
         } else {
             //开始校验拜占庭数量，如果agree的超过2f + 1，就commit
             long agreeCount = voteMsgs.stream().filter(VoteMsg::isAgree).count();
-            long unAgreeCount = voteMsgs.size() - agreeCount;
             System.out.println(agreeCount);
+            long unAgreeCount = voteMsgs.size() - agreeCount;
             System.out.println(unAgreeCount);
-            System.out.println(7);
             //开始发出commit的同意or拒绝的消息
             if (agreeCount >= pbftAgreesize()) {
+            	System.out.println("agree");
                 agree(commitMsg, true);
             } else if (unAgreeCount >= pbftsize() + 1) {
+            	System.out.println("disagree");
                 agree(commitMsg, false);
             }
-            else
-            {
-            	agree(commitMsg, false);
-            }
+            
         }
 	}
 
@@ -59,11 +57,16 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
      */
     public boolean otherConfirm(String hash, int number) {
     	System.out.println(2);
-      //  if (commitMsgQueue.hasOtherConfirm(hash, number)) {
+       if (commitMsgQueue.hasOtherConfirm(hash, number)) {
             return false;
-      //  }
-      //  return hasOtherConfirm(hash, number);
+        }
+        return hasOtherConfirm(hash, number);
             
+    }
+    
+    public void preparesize()
+    {
+    	System.out.println(voteStateConcurrentHashMap.size());
     }
     
     private void agree(VoteMsg commitMsg, boolean flag) {

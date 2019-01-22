@@ -85,6 +85,7 @@ public class IOtest {
 		VoteMsg voteMsg=new VoteMsg();
 		VoteBody voteBody=new VoteBody();
 		voteMsg.setHash("111");
+		voteMsg.setAppId("ss");
 		voteMsg.setNumber(1);
 		byte pre=1;
 		voteMsg.setVoteType(pre);

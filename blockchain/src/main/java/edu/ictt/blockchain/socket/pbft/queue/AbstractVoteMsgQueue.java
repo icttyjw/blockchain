@@ -7,11 +7,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import cn.hutool.core.collection.CollectionUtil;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 
+
 public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
 
+	
 	 /**
      * 存储所有的hash的投票集合
      */
+	
 	public static ConcurrentHashMap<String , List<VoteMsg>> voteMsgConcurrentHashMap=new ConcurrentHashMap<>();
 	 /**
      * 存储本节点已确认状态的hash的集合，即本节点已对外广播过允许commit或拒绝commit的消息了
@@ -23,25 +26,32 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
 	@Override
 	public void push(VoteMsg voteMsg) {
 		// TODO Auto-generated method stub
+		System.out.println(10);
 		String hash=voteMsg.getHash();
 		List<VoteMsg> voteMsgs=voteMsgConcurrentHashMap.get(hash);
 		if(CollectionUtil.isEmpty(voteMsgs)){
+			System.out.println(10);
 			voteMsgs=new ArrayList<VoteMsg>();
 			voteMsgConcurrentHashMap.put(hash, voteMsgs);
 		}else{
 			//如果不空的情况下，判断本地集合是否已经存在完全相同的voteMsg了
+			System.out.println(10);
             for (VoteMsg temp : voteMsgs) {
+            	System.out.println(temp.getNumber());
                 if (temp.getAppId().equals(voteMsg.getAppId())) {
+                	System.out.println(101);
                     return;
                 }
+                System.out.println(10);
             }
 		}
-		
+		System.out.println(10);
 		//添加进去
         voteMsgs.add(voteMsg);
         //如果已经对该hash投过票了，就不再继续
         if (voteStateConcurrentHashMap.get(hash) != null) {
-            return;
+            System.out.println("not null");
+        	//return;
         }
 
         deal(voteMsg, voteMsgs);
@@ -67,11 +77,14 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
             }
           //如果下一阶段的number比当前投票的小，则不理会
             if (voteMsgConcurrentHashMap.get(key).get(0).getNumber() < number) {
-                continue;
+            	System.out.println("small");
+            	continue;
             }
+            else
+            System.out.println("big");
             //只有别的>=number的Block已经达成共识了，则返回true，那么将会拒绝该hash进入下一阶段
             if (voteStateConcurrentHashMap.get(key) != null && voteStateConcurrentHashMap.get(key)) {
-            	
+            	System.out.println("true");
                 return true;
             }
             

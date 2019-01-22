@@ -24,7 +24,7 @@ public class PbftVoteHandler extends AbstractBlockHandler<VoteBody>{
 		// TODO Auto-generated method stub
 		System.out.println("handler");
 		VoteMsg votemsg=bsBody.getVoteMsg();
-		//调用多线程进入投票阶段
+		//进入投票阶段
 		msgQueueManager.push(votemsg);
 		System.out.println("part vote end");
 		return null;

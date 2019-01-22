@@ -19,6 +19,8 @@ public class Message {
 	 * pre队列信息
 	 */
 	public static ConcurrentHashMap<String, VotePreMsg> blockConcurrentHashMap=new ConcurrentHashMap<String, VotePreMsg>();
+
+	 
 	
 	/*
 	 * 队列管理
@@ -26,6 +28,7 @@ public class Message {
 	public static MsgQueueManager msgQueueManager=new MsgQueueManager();
 	
 	public static Block findByHash(String hash) {
+		System.out.println(blockConcurrentHashMap.size());
         VotePreMsg votePreMsg = blockConcurrentHashMap.get(hash);
         if (votePreMsg != null) {
             return votePreMsg.getBlock();

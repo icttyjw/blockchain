@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.alibaba.fastjson.JSONObject;
 
+import edu.ictt.blockchain.bean.Block;
 import edu.ictt.blockchain.bean.Runstate;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.PairKey;
@@ -17,13 +18,30 @@ import edu.ictt.blockchain.socket.pbft.VoteType;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 import edu.ictt.blockchain.socket.pbft.msg.VotePreMsg;
 import edu.ictt.blockchain.socket.pbft.queue.BaseMsgQueue;
+import edu.ictt.blockchain.socket.pbft.queue.CommitMsgQueue;
 import edu.ictt.blockchain.socket.pbft.queue.PreMsgQueue;
+
+import static edu.ictt.blockchain.socket.pbft.Message.blockConcurrentHashMap;
+import static edu.ictt.blockchain.socket.pbft.Message.findByHash;
 
 public class PartTest {
 
 	@Test
+	public void msgtest(){
+		Block block=new Block();
+		block.setHash("3");
+		VotePreMsg voteMsg=new VotePreMsg();
+		voteMsg.setAgree(true);
+		voteMsg.setAppId("1");
+		voteMsg.setBlock(block);
+		blockConcurrentHashMap.put("s", voteMsg);
+		Block b=findByHash("s");
+		System.out.println(b.getHash());
+	}
+	
+	@Test
 	public void basetest(){
-		BaseMsgQueue baseMsgQueue=new PreMsgQueue();
+		BaseMsgQueue baseMsgQueue=new CommitMsgQueue();//new PreMsgQueue();//=
 		System.out.println(baseMsgQueue.getClass());
 	}
 	
