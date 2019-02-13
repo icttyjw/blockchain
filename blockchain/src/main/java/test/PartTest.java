@@ -12,7 +12,7 @@ import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.PairKey;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
 import edu.ictt.blockchain.common.util.DerbyDBUtil;
-import edu.ictt.blockchain.manager.ManageMessage;
+import edu.ictt.blockchain.core.manager.ManageMessage;
 import edu.ictt.blockchain.socket.body.StateBody;
 import edu.ictt.blockchain.socket.pbft.VoteType;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;

@@ -22,7 +22,7 @@ public class CommitEventListener implements EListener {
 		BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.PBFT_VOTE).setBody(new
                 VoteBody(voteMsg)).build();
 		
-		PacketSender.sendGroup(Const.GROUP_SCHOOL, blockPacket);
+		PacketSender.sendGroup(blockPacket);
 	}
 
 	@Override
