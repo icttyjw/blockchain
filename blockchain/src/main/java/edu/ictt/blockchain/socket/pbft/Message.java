@@ -27,11 +27,6 @@ public class Message {
 	 */
 	public static MsgQueueManager msgQueueManager=new MsgQueueManager();
 	
-	/**
-	 * 根据某块的hash得到其投票信息
-	 * @param hash
-	 * @return
-	 */
 	public static Block findByHash(String hash) {
 		System.out.println(blockConcurrentHashMap.size());
         VotePreMsg votePreMsg = blockConcurrentHashMap.get(hash);

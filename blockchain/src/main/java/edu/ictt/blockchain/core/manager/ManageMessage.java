@@ -1,4 +1,4 @@
-package edu.ictt.blockchain.manager;
+package edu.ictt.blockchain.core.manager;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

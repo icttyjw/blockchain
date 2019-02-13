@@ -12,7 +12,7 @@ import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.PairKey;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
 import edu.ictt.blockchain.common.util.DerbyDBUtil;
-import edu.ictt.blockchain.manager.ManageMessage;
+import edu.ictt.blockchain.core.manager.ManageMessage;
 import edu.ictt.blockchain.socket.body.StateBody;
 import edu.ictt.blockchain.socket.pbft.VoteType;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
@@ -20,6 +20,7 @@ import edu.ictt.blockchain.socket.pbft.msg.VotePreMsg;
 import edu.ictt.blockchain.socket.pbft.queue.BaseMsgQueue;
 import edu.ictt.blockchain.socket.pbft.queue.CommitMsgQueue;
 import edu.ictt.blockchain.socket.pbft.queue.PreMsgQueue;
+import edu.ictt.blockchain.socket.pbft.queue.PrepareMsgQueue;
 
 import static edu.ictt.blockchain.socket.pbft.Message.blockConcurrentHashMap;
 import static edu.ictt.blockchain.socket.pbft.Message.findByHash;
@@ -33,10 +34,14 @@ public class PartTest {
 		VotePreMsg voteMsg=new VotePreMsg();
 		voteMsg.setAgree(true);
 		voteMsg.setAppId("1");
+		voteMsg.setHash("111");
+		voteMsg.setNumber(3);
 		voteMsg.setBlock(block);
-		blockConcurrentHashMap.put("s", voteMsg);
-		Block b=findByHash("s");
-		System.out.println(b.getHash());
+		BaseMsgQueue baseMsgQueue=null;
+		baseMsgQueue=new PrepareMsgQueue();
+		baseMsgQueue.push(voteMsg);
+		baseMsgQueue=new CommitMsgQueue();
+		baseMsgQueue.push(voteMsg);
 	}
 	
 	@Test

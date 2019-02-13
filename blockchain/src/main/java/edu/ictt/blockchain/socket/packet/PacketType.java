@@ -43,7 +43,7 @@ public class PacketType {
     /**
      * 获取下一个区块的信息
      */
-    byte NEXT_BLOCK_INFO_REQUEST = 5;
+    static byte NEXT_BLOCK_INFO_REQUEST = 5;
     /**
      * 获取下一个区块的信息
      */

@@ -2,10 +2,6 @@ package edu.ictt.blockchain.socket.pbft.queue;
 
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 
-/**
- * 各节点互传的投票消息存储队列基类
- *
- */
 public abstract class BaseMsgQueue {
 
 	/*
@@ -23,11 +19,5 @@ public abstract class BaseMsgQueue {
 		return 1;
 	}
 	
-	/**
-     * 来了新消息
-     *
-     * @param voteMsg
-     *         voteMsg
-     */
 	public abstract void push(VoteMsg voteMsg);
 }

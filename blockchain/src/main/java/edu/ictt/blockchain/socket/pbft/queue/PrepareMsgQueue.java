@@ -87,7 +87,8 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
     	System.out.println(8);
         commitMsg.setAgree(flag);
         voteStateConcurrentHashMap.put(commitMsg.getHash(), flag);
-        listenerManager.addEListener(new CommitEventListener());
-        listenerManager.publishEvent(new MsgCommitEvent(commitMsg));
+        System.out.println(voteStateConcurrentHashMap.size());
+       // listenerManager.addEListener(new CommitEventListener());
+       // listenerManager.publishEvent(new MsgCommitEvent(commitMsg));
     }
 }
