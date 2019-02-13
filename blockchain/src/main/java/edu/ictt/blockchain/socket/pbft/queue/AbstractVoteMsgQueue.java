@@ -28,6 +28,14 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
 		// TODO Auto-generated method stub
 		System.out.println(10);
 		String hash=voteMsg.getHash();
+		VoteMsg msg=new VoteMsg();
+		msg.setAgree(true);
+		msg.setAppId("3");
+		msg.setHash("111");
+		msg.setNumber(1);
+		List<VoteMsg> vo=new ArrayList<VoteMsg>();
+		vo.add(msg);
+		voteMsgConcurrentHashMap.put(hash, vo);
 		List<VoteMsg> voteMsgs=voteMsgConcurrentHashMap.get(hash);
 		if(CollectionUtil.isEmpty(voteMsgs)){
 			System.out.println(10);
@@ -50,7 +58,8 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
         voteMsgs.add(voteMsg);
         //如果已经对该hash投过票了，就不再继续
         if (voteStateConcurrentHashMap.get(hash) != null) {
-            System.out.println("not null");
+        	for(String key:voteStateConcurrentHashMap.keySet())
+            System.out.println(key);
         	//return;
         }
 
