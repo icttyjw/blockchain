@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+	<!-- configuration 有三个属性： scan(配置文件发生改变时，是否重新加载)，scanPeriod(设置检测配置文件是否有修改的时间间隔),debug(是否打印logback内部日志信息)-->
+    <!--<include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+
+
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <!-- <charset>UTF-8</charset> -->
+        </encoder>
+    </appender>
+
+    <!-- 本地日志文件 -->
+    <appender name="MY_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<!-- prudent为true，日志会被安全的写入文件，即使其他的FileAppender也在向此文件做写入操作，效率低 -->
+        <Prudent>true</Prudent>
+        
+        <!-- 当发生滚动时,涉及文件移动和重命名-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        
+            <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+			
+			<!-- 控制保留的归档文件的最大数量，超出数量就删除旧文件 -->
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} -%msg%n</Pattern>
+        </layout>
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="MY_FILE"/>
+    </root>
+</configuration>

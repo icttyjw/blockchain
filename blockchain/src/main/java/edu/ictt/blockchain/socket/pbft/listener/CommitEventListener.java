@@ -19,9 +19,12 @@ public class CommitEventListener implements EListener {
 	@Override
 	public void msgIsCommited(MsgCommitEvent msgCommitEvent){
 		VoteMsg voteMsg=(VoteMsg) msgCommitEvent.getSource();
+		
+		//群发消息，通知别的节点，我已对该Block commit
 		BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.PBFT_VOTE).setBody(new
                 VoteBody(voteMsg)).build();
 		
+		//广播给group_school节点们我已commit
 		PacketSender.sendGroup(Const.GROUP_SCHOOL, blockPacket);
 	}
 

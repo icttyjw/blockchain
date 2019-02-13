@@ -4,10 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cn.hutool.core.collection.CollectionUtil;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 
-
+/**
+ * 
+ * 
+ *
+ */
 public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
 
 	
@@ -21,6 +28,8 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
      */
 	public static ConcurrentHashMap<String, Boolean> voteStateConcurrentHashMap=new ConcurrentHashMap<>();
 	
+	private Logger logger = LoggerFactory.getLogger(getClass());
+	
 	abstract void deal(VoteMsg voteMsg,List<VoteMsg> voteMsgs);
 	
 	@Override
@@ -30,14 +39,16 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
 		String hash=voteMsg.getHash();
 		List<VoteMsg> voteMsgs=voteMsgConcurrentHashMap.get(hash);
 		if(CollectionUtil.isEmpty(voteMsgs)){
+			System.out.println("投票消息的集合为空");
 			System.out.println(10);
 			voteMsgs=new ArrayList<VoteMsg>();
 			voteMsgConcurrentHashMap.put(hash, voteMsgs);
 		}else{
 			//如果不空的情况下，判断本地集合是否已经存在完全相同的voteMsg了
+			System.out.println("开始判断本地是否存在完全相同的voteMsg");
 			System.out.println(10);
             for (VoteMsg temp : voteMsgs) {
-            	System.out.println(temp.getNumber());
+            	System.out.println("当前voteMsgs中的Number" + temp.getNumber());
                 if (temp.getAppId().equals(voteMsg.getAppId())) {
                 	System.out.println(101);
                     return;
@@ -50,8 +61,8 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
         voteMsgs.add(voteMsg);
         //如果已经对该hash投过票了，就不再继续
         if (voteStateConcurrentHashMap.get(hash) != null) {
-            System.out.println("not null");
-        	//return;
+            System.out.println("not null 已经对该hash投过票 ");
+        	return;
         }
 
         deal(voteMsg, voteMsgs);

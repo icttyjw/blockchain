@@ -53,25 +53,31 @@ public class IOtest {
     	 clientGroupContext.setHeartbeatTimeout(0);
     	 TioClient tioClient = null;
     	 ClientChannelContext clientChannelContext = null;
- 		tioClient = new TioClient(clientGroupContext);
- 		clientChannelContext = tioClient.connect(serverNode);
- 		BlockPacket pack=new BlockPacket();
- 		pack.setType(PacketType.Connect_Request);//添加数据类型
- 		Tio.send(clientChannelContext, pack);
+ 		 tioClient = new TioClient(clientGroupContext);
+ 		 clientChannelContext = tioClient.connect(serverNode);
+ 		
+ 		 BlockPacket pack=new BlockPacket();
+ 		 pack.setType(PacketType.Connect_Request);//添加数据类型
+ 		 Tio.send(clientChannelContext, pack);
 	}
+	
 	//public static ClientChannelContext clientChannelContext = null;
 	//public static  TioClient tioClient = null;
+	
 	public static void main(String args[]) throws Exception{
-	/*	ReconnConf reconnConf = null;
-		 BlockClientAioHandler bcah=new BlockClientAioHandler();
-   	 BlockClientAioListener bcal=new BlockClientAioListener();
-   	 ClientGroupContext clientGroupContext = new ClientGroupContext(bcah, bcal, reconnConf);
-   	 clientGroupContext.setHeartbeatTimeout(0);*/
+	
+		/*	ReconnConf reconnConf = null;
+		BlockClientAioHandler bcah=new BlockClientAioHandler();
+   	    BlockClientAioListener bcal=new BlockClientAioListener();
+   	    ClientGroupContext clientGroupContext = new ClientGroupContext(bcah, bcal, reconnConf);
+   	    clientGroupContext.setHeartbeatTimeout(0);*/
+		
 		ServerAioHandler serverAioHandler = new BlockServerAioHandler();
         ServerAioListener serverAioListener = new BlockServerAioListener();
         ServerGroupContext serverGroupContext = new ServerGroupContext(serverAioHandler, serverAioListener);
         serverGroupContext.setHeartbeatTimeout(-1);
         TioServer tioServer = new TioServer(serverGroupContext);
+        
         //本机启动服务
         tioServer.start(null, Const.PORT);
 		BlockPacket pack=new BlockPacket();
@@ -95,6 +101,7 @@ public class IOtest {
 		packet.setType(type);
 		packet.setBody(Json.toJson(voteBody));
 		Tio.sendToGroup(clientGroupContext,Const.GROUP_SCHOOL , packet);
+		
 		//ccc.connect(clientGroupContext, serverNode2, Const.GROUP_SCHOOL);
 		//connect(clientGroupContext, serverNode1, Const.GROUP_SCHOOL);
 		//ClientGroupContext clientGroupContext1=connect(serverNode1,Const.GROUP_SCHOOL);
@@ -105,13 +112,14 @@ public class IOtest {
 	}
 	public static void connect(ClientGroupContext clientGroupContext,Node servernode,String group) throws Exception{
 		
-    	 TioClient tioClient = null;
-    	 ClientChannelContext clientChannelContext = null;
+    	TioClient tioClient = null;
+    	ClientChannelContext clientChannelContext = null;
     	 
  		tioClient = new TioClient(clientGroupContext);
 		
 		clientChannelContext = tioClient.connect(servernode);
 		Tio.bindGroup(clientChannelContext, group);
+		
 		//clientChannelContext = tioClient.connect(serverNode2);
 		//Tio.bindGroup(clientChannelContext, Const.GROUP_SCHOOL);
 		//clientChannelContext = tioClient.connect(serverNode3);
@@ -126,6 +134,7 @@ public class IOtest {
  		//Tio.send( , packet)
 		
 	}
+	
 	private static void connectgroup( ClientGroupContext clientGroupContext,ClientChannelContext clientchannelcontext,String group,Node serverNode){
 		try {
 			TioClient tioClient = new TioClient(clientGroupContext);

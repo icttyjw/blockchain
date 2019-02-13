@@ -3,6 +3,9 @@ package edu.ictt.blockchain.socket.pbft.queue;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.alibaba.fastjson.JSONObject;
 
 import cn.hutool.core.bean.BeanUtil;
@@ -25,7 +28,8 @@ public class PreMsgQueue extends BaseMsgQueue{
 	
 	private ListenerManager listenerManager=new ListenerManager();
 	
-	
+	private Logger logger = LoggerFactory.getLogger(getClass());
+
 	
 	@Override
 	public void push(VoteMsg voteMsg) {
@@ -46,7 +50,7 @@ public class PreMsgQueue extends BaseMsgQueue{
         //但凡是能进到该push方法的，都是通过基本校验的，但在并发情况下可能会相同number的block都进到投票队列中
         //需要对新进来的Vote信息的number进行校验，如果在比prepre阶段靠后的阶段中，已经出现了认证OK的同number的vote，则拒绝进入该队列
         if (prepareMsgQueue.otherConfirm(hash, voteMsg.getNumber())) {
-            //logger.info("拒绝进入Prepare阶段，hash为" + hash);
+            logger.info("拒绝进入Prepare阶段，hash为" + hash);
         	System.out.println("pre exist");
             return;
         }

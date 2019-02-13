@@ -2,6 +2,9 @@ package edu.ictt.blockchain.socket.pbft.queue;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cn.hutool.core.bean.BeanUtil;
 import edu.ictt.blockchain.socket.pbft.VoteType;
 import edu.ictt.blockchain.socket.pbft.event.MsgCommitEvent;
@@ -15,7 +18,15 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
 	private CommitMsgQueue commitMsgQueue=new CommitMsgQueue();
 	
 	private ListenerManager listenerManager=new ListenerManager();
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	
+	
+	/**
+     * 收到节点（包括自己）针对某Block的Prepare消息
+     *
+     * @param voteMsg
+     *         voteMsg
+     */
 	@Override
 	void deal(VoteMsg voteMsg, List<VoteMsg> voteMsgs) {
 		System.out.println("prepare");
@@ -33,9 +44,9 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
         } else {
             //开始校验拜占庭数量，如果agree的超过2f + 1，就commit
             long agreeCount = voteMsgs.stream().filter(VoteMsg::isAgree).count();
-            System.out.println(agreeCount);
+            System.out.println("同意的数量：" + agreeCount);
             long unAgreeCount = voteMsgs.size() - agreeCount;
-            System.out.println(unAgreeCount);
+            System.out.println("不同意的数量：" + unAgreeCount);
             //开始发出commit的同意or拒绝的消息
             if (agreeCount >= pbftAgreesize()) {
             	System.out.println("agree");
@@ -70,8 +81,9 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
     }
     
     private void agree(VoteMsg commitMsg, boolean flag) {
-        //logger.info("Prepare阶段完毕，是否进入commit的标志是：" + flag);
+        logger.info("Prepare阶段完毕，是否进入commit的标志是：" + flag);
         //发出拒绝commit的消息
+        System.out.println("Prepare阶段完毕，是否进入commit的标志是：" + flag);
     	System.out.println(8);
         commitMsg.setAgree(flag);
         voteStateConcurrentHashMap.put(commitMsg.getHash(), flag);
