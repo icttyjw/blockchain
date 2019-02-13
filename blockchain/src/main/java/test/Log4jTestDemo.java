@@ -12,6 +12,9 @@ public class Log4jTestDemo {
     /**
      * @param args
      */
+    
+    
+    
     @Test
     public void sss() {
     	logger.info("this is a example");
