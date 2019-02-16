@@ -2,6 +2,8 @@ package edu.ictt.blockchain.socket.pbft.queue;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import edu.ictt.blockchain.bean.Block;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 
@@ -9,6 +11,7 @@ import static edu.ictt.blockchain.socket.pbft.Message.findByHash;
 /*
  * commit队列处理
  */
+@Component
 public class CommitMsgQueue extends AbstractVoteMsgQueue{
 
 	/*

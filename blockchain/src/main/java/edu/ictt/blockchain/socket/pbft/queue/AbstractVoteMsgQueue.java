@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.hutool.core.collection.CollectionUtil;
+import edu.ictt.blockchain.common.timer.TimerManager;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 
 /**
@@ -34,8 +35,6 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
 	
 	@Override
 	public void push(VoteMsg voteMsg) {
-		// TODO Auto-generated method stub
-		System.out.println(10);
 		String hash=voteMsg.getHash();
 		VoteMsg msg=new VoteMsg();
 		msg.setAgree(true);
@@ -47,31 +46,23 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
 		voteMsgConcurrentHashMap.put(hash, vo);
 		List<VoteMsg> voteMsgs=voteMsgConcurrentHashMap.get(hash);
 		if(CollectionUtil.isEmpty(voteMsgs)){
-			System.out.println("投票消息的集合为空");
-			System.out.println(10);
 			voteMsgs=new ArrayList<VoteMsg>();
 			voteMsgConcurrentHashMap.put(hash, voteMsgs);
 		}else{
 			//如果不空的情况下，判断本地集合是否已经存在完全相同的voteMsg了
-			System.out.println("开始判断本地是否存在完全相同的voteMsg");
-			System.out.println(10);
             for (VoteMsg temp : voteMsgs) {
             	System.out.println("当前voteMsgs中的Number" + temp.getNumber());
                 if (temp.getAppId().equals(voteMsg.getAppId())) {
-                	System.out.println(101);
                     return;
                 }
-                System.out.println(10);
             }
 		}
-		System.out.println(10);
 		//添加进去
         voteMsgs.add(voteMsg);
         //如果已经对该hash投过票了，就不再继续
         if (voteStateConcurrentHashMap.get(hash) != null) {
 
-            System.out.println("not null 已经对该hash投过票 ");
-        	//return;
+        	return;
 
         }
 
@@ -89,7 +80,6 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
      * @return 是否超过
      */
 	public boolean hasOtherConfirm(String hash,int number){
-		System.out.println(5);
 		//遍历该阶段的所有投票信息
 		for(String key:voteMsgConcurrentHashMap.keySet()){
 			//如果下一阶段存在同一个hash的投票，则不理会
@@ -98,14 +88,12 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
             }
           //如果下一阶段的number比当前投票的小，则不理会
             if (voteMsgConcurrentHashMap.get(key).get(0).getNumber() < number) {
-            	System.out.println("small");
             	continue;
             }
             else
             System.out.println("big");
             //只有别的>=number的Block已经达成共识了，则返回true，那么将会拒绝该hash进入下一阶段
             if (voteStateConcurrentHashMap.get(key) != null && voteStateConcurrentHashMap.get(key)) {
-            	System.out.println("true");
                 return true;
             }
             
@@ -117,4 +105,15 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
 	/**
      * 清理旧的block的hash
      */
+	protected void clearOldBlockHash(int number){
+		TimerManager.schedule(()->{
+			for(String key : voteMsgConcurrentHashMap.keySet()){
+				if(voteMsgConcurrentHashMap.get(key).get(0).getNumber()<=number){
+					voteMsgConcurrentHashMap.remove(key);
+					voteStateConcurrentHashMap.remove(key);
+				}
+			}
+			return null;
+		}, 2000);
+	}
 }

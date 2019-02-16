@@ -29,19 +29,6 @@ public class PartTest {
 
 	@Test
 	public void msgtest(){
-		Block block=new Block();
-		block.setHash("3");
-		VotePreMsg voteMsg=new VotePreMsg();
-		voteMsg.setAgree(true);
-		voteMsg.setAppId("1");
-		voteMsg.setHash("111");
-		voteMsg.setNumber(3);
-		voteMsg.setBlock(block);
-		BaseMsgQueue baseMsgQueue=null;
-		baseMsgQueue=new PrepareMsgQueue();
-		baseMsgQueue.push(voteMsg);
-		baseMsgQueue=new CommitMsgQueue();
-		baseMsgQueue.push(voteMsg);
 	}
 	
 	@Test
