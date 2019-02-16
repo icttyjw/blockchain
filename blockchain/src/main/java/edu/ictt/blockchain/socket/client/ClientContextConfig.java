@@ -10,7 +10,7 @@ import org.tio.client.intf.ClientAioListener;
 import org.tio.core.Node;
 import org.tio.core.Tio;
 
-import edu.ictt.blockchain.socket.common.Const;
+import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.PacketType;
 

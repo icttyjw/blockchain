@@ -1,11 +1,11 @@
 package edu.ictt.blockchain.socket.server;
 
-import edu.ictt.blockchain.socket.common.Const;
 import org.tio.server.TioServer;
 import org.tio.server.ServerGroupContext;
 import org.tio.server.intf.ServerAioHandler;
 import org.tio.server.intf.ServerAioListener;
 
+import edu.ictt.blockchain.common.Const;
 
 import java.io.IOException;
 

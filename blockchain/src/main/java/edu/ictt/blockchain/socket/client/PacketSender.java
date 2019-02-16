@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import org.tio.client.ClientGroupContext;
 import org.tio.core.Tio;
 
+import static edu.ictt.blockchain.common.Const.GROUP_NAME;
 import static edu.ictt.blockchain.socket.client.ClientContextConfig.clientGroupContext;
-import static edu.ictt.blockchain.socket.common.Const.GROUP_NAME;
 
 import javax.annotation.Resource;
 

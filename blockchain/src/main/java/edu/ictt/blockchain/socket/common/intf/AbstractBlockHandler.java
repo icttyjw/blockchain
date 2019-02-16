@@ -1,7 +1,7 @@
 package edu.ictt.blockchain.socket.common.intf;
 
+import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.socket.body.BaseBody;
-import edu.ictt.blockchain.socket.common.Const;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import org.tio.core.ChannelContext;
 import org.tio.utils.json.Json;

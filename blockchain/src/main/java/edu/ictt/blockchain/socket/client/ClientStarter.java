@@ -27,8 +27,8 @@ import org.tio.utils.lock.SetWithLock;
 import com.google.common.collect.Maps;
 
 import edu.ictt.blockchain.common.CommonUtil;
+import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.core.event.NodesConnectedEvent;
-import edu.ictt.blockchain.socket.common.Const;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.NextBlockPacketBuilder;
 

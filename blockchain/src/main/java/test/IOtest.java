@@ -19,11 +19,11 @@ import org.tio.server.intf.ServerAioHandler;
 import org.tio.server.intf.ServerAioListener;
 import org.tio.utils.json.Json;
 
+import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.socket.body.VoteBody;
 import edu.ictt.blockchain.socket.client.BlockClientAioHandler;
 import edu.ictt.blockchain.socket.client.BlockClientAioListener;
 import edu.ictt.blockchain.socket.client.ClientContextConfig;
-import edu.ictt.blockchain.socket.common.Const;
 import edu.ictt.blockchain.socket.common.GroupContext;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.PacketType;

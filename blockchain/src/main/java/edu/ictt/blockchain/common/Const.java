@@ -1,4 +1,4 @@
-package edu.ictt.blockchain.socket.common;
+package edu.ictt.blockchain.common;
 
 /**
  * 部分网络常数

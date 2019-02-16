@@ -1,10 +1,10 @@
 package edu.ictt.blockchain.socket.client;
 
 import edu.ictt.blockchain.socket.common.AbstractAioHandler;
-import edu.ictt.blockchain.socket.common.Const;
 import edu.ictt.blockchain.socket.common.intf.AbstractBlockHandler;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.PacketType;
+import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.socket.body.StateBody;
 import edu.ictt.blockchain.socket.client.handler.HeartbeatHandler;
