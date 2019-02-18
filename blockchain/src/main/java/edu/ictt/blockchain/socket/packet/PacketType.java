@@ -2,16 +2,16 @@ package edu.ictt.blockchain.socket.packet;
 /**
  * packetType大于0时是请求类型，小于0时为响应类型
  */
-public class PacketType {
+public interface PacketType {
 
 	/**
      * 心跳包
      */
-    public static byte HEART_BEAT = 0;
+    byte HEART_BEAT = 0;
     /**
      * 已生成新的区块
      */
-    public static byte Connect_Request = 1;
+    byte Connect_Request = 1;
     /**
      * 已生成新的区块回应
      */
@@ -35,7 +35,7 @@ public class PacketType {
     /**
      * 获取一个block信息
      */
-    public static byte FETCH_BLOCK_INFO_REQUEST = 4;
+   byte FETCH_BLOCK_INFO_REQUEST = 4;
     /**
      * 获取一块信息响应
      */
@@ -43,7 +43,7 @@ public class PacketType {
     /**
      * 获取下一个区块的信息
      */
-    static byte NEXT_BLOCK_INFO_REQUEST = 5;
+    byte NEXT_BLOCK_INFO_REQUEST = 5;
     /**
      * 获取下一个区块的信息
      */
@@ -51,5 +51,5 @@ public class PacketType {
     /**
      * pbft投票
      */
-    public static byte PBFT_VOTE = 10;
+    byte PBFT_VOTE = 10;
 }

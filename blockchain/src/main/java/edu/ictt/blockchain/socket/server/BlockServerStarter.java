@@ -1,6 +1,7 @@
 package edu.ictt.blockchain.socket.server;
 
 import org.tio.server.TioServer;
+import org.springframework.stereotype.Component;
 import org.tio.server.ServerGroupContext;
 import org.tio.server.intf.ServerAioHandler;
 import org.tio.server.intf.ServerAioListener;
@@ -9,6 +10,8 @@ import edu.ictt.blockchain.common.Const;
 
 import java.io.IOException;
 
+import javax.annotation.PostConstruct;
+
 /**
  * server启动器
  * 仿照其中代码可以放入其他函数中，但是具体的数据处理应该在server的handler中
@@ -16,10 +19,11 @@ import java.io.IOException;
  *
  * @author wuweifeng wrote on 2018/3/12.
  */
+@Component
 public class BlockServerStarter {
 
-    
-    public static void main(String args[]) throws IOException {
+    @PostConstruct
+    public void serverStart() throws IOException {
         ServerAioHandler serverAioHandler = new BlockServerAioHandler();
         ServerAioListener serverAioListener = new BlockServerAioListener();
         ServerGroupContext serverGroupContext = new ServerGroupContext(serverAioHandler, serverAioListener);

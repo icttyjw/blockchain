@@ -2,8 +2,11 @@ package edu.ictt.blockchain.socket.client;
 
 import edu.ictt.blockchain.socket.common.AbstractAioHandler;
 import edu.ictt.blockchain.socket.common.intf.AbstractBlockHandler;
+import edu.ictt.blockchain.socket.disruptor.base.BaseEvent;
+import edu.ictt.blockchain.socket.disruptor.base.MessageProducer;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.PacketType;
+import edu.ictt.blockchain.ApplicationContextProvider;
 import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.socket.body.StateBody;
@@ -25,10 +28,6 @@ import org.tio.core.intf.Packet;
  */
 public class BlockClientAioHandler extends AbstractAioHandler implements ClientAioHandler {
 
-	private static Map<Byte, AbstractBlockHandler<?>> handlerMap = new HashMap<Byte, AbstractBlockHandler<?>>();
-	static{
-		handlerMap.put(PacketType.HEART_BEAT, new HeartbeatHandler());
-	}
     @Override
     public BlockPacket heartbeatPacket() {
         //心跳包的内容就是隔一段时间向别的节点获取一次下一步区块（带着自己的最新Block获取别人的next Block）
@@ -54,16 +53,10 @@ public class BlockClientAioHandler extends AbstractAioHandler implements ClientA
      */
     @Override
     public void handler(Packet packet, ChannelContext channelContext) throws Exception  {
-    	System.out.println("clienthandler");
     	BlockPacket blockPacket = (BlockPacket) packet;
-        byte type=blockPacket.getType();
-        System.out.println(type);
-        AbstractBlockHandler<?> blockhandler=handlerMap.get(type);
-        System.out.println(blockhandler.getClass());
-        blockhandler.handler(blockPacket,channelContext);
-        return;
+       
         //使用Disruptor来publish消息。所有收到的消息都进入Disruptor，同BlockServerAioHandler
-        //ApplicationContextProvider.getBean(MessageProducer.class).publish(new BaseEvent(blockPacket, channelContext));
+        ApplicationContextProvider.getBean(MessageProducer.class).publish(new BaseEvent(blockPacket, channelContext));
     }
 
 	
