@@ -67,6 +67,12 @@
     <artifactId>hutool-all</artifactId>
     <version>4.1.19</version>
 </dependency>
+	<!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
+<dependency>
+    <groupId>com.lmax</groupId>
+    <artifactId>disruptor</artifactId>
+    <version>3.4.1</version>
+</dependency>
 	
 	<dependency>
 				<groupId>cn.hutool</groupId>

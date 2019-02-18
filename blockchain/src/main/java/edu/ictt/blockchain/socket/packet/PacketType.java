@@ -35,7 +35,7 @@ public class PacketType {
     /**
      * 获取一个block信息
      */
-    byte FETCH_BLOCK_INFO_REQUEST = 4;
+    public static byte FETCH_BLOCK_INFO_REQUEST = 4;
     /**
      * 获取一块信息响应
      */
