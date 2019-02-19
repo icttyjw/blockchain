@@ -1,6 +1,8 @@
 package edu.ictt.blockchain.socket.client;
 
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.tio.client.ClientChannelContext;
 import org.tio.client.ClientGroupContext;
 import org.tio.client.ReconnConf;
@@ -17,9 +19,29 @@ import edu.ictt.blockchain.socket.packet.PacketType;
 /**
  * 设置全局的clientgroupcontext，后面的connect应该是没用的
  */
-
+@Component
 public class ClientContextConfig {
 
+	/**
+     * 构建客户端连接的context
+     * @return
+     * ClientGroupContext
+     */
+    @Bean
+    public ClientGroupContext clientGroupContext() {
+        //handler, 包括编码、解码、消息处理
+        ClientAioHandler clientAioHandler = new BlockClientAioHandler();
+        //事件监听器，可以为null，但建议自己实现该接口
+        ClientAioListener clientAioListener = new BlockClientAioListener();
+        //断链后自动连接的，不想自动连接请设为null
+        ReconnConf reconnConf = new ReconnConf(5000L, 20);
+        ClientGroupContext clientGroupContext = new ClientGroupContext(clientAioHandler, clientAioListener,
+                reconnConf);
+
+        //clientGroupContext.setHeartbeatTimeout(Const.TIMEOUT);
+        return clientGroupContext;
+    }
+    /*
 	public static ClientGroupContext clientGroupContext;
 	
 	{
@@ -58,7 +80,7 @@ public class ClientContextConfig {
 		//Tio.sendToGroup(clientGroupContext, Const.GROUP_SCHOOL, pack);
 		//Tio.send( , packet)
 		
-	}
+	}*/
     
     
 

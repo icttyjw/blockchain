@@ -30,7 +30,6 @@ import edu.ictt.blockchain.socket.packet.PacketType;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 import edu.ictt.blockchain.socket.server.BlockServerAioHandler;
 import edu.ictt.blockchain.socket.server.BlockServerAioListener;
-import static edu.ictt.blockchain.socket.client.ClientContextConfig.clientGroupContext;
 
 public class IOtest {
 
@@ -81,7 +80,7 @@ public class IOtest {
 		//Node serverNode3 = new Node("10.170.5.134",Const.PORT);
 		ClientContextConfig ccc=new ClientContextConfig();
 		
-		ccc.connect(clientGroupContext, serverNode1, Const.GROUP_SCHOOL);
+		//ccc.connect(clientGroupContext, serverNode1, Const.GROUP_SCHOOL);
 		VoteMsg voteMsg=new VoteMsg();
 		VoteBody voteBody=new VoteBody();
 		voteMsg.setHash("111");
@@ -94,7 +93,7 @@ public class IOtest {
 		byte type=10;
 		packet.setType(type);
 		packet.setBody(Json.toJson(voteBody));
-		Tio.sendToGroup(clientGroupContext,Const.GROUP_SCHOOL , packet);
+		//Tio.sendToGroup(clientGroupContext,Const.GROUP_SCHOOL , packet);
 		//ccc.connect(clientGroupContext, serverNode2, Const.GROUP_SCHOOL);
 		//connect(clientGroupContext, serverNode1, Const.GROUP_SCHOOL);
 		//ClientGroupContext clientGroupContext1=connect(serverNode1,Const.GROUP_SCHOOL);

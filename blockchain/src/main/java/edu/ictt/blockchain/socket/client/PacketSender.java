@@ -10,7 +10,6 @@ import org.tio.client.ClientGroupContext;
 import org.tio.core.Tio;
 
 import static edu.ictt.blockchain.common.Const.GROUP_NAME;
-import static edu.ictt.blockchain.socket.client.ClientContextConfig.clientGroupContext;
 
 import javax.annotation.Resource;
 
@@ -21,7 +20,7 @@ import javax.annotation.Resource;
 public class PacketSender {
 	
     @Resource
-    private ClientContextConfig clientContextConfig;
+    private ClientGroupContext clientGroupContext;
 
     public void sendGroup(BlockPacket blockPacket) {
         //对外发出client请求事件
