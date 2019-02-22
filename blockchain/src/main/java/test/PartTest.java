@@ -2,12 +2,15 @@ package test;
 
 import java.io.UnsupportedEncodingException;
 
+import edu.ictt.blockchainmanager.Runstate;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSONObject;
 
-import edu.ictt.blockchain.bean.Block;
-import edu.ictt.blockchain.bean.Runstate;
+import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
+
+import edu.ictt.blockchain.Block.block.Block;
+import edu.ictt.blockchainmanager.Runstate;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.PairKey;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
@@ -24,6 +27,8 @@ import edu.ictt.blockchain.socket.pbft.queue.PrepareMsgQueue;
 
 import static edu.ictt.blockchain.socket.pbft.Message.blockConcurrentHashMap;
 import static edu.ictt.blockchain.socket.pbft.Message.findByHash;
+
+
 
 public class PartTest {
 

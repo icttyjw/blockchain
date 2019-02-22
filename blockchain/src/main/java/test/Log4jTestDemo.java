@@ -1,4 +1,5 @@
 package test;
+
 import org.checkerframework.common.reflection.qual.GetClass;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -10,7 +11,7 @@ public class Log4jTestDemo {
 
     
     /**
-     * @param args
+     *
      */
     
     

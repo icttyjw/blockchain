@@ -62,12 +62,14 @@
 	<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-nop -->
 	<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
 	<!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
-<dependency>
-    <groupId>cn.hutool</groupId>
-    <artifactId>hutool-all</artifactId>
-    <version>4.1.19</version>
-</dependency>
-	<!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
+	  <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
+	  <!--<dependency>
+		  <groupId>cn.hutool</groupId>
+		  <artifactId>hutool-all</artifactId>
+		  <version>4.4.3</version>
+	  </dependency>-!>
+
+	<!- https://mvnrepository.com/artifact/com.lmax/disruptor -->
 <dependency>
     <groupId>com.lmax</groupId>
     <artifactId>disruptor</artifactId>
@@ -108,6 +110,16 @@
   		<artifactId>slf4j-nop</artifactId>
   		<version>1.8.0-beta2</version>
   	</dependency>
+      <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>4.8.2</version>
+      </dependency>
+	  <dependency>
+		  <groupId>org.t-io</groupId>
+		  <artifactId>tio-utils</artifactId>
+		  <version>3.2.1.v20181024-RELEASE</version>
+	  </dependency>
   </dependencies>
   <dependencyManagement>
   	<dependencies>

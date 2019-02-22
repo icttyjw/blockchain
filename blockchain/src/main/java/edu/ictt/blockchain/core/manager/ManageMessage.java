@@ -3,7 +3,7 @@ package edu.ictt.blockchain.core.manager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import edu.ictt.blockchain.bean.Runstate;
+import edu.ictt.blockchainmanager.Runstate;
 import edu.ictt.blockchain.common.util.DerbyDBUtil;
 
 /*
