@@ -3,7 +3,7 @@ package edu.ictt.blockchain.core.manager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import edu.ictt.blockchainmanager.Runstate;
+import edu.ictt.blockchainmanager.NodeState;
 import edu.ictt.blockchain.common.util.DerbyDBUtil;
 
 /*
@@ -19,7 +19,7 @@ public class ManageMessage {
 		 if(doesTableExist==false)
 		 {
 			 String sql="create table node (Id varchar(10),name varchar(10),Ip varchar(20),state varchar(10),"
-			 		+ "connectstate varchar(10),lastConnect varchar(10),main varchar(10),priKey varchar(80),pubKeyX varchar(80),pubKeyY varchar(80))";
+			 		+ "connectstate varchar(10),lastConnect varchar(10),main varchar(10),priKey varchar(80),pubKey varchar(80))";
 			 DerbyDBUtil.executeInit(sql);
 		 }
 	}
@@ -27,8 +27,8 @@ public class ManageMessage {
 	/*
 	 * 将注册信息写入数据库
 	 */
-	public void Regist(Runstate rs){
-		String sql="insert into node(Id,name,Ip,state,connectstate,main,lastConnect,priKey,pubKeyX,pubKeyY)values('"
+	public void Regist(NodeState rs){
+		String sql="insert into node(Id,name,Ip,state,connectstate,main,lastConnect,priKey,pubKey)values('"
 				+rs.getId()
 				+"','"
 				+rs.getName()
@@ -45,16 +45,14 @@ public class ManageMessage {
 				+"','"
 				+rs.getPriKey()
 				+"','"
-				+rs.getPubKeyX()
-				+"','"
-				+rs.getPubKeyY()
+				+rs.getPubKey()
 				+"')";
 		DerbyDBUtil.executeUpdate(sql);
 	}
 	/*
 	 * 暂时是通过name修改其余信息，不能修改公私钥
 	 */
-	public void Update(Runstate rs){
+	public void Update(NodeState rs){
 		String sql="update node set id='"+rs.getId()
 					+"',"+"Ip='"+rs.getIp()
 					+"',"
@@ -71,10 +69,10 @@ public class ManageMessage {
 	/*
 	 * 通过name查询保存的记录信息
 	 */
-	public Runstate queryByIp(String name){
+	public NodeState queryByIp(String name){
 		String sql="select * from node where name='"+name+"'";
 		ResultSet rs = DerbyDBUtil.query(sql);
-		Runstate rstate=new Runstate();
+		NodeState rstate=new NodeState();
 		try {
 			if(rs.next())
 			{
@@ -85,10 +83,9 @@ public class ManageMessage {
 				String main=rs.getString("main");
 				String lc=rs.getString("lastConnect");
 				String prik=rs.getString("priKey");
-				String pubkx=rs.getString("pubKeyX");
-				String pubky=rs.getString("pubKeyY");
+				String pubk=rs.getString("pubKey");
 				
-				rstate=new Runstate(id,name,Ip,s,cs,main,lc,prik,pubkx,pubky);
+				rstate=new NodeState(id,name,Ip,s,cs,main,lc,prik,pubk);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -2,7 +2,7 @@ package edu.ictt.blockchainmanager;
 
 import java.io.Serializable;
 
-public class Runstate implements Serializable{
+public class NodeState implements Serializable{
 
 	/**
 	 * 
@@ -17,6 +17,13 @@ public class Runstate implements Serializable{
 	 * 自命名节点名
 	 */
 	private String name;//
+	/*
+	 * 节点类型
+	 * 1.自己  localnode
+	 * 2.同校节点 groupnode
+	 * 3.其他学校节点 schoolnode
+	 */
+	private String nodetype;
 	/**
 	 * 节点IP
 	 */
@@ -34,10 +41,9 @@ public class Runstate implements Serializable{
 	 */
 	private String lastConnect;//
 	/**
-	 * 节点公钥
+	 * 节点公钥 用新的方法 公钥不用分成两个
 	 */
-	private String pubKeyX;
-	private String pubKeyY;
+	private String pubKey;
 	/*
 	 * 节点主次
 	 */
@@ -47,8 +53,8 @@ public class Runstate implements Serializable{
 	 */
 	private String priKey;
 	
-	public Runstate(String id,String name,String Ip,String state,String connectstate,String main,
-					String lastConnect,String pubKeyX,String pubKeyY,String priKey){
+	public NodeState(String id,String name,String Ip,String state,String connectstate,String main,
+					String lastConnect,String pubKey,String priKey){
 		this.id=id;
 		this.name=name;
 		this.Ip=Ip;
@@ -56,15 +62,22 @@ public class Runstate implements Serializable{
 		this.connectstate =connectstate;
 		this.main=main;
 		this.lastConnect=lastConnect;
-		this.pubKeyX=pubKeyX;
-		this.pubKeyY=pubKeyY;
+		this.pubKey=pubKey;
 		this.priKey=priKey;
 	}
 	
-	public Runstate(){
+	public NodeState(){
 		super();
 	}
 	
+	public String getNodetype() {
+		return nodetype;
+	}
+
+	public void setNodetype(String nodetype) {
+		this.nodetype = nodetype;
+	}
+
 	public String getMain() {
 		return main;
 	}
@@ -110,22 +123,16 @@ public class Runstate implements Serializable{
 		this.lastConnect = lastConnect;
 	}
 	
-	public String getPubKeyX() {
-		return pubKeyX;
+	public String getPubKey() {
+		return pubKey;
 	}
 	public String getPriKey() {
 		return priKey;
 	}
-	public void setPubKeyX(String pubKeyX) {
-		this.pubKeyX = pubKeyX;
+	public void setPubKey(String pubKey) {
+		this.pubKey = pubKey;
 	}
-	public String getPubKeyY() {
-		return pubKeyY;
-	}
-
-	public void setPubKeyY(String pubKeyY) {
-		this.pubKeyY = pubKeyY;
-	}
+	
 
 	public void setPriKey(String priKey) {
 		this.priKey = priKey;
@@ -139,8 +146,7 @@ public class Runstate implements Serializable{
 				"main："+main+"\n"+
 				"connectstate:"+connectstate+"\n"+
 				"lastConnect:"+lastConnect+"\n"+
-				"pubKeyX:"+pubKeyX+"\n"+
-				"pubKeyY:"+pubKeyY;
+				"pubKeyX:"+pubKey;
 	}
 	
 }

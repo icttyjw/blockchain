@@ -2,7 +2,7 @@ package test;
 
 import java.io.UnsupportedEncodingException;
 
-import edu.ictt.blockchainmanager.Runstate;
+import edu.ictt.blockchainmanager.NodeState;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSONObject;
@@ -10,7 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 
 import edu.ictt.blockchain.Block.block.Block;
-import edu.ictt.blockchainmanager.Runstate;
+import edu.ictt.blockchainmanager.NodeState;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.PairKey;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
@@ -71,11 +71,11 @@ public class PartTest {
 	
 	@Test
 	public void jsontest() throws Exception{
-		Runstate rs=new Runstate("1","ss","123","1","1","main","12:00:00","fdf","fdf","dfdf");
+		NodeState rs=new NodeState("1","ss","123","1","1","main","12:00:00","fdf","fdf");
 		String text=FastJsonUtil.toJSONString(rs);
 		text.getBytes("utf-8");
 		System.out.println(text);
-		Runstate rw=FastJsonUtil.toBean(text, Runstate.class);
+		NodeState rw=FastJsonUtil.toBean(text, NodeState.class);
 		System.out.println(rw);
 	}
 	@Test
@@ -94,7 +94,7 @@ public class PartTest {
 		//Runstate rs=new Runstate("1","ss","123","1","1","12:00:00","fdf","fdf","dfdf");
 		ManageMessage mm=new ManageMessage();
 		//mm.Regist(rs);
-		Runstate rw=mm.queryByIp("ss");
+		NodeState rw=mm.queryByIp("ss");
 		System.out.println(rw);
 	}
 	/*
@@ -102,14 +102,14 @@ public class PartTest {
 	 */
 	@Test
 	public void inserttest(){
-		Runstate rs=new Runstate("1","ss","123","1","1","main","12:00:00","fdf","fdf","dfdf");
+		NodeState rs=new NodeState("1","ss","123","1","1","main","12:00:00","fdf","fdf");
 		//ManageMessage mm=new ManageMessage();
 		System.out.println(rs.toString());
 		//mm.Regist(rs);
 	}
 	@Test
 	public void updatetest(){
-		Runstate rs=new Runstate("1","ss","123","1","1","main","12:00:00","fdf","fdf","dfdf");
+		NodeState rs=new NodeState("1","ss","123","1","1","main","12:00:00","fdf","fdf");
 		ManageMessage mm=new ManageMessage();
 		System.out.println(rs.toString());
 		mm.Update(rs);
