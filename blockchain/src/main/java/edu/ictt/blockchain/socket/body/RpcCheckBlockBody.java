@@ -1,6 +1,6 @@
 package edu.ictt.blockchain.socket.body;
 
-import edu.ictt.blockchain.bean.Block;
+import edu.ictt.blockchain.Block.block.Block;;
 
 public class RpcCheckBlockBody extends RpcBlockBody{
 

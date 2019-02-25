@@ -5,7 +5,7 @@ import static edu.ictt.blockchain.socket.pbft.Message.blockConcurrentHashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import edu.ictt.blockchain.bean.Block;
+import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 import edu.ictt.blockchain.socket.pbft.msg.VotePreMsg;
 import edu.ictt.blockchain.socket.pbft.queue.MsgQueueManager;

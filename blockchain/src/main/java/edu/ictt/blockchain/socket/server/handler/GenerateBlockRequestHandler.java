@@ -6,7 +6,7 @@ import org.tio.core.ChannelContext;
 
 import edu.ictt.blockchain.ApplicationContextProvider;
 import edu.ictt.blockchain.Block.check.CheckerManager;
-import edu.ictt.blockchain.bean.Block;
+import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.socket.body.RpcBlockBody;
 import edu.ictt.blockchain.socket.body.RpcCheckBlockBody;
 import edu.ictt.blockchain.socket.common.intf.AbstractBlockHandler;
@@ -40,7 +40,7 @@ public class GenerateBlockRequestHandler extends AbstractBlockHandler<RpcBlockBo
             votePreMsg.setVoteType(VoteType.prepare);
             votePreMsg.setNumber(111);//block.getBlockHeader().getNumber()
             votePreMsg.setAppId(rpcBlockBody.getAppId());
-            votePreMsg.setHash(block.getHash());
+            votePreMsg.setHash(block.getblockHash());
             votePreMsg.setAgree(true);
             //将消息推入PrePrepare队列
             ApplicationContextProvider.getBean(MsgQueueManager.class).push(votePreMsg);

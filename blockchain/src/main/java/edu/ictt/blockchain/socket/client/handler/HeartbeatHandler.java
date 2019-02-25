@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
 import org.tio.utils.json.Json;
 
-import edu.ictt.blockchain.bean.Runstate;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.socket.body.BaseBody;
 import edu.ictt.blockchain.socket.body.StateBody;

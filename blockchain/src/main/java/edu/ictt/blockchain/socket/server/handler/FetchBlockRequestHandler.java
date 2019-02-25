@@ -6,7 +6,7 @@ import org.tio.core.Tio;
 import org.tio.core.ChannelContext;
 
 import edu.ictt.blockchain.ApplicationContextProvider;
-import edu.ictt.blockchain.bean.Block;
+import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.socket.body.RpcBlockBody;
 import edu.ictt.blockchain.socket.body.RpcSimpleBlockBody;

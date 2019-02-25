@@ -6,7 +6,7 @@ import org.tio.core.ChannelContext;
 import org.tio.core.Tio;
 import org.tio.utils.json.Json;
 
-import edu.ictt.blockchain.bean.Runstate;
+
 import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.socket.body.BaseBody;

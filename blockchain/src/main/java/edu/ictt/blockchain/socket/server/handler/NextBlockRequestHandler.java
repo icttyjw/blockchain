@@ -7,7 +7,7 @@ import org.tio.core.ChannelContext;
 import org.tio.utils.json.Json;
 
 import edu.ictt.blockchain.ApplicationContextProvider;
-import edu.ictt.blockchain.bean.Block;
+import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.socket.body.RpcNextBlockBody;
 import edu.ictt.blockchain.socket.body.RpcSimpleBlockBody;
@@ -40,7 +40,7 @@ public class NextBlockRequestHandler extends AbstractBlockHandler<RpcSimpleBlock
         Block nextBlock = ApplicationContextProvider.getBean(DbBlockManager.class).getNextBlockByHash(hash);
         String nextHash = null;
         if (nextBlock != null) {
-            nextHash = nextBlock.getHash();
+            nextHash = nextBlock.getblockHash();
         }
         RpcNextBlockBody respBody = new RpcNextBlockBody(nextHash, hash);
         //respBody.setResponseMsgId("111");//rpcBlockBody.getMessageId()

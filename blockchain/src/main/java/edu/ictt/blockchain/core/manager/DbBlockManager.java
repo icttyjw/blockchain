@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import cn.hutool.core.util.StrUtil;
 import edu.ictt.blockchain.Block.db.DbStore;
-import edu.ictt.blockchain.bean.Block;
+import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.common.Constants;
 import edu.ictt.blockchain.common.FastJsonUtil;
 
@@ -50,7 +50,7 @@ public class DbBlockManager {
 	    public String getLastBlockHash() {
 	        Block block = getLastBlock();
 	        if (block != null) {
-	            return block.getHash();
+	            return block.getblockHash();
 	        }
 	        return null;
 	    }
@@ -78,7 +78,7 @@ public class DbBlockManager {
 	        if (block == null) {
 	            return getFirstBlock();
 	        }
-	        String nextHash = dbStore.get(Constants.KEY_BLOCK_NEXT_PREFIX + block.getHash());
+	        String nextHash = dbStore.get(Constants.KEY_BLOCK_NEXT_PREFIX + block.getblockHash());
 	        if (nextHash == null) {
 	            return null;
 	        }
