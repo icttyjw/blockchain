@@ -31,6 +31,8 @@ import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.core.event.NodesConnectedEvent;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.NextBlockPacketBuilder;
+import edu.ictt.blockchain.sql.service.NodeService;
+import edu.ictt.blockchainmanager.NodeState;
 
 
 
@@ -47,16 +49,18 @@ public class ClientStarter {
     private PacketSender packetSender;
     @Resource
     private RestTemplate restTemplate;
+    @Resource
+    private NodeService nodeService;
     //@Resource
     //private PermissionManager permissionManager;
-    @Value("${managerUrl}")
-    private String managerUrl;
-    @Value("${appId}")
-    private String appId;
-    @Value("${name}")
-    private String name;
-    @Value("${singeNode:true}")
-    private Boolean singeNode;
+    //@Value("${managerUrl}")
+    //private String managerUrl;
+    //@Value("${appId}")
+    //private String appId;
+    //@Value("${name}")
+    //private String name;
+    //@Value("${singeNode:true}")
+    private Boolean singeNode=true;
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -75,6 +79,21 @@ public class ClientStarter {
         String localIp = CommonUtil.getLocalIp();
         logger.info("本机IP：{}",localIp);
         //校内和组内信息为长连，组间在投票时连接
+       /* List<NodeState> nodelist=nodeService.queryAllNodes();
+        if(nodelist.isEmpty())
+        {
+        	logger.info("请先初始化");
+        	 System.exit(0);
+        }
+        logger.info("共有" + nodelist.size() + "个成员需要连接：" + nodelist.toString());
+        nodes.clear();
+        for(NodeState nodestate:nodelist){
+        	 Node node = new Node(nodestate.getIp(), Const.PORT);
+             nodes.add(node);
+        }*/
+        Node node=new Node(localIp,Const.PORT);
+        nodes.add(node);
+        bindServerGroup(nodes);
     }
     
     /**

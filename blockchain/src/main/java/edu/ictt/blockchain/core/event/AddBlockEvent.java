@@ -2,7 +2,7 @@ package edu.ictt.blockchain.core.event;
 
 import org.springframework.context.ApplicationEvent;
 
-import edu.ictt.blockchain.bean.Block;
+import edu.ictt.blockchain.Block.block.Block;
 
 public class AddBlockEvent extends ApplicationEvent{
 	/**

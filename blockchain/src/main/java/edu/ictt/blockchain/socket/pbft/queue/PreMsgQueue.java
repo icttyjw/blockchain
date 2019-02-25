@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSONObject;
 
 import cn.hutool.core.bean.BeanUtil;
-import edu.ictt.blockchain.bean.Block;
+import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.common.timer.TimerManager;
 import edu.ictt.blockchain.core.event.AddBlockEvent;
 import edu.ictt.blockchain.socket.pbft.VoteType;
@@ -78,11 +78,11 @@ public class PreMsgQueue extends BaseMsgQueue{
         }
         return null;
     }
-    @Order(3)
-    @EventListener(AddBlockEvent.class)
+    //@Order(3)
+    //@EventListener(AddBlockEvent.class)
     public void blockGenerated(AddBlockEvent addBlockEvent) {
         Block block = (Block) addBlockEvent.getSource();
-        int number = 1;//block.getBlockHeader().getNumber();
+        long number = block.getBlockHeader().getBlockMumber();
         TimerManager.schedule(() -> {
             for (String key : blockConcurrentHashMap.keySet()) {
                 if (blockConcurrentHashMap.get(key).getNumber() <= number) {

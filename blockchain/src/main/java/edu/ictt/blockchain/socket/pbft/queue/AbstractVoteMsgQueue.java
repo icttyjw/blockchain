@@ -105,7 +105,7 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
 	/**
      * 清理旧的block的hash
      */
-	protected void clearOldBlockHash(int number){
+	protected void clearOldBlockHash(long number){
 		TimerManager.schedule(()->{
 			for(String key : voteMsgConcurrentHashMap.keySet()){
 				if(voteMsgConcurrentHashMap.get(key).get(0).getNumber()<=number){

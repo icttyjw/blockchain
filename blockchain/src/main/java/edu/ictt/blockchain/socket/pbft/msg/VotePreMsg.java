@@ -1,6 +1,6 @@
 package edu.ictt.blockchain.socket.pbft.msg;
 
-import edu.ictt.blockchain.bean.Block;
+import edu.ictt.blockchain.Block.block.Block;
 
 public class VotePreMsg extends VoteMsg{
 

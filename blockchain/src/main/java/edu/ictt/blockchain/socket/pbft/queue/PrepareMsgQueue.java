@@ -12,7 +12,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import cn.hutool.core.bean.BeanUtil;
-import edu.ictt.blockchain.bean.Block;
+import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.core.event.AddBlockEvent;
 import edu.ictt.blockchain.socket.pbft.VoteType;
 import edu.ictt.blockchain.socket.pbft.event.MsgCommitEvent;
@@ -94,10 +94,10 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
      *
      * @param addBlockEvent  addBlockEvent
      */
-    @Order(3)
-    @EventListener(AddBlockEvent.class)
+    //@Order(3)
+    //@EventListener(AddBlockEvent.class)
     public void blockGenerated(AddBlockEvent addBlockEvent){
     	Block block=(Block) addBlockEvent.getSource();
-    	clearOldBlockHash(0);//block.getBlockHeader().getNumber());
+    	clearOldBlockHash(block.getBlockHeader().getBlockMumber());//block.getBlockHeader().getNumber());
     }
 }

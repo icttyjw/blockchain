@@ -2,6 +2,12 @@ package edu.ictt.blockchainmanager;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
+@Entity
 public class NodeState implements Serializable{
 
 	/**
@@ -10,8 +16,11 @@ public class NodeState implements Serializable{
 	private static final long serialVersionUID = 999611661446387109L;//程序的运行状态
 
 	/**
-	 * 自命名ID
+	 * ID,String类型ID使用uuid由程序自动生成
 	 */
+	@Id
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid")
 	private String id;
 	/**
 	 * 自命名节点名
