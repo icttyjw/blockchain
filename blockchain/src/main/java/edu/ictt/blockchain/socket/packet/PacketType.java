@@ -48,6 +48,14 @@ public interface PacketType {
      * 获取下一个区块的信息
      */
     byte NEXT_BLOCK_INFO_RESPONSE = -5;
+    /*
+     * 登录
+     */
+    byte LOGIN_REQUEST = 6;
+    /*
+     * 登录
+     */
+    byte LOGIN_REAPONSE = -6;
     /**
      * pbft投票
      */

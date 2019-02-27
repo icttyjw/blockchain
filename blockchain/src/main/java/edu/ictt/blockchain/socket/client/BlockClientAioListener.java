@@ -6,6 +6,11 @@ import org.tio.client.intf.ClientAioListener;
 import org.tio.core.Tio;
 import org.tio.core.ChannelContext;
 import org.tio.core.intf.Packet;
+import org.tio.utils.json.Json;
+
+import edu.ictt.blockchain.ApplicationContextProvider;
+import edu.ictt.blockchain.common.Const;
+import edu.ictt.blockchain.core.event.NodesConnectedEvent;
 
 
 
@@ -20,13 +25,13 @@ public class BlockClientAioListener implements ClientAioListener {
 
     @Override
     public void onAfterConnected(ChannelContext channelContext, boolean isConnected, boolean isReconnect) throws Exception {
-//        if (isConnected) {
-//            logger.info("连接成功：server地址为-" + channelContext.getServerNode());
-//            Aio.bindGroup(channelContext, Const.GROUP_NAME);
-//        } else {
-//            logger.info("连接失败：server地址为-" + channelContext.getServerNode());
-//        }
-        //ApplicationContextProvider.publishEvent(new NodesConnectedEvent(channelContext));
+        if (isConnected) {
+            logger.info("连接成功：server地址为-" + channelContext.getServerNode());
+           // Tio.bindGroup(channelContext, Const.GROUP_NAME);
+        } else {
+            logger.info("连接失败：server地址为-" + channelContext.getServerNode());
+        }
+        ApplicationContextProvider.publishEvent(new NodesConnectedEvent(channelContext));
     }
 
     @Override
@@ -47,7 +52,7 @@ public class BlockClientAioListener implements ClientAioListener {
 
     @Override
     public void onAfterSent(ChannelContext channelContext, Packet packet, boolean b) throws Exception {
-
+    	logger.info("onAfterSent channelContext:{}, packet:{}, packetSize:{}",channelContext,Json.toJson(packet),b);
     }
 
     @Override

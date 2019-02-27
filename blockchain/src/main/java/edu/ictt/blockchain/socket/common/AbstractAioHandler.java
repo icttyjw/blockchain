@@ -1,6 +1,9 @@
 package edu.ictt.blockchain.socket.common;
 
 import edu.ictt.blockchain.socket.packet.BlockPacket;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
 import org.tio.core.exception.AioDecodeException;
@@ -13,7 +16,7 @@ import java.nio.ByteBuffer;
  * 编码解码函数
  */
 public abstract  class AbstractAioHandler implements AioHandler {
-   
+	private Logger logger = LoggerFactory.getLogger(getClass());
     /**
 	 * 解码：把接收到的ByteBuffer，解码成应用可以识别的业务消息包
 	 * 消息头：type + bodyLength
@@ -22,7 +25,6 @@ public abstract  class AbstractAioHandler implements AioHandler {
 	@Override
 	public Packet decode(ByteBuffer buffer, int limit, int position, int readableLength, ChannelContext channelContext) throws AioDecodeException {
 		//可读数据，小于头部的固定长度，直接返回null，这样tio框架会自动把本次收到的数据暂存起来，并和下次收到的数据组合起来
-		System.out.println("decode");
 		if (readableLength < BlockPacket.HEADER_LENGTH) {
 			return null;
 		}
@@ -61,7 +63,6 @@ public abstract  class AbstractAioHandler implements AioHandler {
      */
     @Override
     public ByteBuffer encode(Packet packet, GroupContext groupContext, ChannelContext channelContext) {
-    	System.out.println("endcode");
     	BlockPacket showcasePacket = (BlockPacket) packet;
         byte[] body = showcasePacket.getBody();
         int bodyLen = 0;

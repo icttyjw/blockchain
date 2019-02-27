@@ -1,6 +1,8 @@
 package edu.ictt.blockchain.socket.server;
 
 import org.tio.server.TioServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.tio.server.ServerGroupContext;
 import org.tio.server.intf.ServerAioHandler;
@@ -22,12 +24,14 @@ import javax.annotation.PostConstruct;
 @Component
 public class BlockServerStarter {
 
+	private Logger logger = LoggerFactory.getLogger(getClass());
     @PostConstruct
     public void serverStart() throws IOException {
+    	logger.info("启动server");
         ServerAioHandler serverAioHandler = new BlockServerAioHandler();
         ServerAioListener serverAioListener = new BlockServerAioListener();
         ServerGroupContext serverGroupContext = new ServerGroupContext(serverAioHandler, serverAioListener);
-        serverGroupContext.setHeartbeatTimeout(Const.TIMEOUT);
+        //serverGroupContext.setHeartbeatTimeout(Const.TIMEOUT);
         TioServer tioServer = new TioServer(serverGroupContext);
         //本机启动服务
         tioServer.start(null, Const.PORT);

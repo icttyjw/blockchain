@@ -1,5 +1,7 @@
 package edu.ictt.blockchain.core.event;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEvent;
 
 import edu.ictt.blockchain.socket.packet.BlockPacket;

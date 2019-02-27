@@ -2,6 +2,8 @@ package edu.ictt.blockchain.core.manager;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import cn.hutool.core.util.StrUtil;
@@ -15,6 +17,7 @@ public class DbBlockManager {
 
 	 @Resource
 	    private DbStore dbStore;
+	 private Logger logger=LoggerFactory.getLogger(getClass());
 
 	    /**
 	     * 查找第一个区块
@@ -35,6 +38,7 @@ public class DbBlockManager {
 	     * @return 最后一个区块
 	     */
 	    public Block getLastBlock() {
+	    	logger.info("get lastblock");
 	        String lastBlockHash = dbStore.get(Constants.KEY_LAST_BLOCK);
 	        if (StrUtil.isEmpty(lastBlockHash)) {
 	            return null;

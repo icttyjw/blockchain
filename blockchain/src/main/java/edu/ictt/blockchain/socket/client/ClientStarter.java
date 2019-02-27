@@ -1,5 +1,7 @@
 package edu.ictt.blockchain.socket.client;
 
+import static edu.ictt.blockchain.common.Const.GROUP_NAME;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +31,11 @@ import com.google.common.collect.Maps;
 import edu.ictt.blockchain.common.CommonUtil;
 import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.core.event.NodesConnectedEvent;
+import edu.ictt.blockchain.socket.body.BaseBody;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.NextBlockPacketBuilder;
+import edu.ictt.blockchain.socket.packet.PacketBuilder;
+import edu.ictt.blockchain.socket.packet.PacketType;
 import edu.ictt.blockchain.sql.service.NodeService;
 import edu.ictt.blockchainmanager.NodeState;
 
@@ -99,12 +104,14 @@ public class ClientStarter {
     /**
      * 每30秒群发一次消息，和别人对比最新的Block
      */
-    @Scheduled(fixedRate = 30000)
+    @Scheduled(fixedDelay = 30000)
     public void heartBeat() {
     	if(!isNodesReady)return;
         logger.info("---------开始心跳包--------");
-        BlockPacket blockPacket = NextBlockPacketBuilder.build();
-        packetSender.sendGroup(blockPacket);
+        logger.info(""+clientGroupContext.getName());
+        BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.HEART_BEAT).setBody(new BaseBody()).build();//NextBlockPacketBuilder.build();
+        //packetSender.sendGroup(blockPacket);
+        Tio.sendToGroup(clientGroupContext, GROUP_NAME, blockPacket);
     }
 
     public void onNodesReady() {
