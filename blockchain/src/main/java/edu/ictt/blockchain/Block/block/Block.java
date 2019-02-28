@@ -24,17 +24,6 @@ public class Block implements Serializable{
 		this.blockBody = blockBody;
 	}
 
-	/**
-	 * 根据该区块所有属性计算sha256
-	 * @return
-	 * sha256hex
-	 */
-	private String calculateHash() {
-		return DigestUtil.sha256Hex(
-				blockHeader.toString() + blockBody.toString()
-		);
-	}
-
 	public BlockHeader getBlockHeader() {
 		return blockHeader;
 	}
@@ -51,7 +40,7 @@ public class Block implements Serializable{
 		this.blockBody = blockBody;
 	}
 
-	public String getblockHash() {
+	public String getBlockHash() {
 
 		return blockHash;
 	}
@@ -59,6 +48,17 @@ public class Block implements Serializable{
 	public void setblockHash(String blockHash) {
 
 		this.blockHash = blockHash;
+	}
+
+	/**
+	 * 根据该区块所有属性计算sha256
+	 * @return
+	 * sha256hex
+	 */
+	private String calculateHash() {
+		return DigestUtil.sha256Hex(
+				blockHeader.toString() + blockBody.toString()
+		);
 	}
 
 }

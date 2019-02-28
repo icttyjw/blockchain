@@ -1,5 +1,5 @@
 package edu.ictt.blockchain.userinterface;
-import edu.ictt.blockchain.bean.*;
+
 
 import java.net.URL;
 import java.util.ResourceBundle;

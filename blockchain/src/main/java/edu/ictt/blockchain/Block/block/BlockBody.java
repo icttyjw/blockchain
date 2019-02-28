@@ -1,6 +1,6 @@
 package edu.ictt.blockchain.Block.block;
 
-import edu.ictt.blockchain.Block.record.recordInfo.Record;
+import edu.ictt.blockchain.Block.record.Record;
 
 import java.util.List;
 
@@ -18,13 +18,18 @@ public class BlockBody {
     //记录哈希值集合
     private List<String> recordHashList;
 
-    public List<Record> getRecordsList() {
+    public BlockBody(){};
 
+    public BlockBody(List<Record> recordsList, List<String> recordHashList) {
+        this.recordsList = recordsList;
+        this.recordHashList = recordHashList;
+    }
+
+    public List<Record> getRecordsList() {
         return recordsList;
     }
 
     public void setRecordsList(List<Record> recordsList) {
-
         this.recordsList = recordsList;
     }
 

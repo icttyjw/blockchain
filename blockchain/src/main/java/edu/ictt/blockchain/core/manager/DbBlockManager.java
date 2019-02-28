@@ -50,7 +50,7 @@ public class DbBlockManager {
 	    public String getLastBlockHash() {
 	        Block block = getLastBlock();
 	        if (block != null) {
-	            return block.getblockHash();
+	            return block.getBlockHash();
 	        }
 	        return null;
 	    }
@@ -78,7 +78,7 @@ public class DbBlockManager {
 	        if (block == null) {
 	            return getFirstBlock();
 	        }
-	        String nextHash = dbStore.get(Constants.KEY_BLOCK_NEXT_PREFIX + block.getblockHash());
+	        String nextHash = dbStore.get(Constants.KEY_BLOCK_NEXT_PREFIX + block.getBlockHash());
 	        if (nextHash == null) {
 	            return null;
 	        }

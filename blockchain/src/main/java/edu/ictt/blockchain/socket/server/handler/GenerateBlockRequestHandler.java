@@ -40,7 +40,7 @@ public class GenerateBlockRequestHandler extends AbstractBlockHandler<RpcBlockBo
             votePreMsg.setVoteType(VoteType.prepare);
             votePreMsg.setNumber(111);//block.getBlockHeader().getNumber()
             votePreMsg.setAppId(rpcBlockBody.getAppId());
-            votePreMsg.setHash(block.getblockHash());
+            votePreMsg.setHash(block.getBlockHash());
             votePreMsg.setAgree(true);
             //将消息推入PrePrepare队列
             ApplicationContextProvider.getBean(MsgQueueManager.class).push(votePreMsg);

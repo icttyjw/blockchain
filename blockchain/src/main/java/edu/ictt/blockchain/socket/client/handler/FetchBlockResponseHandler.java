@@ -37,7 +37,7 @@ public class FetchBlockResponseHandler extends AbstractBlockHandler<RpcBlockBody
             logger.info("对方也没有该Block");
         } else {
             //此处校验传过来的block的合法性，如果合法，则更新到本地，作为next区块
-        	if(ApplicationContextProvider.getBean(NextBlockQueue.class).pop(block.getblockHash()) == null) return null;
+        	if(ApplicationContextProvider.getBean(NextBlockQueue.class).pop(block.getBlockHash()) == null) return null;
         	
             CheckerManager checkerManager = ApplicationContextProvider.getBean(CheckerManager.class);
             RpcCheckBlockBody rpcCheckBlockBody = checkerManager.check(block);

@@ -1,4 +1,4 @@
-package edu.ictt.blockchain.Block.record.recordInfo;
+package edu.ictt.blockchain.Block.record;
 
 import java.io.Serializable;
 
@@ -106,4 +106,18 @@ public class GradeRecord implements Serializable,Record {
 	public void setRecordTimeStamp(long recordTimeStamp) {
 		this.recordTimeStamp = recordTimeStamp;
 	}
+
+	@Override
+	public String toString() {
+		return "GradeRecord{" +
+				"schoolInfo=" + schoolInfo +
+				", facultyInfo=" + facultyInfo +
+				", gradeInfo=" + gradeInfo +
+				", teacherSign='" + teacherSign + '\'' +
+				", schoolSign='" + schoolSign + '\'' +
+				", recordTimeStamp=" + recordTimeStamp +
+				'}';
+	}
+
+
 }

@@ -1,4 +1,4 @@
-package edu.ictt.blockchain.Block.record.recordInfo;
+package edu.ictt.blockchain.Block.record;
 
 import edu.ictt.blockchain.common.PairKey;
 
@@ -58,12 +58,12 @@ public class SchoolInfo{
     }
 
     @Override
-    public String toString(){
-        return "SchoolInfo:{"+
-               ",schoolId=" + schoolId +
-               ",schoolName=" + schoolName +
-               ",schoolPairKey" + schoolPairKey +
-               ",schoolPro" + schoolPro +
-               '}';
+    public String toString() {
+        return "SchoolInfo{" +
+                "schoolId=" + schoolId +
+                ", schoolName='" + schoolName + '\'' +
+                ", schoolPairKey=" + schoolPairKey +
+                ", schoolPro=" + schoolPro +
+                '}';
     }
 }

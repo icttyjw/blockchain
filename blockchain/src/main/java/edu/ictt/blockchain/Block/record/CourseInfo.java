@@ -1,4 +1,4 @@
-package edu.ictt.blockchain.Block.record.recordInfo;
+package edu.ictt.blockchain.Block.record;
 
 /**
  * 记录中课程信息类
@@ -77,13 +77,13 @@ public class CourseInfo{
     }
 
     @Override
-    public String toString(){
-        return "CourseInfo:{" +
-                ",courseId:" + courseId +
-                ",courseName:" + courseName +
-                ",courseDate:" + courseDate +
-                ",coursePro:" + coursePro +
-                "}";
-
+    public String toString() {
+        return "CourseInfo{" +
+                "courseId=" + courseId +
+                ", courseName='" + courseName + '\'' +
+                ", courseCredit=" + courseCredit +
+                ", courseDate='" + courseDate + '\'' +
+                ", coursePro='" + coursePro + '\'' +
+                '}';
     }
 }

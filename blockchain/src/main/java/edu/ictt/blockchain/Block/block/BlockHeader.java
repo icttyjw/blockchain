@@ -1,6 +1,7 @@
 package edu.ictt.blockchain.Block.block;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author:zoe
@@ -51,6 +52,27 @@ public class BlockHeader {
      *
      */
     private String blockHeaderSign;
+
+    /**
+     * 该区块里每条交易信息的hash集合，按顺序来的，通过该hash集合能算出根节点hash
+     */
+    private List<String> hashList;
+
+    public BlockHeader(){};
+
+    public BlockHeader(String hashPreviousBlock, String hashMerkleRoot, long nounce,
+                       long difficultGoal, long blockTimeStamp, long blockNumber, int recordCount,
+                       String blockHeaderSign, List<String> hashList) {
+        this.hashPreviousBlock = hashPreviousBlock;
+        this.hashMerkleRoot = hashMerkleRoot;
+        this.nounce = nounce;
+        this.difficultGoal = difficultGoal;
+        this.blockTimeStamp = blockTimeStamp;
+        this.blockNumber = blockNumber;
+        this.recordCount = recordCount;
+        this.blockHeaderSign = blockHeaderSign;
+        this.hashList = hashList;
+    }
 
     public String getHashPreviousBlock() {
         return hashPreviousBlock;
@@ -115,6 +137,14 @@ public class BlockHeader {
     public void setBlockHeaderSign(String blockHeaderSign) {
         this.blockHeaderSign = blockHeaderSign;
     }
+
+    public long getBlockNumber() { return blockNumber; }
+
+    public void setBlockNumber(long blockNumber) { this.blockNumber = blockNumber; }
+
+    public List<String> getHashList() { return hashList; }
+
+    public void setHashList(List<String> hashList) { this.hashList = hashList; }
 
     @Override
     public String toString() {

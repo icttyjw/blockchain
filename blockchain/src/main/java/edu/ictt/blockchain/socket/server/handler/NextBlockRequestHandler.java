@@ -40,7 +40,7 @@ public class NextBlockRequestHandler extends AbstractBlockHandler<RpcSimpleBlock
         Block nextBlock = ApplicationContextProvider.getBean(DbBlockManager.class).getNextBlockByHash(hash);
         String nextHash = null;
         if (nextBlock != null) {
-            nextHash = nextBlock.getblockHash();
+            nextHash = nextBlock.getBlockHash();
         }
         RpcNextBlockBody respBody = new RpcNextBlockBody(nextHash, hash);
         //respBody.setResponseMsgId("111");//rpcBlockBody.getMessageId()
