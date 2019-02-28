@@ -12,10 +12,15 @@ import org.tio.utils.json.Json;
 
 import cn.hutool.core.util.StrUtil;
 import edu.ictt.blockchain.socket.body.BaseBody;
+import edu.ictt.blockchain.socket.client.handler.FetchBlockResponseHandler;
+import edu.ictt.blockchain.socket.client.handler.HeartbeatHandler;
+import edu.ictt.blockchain.socket.client.handler.NextBlockResponseHandler;
+import edu.ictt.blockchain.socket.client.handler.TotalBlockInfoResponseHandler;
 import edu.ictt.blockchain.socket.common.intf.AbstractBlockHandler;
 import edu.ictt.blockchain.socket.disruptor.base.BaseEvent;
 import edu.ictt.blockchain.socket.disruptor.base.MessageConsumer;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
+import edu.ictt.blockchain.socket.packet.PacketType;
 
 @Component
 public class DisruptorClientConsumer implements MessageConsumer{
@@ -24,6 +29,10 @@ public class DisruptorClientConsumer implements MessageConsumer{
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     static {
+    	handlerMap.put(PacketType.FETCH_BLOCK_INFO_RESPONSE, new FetchBlockResponseHandler());
+    	handlerMap.put(PacketType.HEART_BEAT, new HeartbeatHandler());
+    	handlerMap.put(PacketType.TOTAL_BLOCK_INFO_RESPONSE, new TotalBlockInfoResponseHandler());
+    	handlerMap.put(PacketType.NEXT_BLOCK_INFO_RESPONSE, new NextBlockResponseHandler());
     }
 
     @Override
@@ -37,7 +46,7 @@ public class DisruptorClientConsumer implements MessageConsumer{
 
         //消费消息
         BaseBody baseBody = Json.toBean(new String(blockPacket.getBody()), BaseBody.class);
-        //logger.info("收到来自于<" + baseBody.getAppId() + ">针对msg<" + baseBody.getResponseMsgId() + ">的回应");
+        logger.info("收到来自于<" + baseBody.getAppId() + ">针对msg<>的回应");
 
         //String appId = baseBody.getAppId();
         //if (StrUtil.equals(AppId.value, appId)) {

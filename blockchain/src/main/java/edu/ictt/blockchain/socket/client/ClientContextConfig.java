@@ -1,6 +1,8 @@
 package edu.ictt.blockchain.socket.client;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.tio.client.ClientChannelContext;
@@ -22,6 +24,7 @@ import edu.ictt.blockchain.socket.packet.PacketType;
 @Component
 public class ClientContextConfig {
 
+	private Logger logger=LoggerFactory.getLogger(getClass());
 	/**
      * 构建客户端连接的context
      * @return
@@ -29,16 +32,17 @@ public class ClientContextConfig {
      */
     @Bean
     public ClientGroupContext clientGroupContext() {
+    	logger.info("初始化clientgroupcontext");
         //handler, 包括编码、解码、消息处理
         ClientAioHandler clientAioHandler = new BlockClientAioHandler();
         //事件监听器，可以为null，但建议自己实现该接口
         ClientAioListener clientAioListener = new BlockClientAioListener();
         //断链后自动连接的，不想自动连接请设为null
-        ReconnConf reconnConf = new ReconnConf(5000L, 20);
+        ReconnConf reconnConf = new ReconnConf(50000, 20);
         ClientGroupContext clientGroupContext = new ClientGroupContext(clientAioHandler, clientAioListener,
                 reconnConf);
-
-        //clientGroupContext.setHeartbeatTimeout(Const.TIMEOUT);
+        clientGroupContext.setName("blockgroup");
+        //clientGroupContext.setHeartbeatTimeout(0);
         return clientGroupContext;
     }
     /*

@@ -35,12 +35,12 @@ public class BlockServerAioListener implements ServerAioListener {
 
 	@Override
 	public void onAfterDecoded(ChannelContext channelContext, Packet packet, int i) throws Exception {
-
+		log.info("onAfterReceived channelContext:{}, packet:{}, packetSize:{}",channelContext,Json.toJson(packet),i);
 	}
 
 	@Override
 	public void onAfterReceivedBytes(ChannelContext channelContext, int i) throws Exception {
-		log.info("onAfterReceived channelContext:{}, packet:{}, packetSize:{}");
+		
 	}
 
 

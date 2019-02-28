@@ -22,7 +22,6 @@ public class PbftVoteHandler extends AbstractBlockHandler<VoteBody>{
 	@Override
 	public Object handler(BlockPacket packet, VoteBody bsBody, ChannelContext channelContext) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("handler");
 		VoteMsg votemsg=bsBody.getVoteMsg();
 		//进入投票阶段
 		msgQueueManager.push(votemsg);

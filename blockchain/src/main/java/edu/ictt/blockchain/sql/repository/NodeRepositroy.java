@@ -16,12 +16,12 @@ public interface NodeRepositroy extends JpaRepository<NodeState, String>{
 	/*
 	 * 查询自己的信息
 	 */
-	@Query("SELECT * FROM node WHERE nodetype=?1")
+	@Query(value="SELECT * FROM node WHERE nodetype=?1",nativeQuery=true)
 	public NodeState queryLocalNode(@Param("nodetype") String nodetype);
 	/*
 	 * 用于查询其余节点
 	 */
-	@Query("SELECT * FROM node WHERE nodetype=?1")
+	@Query(value="SELECT * FROM node WHERE nodetype=?1",nativeQuery=true)
 	public List<NodeState> queryNodebyType(@Param("nodetype") String nodetype);
 	
 }

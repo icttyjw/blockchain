@@ -1,5 +1,8 @@
 package edu.ictt.blockchain.socket.packet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.ictt.blockchain.ApplicationContextProvider;
 import edu.ictt.blockchain.core.event.ClientRequestEvent;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
