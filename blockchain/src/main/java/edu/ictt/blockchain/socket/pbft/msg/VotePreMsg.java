@@ -13,5 +13,9 @@ public class VotePreMsg extends VoteMsg{
 	public void setBlock(Block block) {
 		this.block = block;
 	}
+	@Override
+	public String toString(){
+		return "Block{"+block+"}";
+	}
 	
 }

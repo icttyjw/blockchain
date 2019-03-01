@@ -13,7 +13,6 @@ import edu.ictt.blockchain.common.Const;
 
 
 @Component
-@ConditionalOnProperty("db.rocksDB")
 public class RocksDbStoreImpl implements DbStore{
 	
 	@Resource

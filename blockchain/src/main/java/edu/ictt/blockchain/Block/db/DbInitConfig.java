@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 public class DbInitConfig {
 
 	@Bean
-    @ConditionalOnProperty("db.rocksDB")
     public RocksDB rocksDB() {
         RocksDB.loadLibrary();
 

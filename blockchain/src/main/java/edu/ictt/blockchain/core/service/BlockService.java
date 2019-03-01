@@ -31,12 +31,13 @@ public class BlockService {
 	public Block addBlock(BlockRequesbody blockRequesbody){
 		BlockBody blockBody=blockRequesbody.getBlockBody();
 		BlockHeader blockHeader=new BlockHeader();
-		blockHeader.setBlockTimeStamp(CommonUtil.getNow());
-		blockHeader.setBlockNumber(dbBlockManager.getLastBlockNumber());
+		blockHeader.setBlockTimeStamp(CommonUtil.getNow());		
+		blockHeader.setBlockNumber(dbBlockManager.getLastBlockNumber()+1);
 		blockHeader.setHashPreviousBlock(dbBlockManager.getLastBlockHash());
 		Block block=new Block();
 		block.setBlockHeader(blockHeader);
 		block.setBlockHash(SHA256.sha256(blockHeader.toString()));
+		logger.info("block"+block);
 		RpcBlockBody rpcBlockBody=new RpcBlockBody(block);
 		BlockPacket blockPacket=new PacketBuilder<>().setType(PacketType.GENERATE_BLOCK_REQUEST).setBody(
 				rpcBlockBody).build();

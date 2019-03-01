@@ -37,7 +37,7 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
      *         voteMsg
      */
 	@Override
-	void deal(VoteMsg voteMsg, List<VoteMsg> voteMsgs) {
+	protected void deal(VoteMsg voteMsg, List<VoteMsg> voteMsgs) {
 		String hash = voteMsg.getHash();
         VoteMsg commitMsg = new VoteMsg();
         BeanUtil.copyProperties(voteMsg, commitMsg);
@@ -61,6 +61,11 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
         }
 	}
 
+	
+	public void log(){
+		logger.info("启用prepare");
+	}
+	
 	/**
      * 判断大家是否已对其他的Block达成共识，如果true，则拒绝即将进入队列的Block
      * 这个准备放message里

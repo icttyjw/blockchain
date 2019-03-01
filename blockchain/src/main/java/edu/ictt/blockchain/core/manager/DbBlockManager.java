@@ -63,10 +63,10 @@ public class DbBlockManager {
 	     * 获取最后一个block的number
 	     * @return number
 	     */
-	    public int getLastBlockNumber() {
+	    public long getLastBlockNumber() {
 	        Block block = getLastBlock();
 	        if (block != null) {
-	            return 1;//block.getBlockHeader().getNumber();
+	            return block.getBlockHeader().getBlockNumber();
 	        }
 	        return 0;
 	    }

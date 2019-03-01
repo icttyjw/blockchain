@@ -35,14 +35,16 @@ public class GenerateBlockRequestHandler extends AbstractBlockHandler<RpcBlockBo
         RpcCheckBlockBody rpcCheckBlockBody = checkerManager.check(block);
         logger.info("校验结果:" + rpcCheckBlockBody.toString());
         if (rpcCheckBlockBody.getCode() == 0) {
+        	
             VotePreMsg votePreMsg = new VotePreMsg();
             votePreMsg.setBlock(block);
-            votePreMsg.setVoteType(VoteType.prepare);
+            votePreMsg.setVoteType(VoteType.pre);
             votePreMsg.setNumber(block.getBlockHeader().getBlockNumber());//
             votePreMsg.setAppId(rpcBlockBody.getAppId());
             votePreMsg.setHash(block.getBlockHash());
             votePreMsg.setAgree(true);
             //将消息推入PrePrepare队列
+            logger.info("votepremsg:"+votePreMsg);
             ApplicationContextProvider.getBean(MsgQueueManager.class).push(votePreMsg);
         }
 

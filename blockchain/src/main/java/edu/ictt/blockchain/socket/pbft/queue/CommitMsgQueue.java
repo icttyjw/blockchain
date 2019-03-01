@@ -32,9 +32,7 @@ public class CommitMsgQueue extends AbstractVoteMsgQueue{
 	
 	@Override
 	void deal(VoteMsg voteMsg, List<VoteMsg> voteMsgs) {
-		System.out.println("commit");
 		 String hash = voteMsg.getHash();
-		 System.out.println("commit end");
 	        //通过校验agree数量，来决定是否在本地生成Block
 	        long count = voteMsgs.stream().filter(VoteMsg::isAgree).count();
 	        logger.info("已经commit为true的数量为:"+count);

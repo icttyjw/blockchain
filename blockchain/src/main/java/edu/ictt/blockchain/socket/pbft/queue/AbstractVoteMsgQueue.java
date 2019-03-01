@@ -36,7 +36,7 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
 	@Override
 	public void push(VoteMsg voteMsg) {
 		String hash=voteMsg.getHash();
-		logger.info("votemsg hash "+hash);
+		logger.info("votemsg hash "+voteMsg);
 		List<VoteMsg> voteMsgs;
 		if(voteMsgConcurrentHashMap.isEmpty()){
 			voteMsgs=new ArrayList<VoteMsg>();
@@ -51,6 +51,7 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
 			//如果不空的情况下，判断本地集合是否已经存在完全相同的voteMsg了
             for (VoteMsg temp : voteMsgs) {
             	//System.out.println("当前voteMsgs中的Number" + temp.getNumber());
+            	logger.info("votemsg hash "+temp);
                 if (temp.getAppId().equals(voteMsg.getAppId())) {
                     return;
                 }
@@ -80,6 +81,8 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
      */
 	public boolean hasOtherConfirm(String hash,long l){
 		//遍历该阶段的所有投票信息
+		if(voteMsgConcurrentHashMap.isEmpty())
+			return true;
 		for(String key:voteMsgConcurrentHashMap.keySet()){
 			//如果下一阶段存在同一个hash的投票，则不理会
             if (hash.equals(key)) {
