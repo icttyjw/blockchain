@@ -10,7 +10,6 @@ public class MsgQueueManager {
 
 	public void push(VoteMsg voteMsg){
 		BaseMsgQueue baseMsgQueue=null;
-		System.out.println("manager");
 		switch(voteMsg.getVoteType()){
 		case VoteType.pre:
 			baseMsgQueue=new PreMsgQueue();

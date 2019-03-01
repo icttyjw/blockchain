@@ -15,7 +15,7 @@ public class VoteMsg {
     /**
      * 区块的number
      */
-    private int number;
+    private long number;
     /**
      * 是哪个节点传来的
      */
@@ -52,12 +52,12 @@ public class VoteMsg {
         this.hash = hash;
     }
 
-    public int getNumber() {
+    public long getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setNumber(long l) {
+        this.number = l;
     }
 
     public String getAppId() {

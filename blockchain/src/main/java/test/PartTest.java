@@ -4,19 +4,31 @@ import java.io.UnsupportedEncodingException;
 
 import edu.ictt.blockchainmanager.NodeState;
 import org.junit.Test;
+import org.tio.utils.json.Json;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 
 import edu.ictt.blockchain.Block.block.Block;
+import edu.ictt.blockchain.Block.block.BlockHeader;
 import edu.ictt.blockchainmanager.NodeState;
+import edu.ictt.blockchain.common.CommonUtil;
+import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.PairKey;
+import edu.ictt.blockchain.common.SHA256;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
 import edu.ictt.blockchain.common.util.DerbyDBUtil;
 import edu.ictt.blockchain.core.manager.ManageMessage;
+import edu.ictt.blockchain.socket.body.BaseBody;
+import edu.ictt.blockchain.socket.body.RpcBlockBody;
 import edu.ictt.blockchain.socket.body.StateBody;
+import edu.ictt.blockchain.socket.packet.BlockPacket;
+import edu.ictt.blockchain.socket.packet.PacketBuilder;
+import edu.ictt.blockchain.socket.packet.PacketType;
 import edu.ictt.blockchain.socket.pbft.VoteType;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 import edu.ictt.blockchain.socket.pbft.msg.VotePreMsg;
@@ -33,7 +45,23 @@ import static edu.ictt.blockchain.socket.pbft.Message.findByHash;
 public class PartTest {
 
 	@Test
-	public void msgtest(){
+	public void msgtest() throws UnsupportedEncodingException{
+		BlockHeader blockHeader=new BlockHeader();
+		blockHeader.setBlockTimeStamp(CommonUtil.getNow());
+		Block block=new Block();
+		block.setBlockHeader(blockHeader);
+		block.setBlockHash(SHA256.sha256(blockHeader.toString()));
+		System.out.println("1+"+block);
+		RpcBlockBody rpcBlockBody=new RpcBlockBody(block);
+		System.out.println("2+"+rpcBlockBody);
+		String jsonStr;
+			jsonStr = JSON.toJSONString(rpcBlockBody);
+			System.out.println(jsonStr);
+		BaseBody bsBody = null;
+		bsBody = FastJsonUtil.toBean(jsonStr, RpcBlockBody.class);
+		System.out.println(bsBody);
+		bsBody=JSON.parseObject(jsonStr,new TypeReference<RpcBlockBody>(){});
+		System.out.println(bsBody);
 	}
 	
 	@Test

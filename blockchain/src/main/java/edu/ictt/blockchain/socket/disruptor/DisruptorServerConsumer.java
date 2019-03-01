@@ -12,6 +12,7 @@ import edu.ictt.blockchain.socket.disruptor.base.BaseEvent;
 import edu.ictt.blockchain.socket.disruptor.base.MessageConsumer;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.PacketType;
+import edu.ictt.blockchain.socket.server.handler.GenerateBlockRequestHandler;
 import edu.ictt.blockchain.socket.server.handler.HeartbeatReqHandler;
 import edu.ictt.blockchain.socket.server.handler.LoginReqHandler;
 import edu.ictt.blockchain.socket.server.handler.NextBlockRequestHandler;
@@ -27,12 +28,14 @@ public class DisruptorServerConsumer implements MessageConsumer{
 	    	handlerMap.put(PacketType.HEART_BEAT, new HeartbeatReqHandler());
 	    	handlerMap.put(PacketType.LOGIN_REQUEST, new LoginReqHandler());
 	    	handlerMap.put(PacketType.NEXT_BLOCK_INFO_REQUEST, new NextBlockRequestHandler());
+	    	handlerMap.put(PacketType.GENERATE_BLOCK_REQUEST, new GenerateBlockRequestHandler());
 	    }
 
 	    @Override
 	    public void receive(BaseEvent baseEvent) throws Exception {
 	    	logger.info("收到消息");
 	        BlockPacket blockPacket = baseEvent.getBlockPacket();
+	        logger.info(blockPacket.getBody().toString());
 	        Byte type = blockPacket.getType();
 	        AbstractBlockHandler<?> handler = handlerMap.get(type);
 	        if (handler == null) {

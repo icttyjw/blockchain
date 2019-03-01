@@ -36,22 +36,21 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
 	@Override
 	public void push(VoteMsg voteMsg) {
 		String hash=voteMsg.getHash();
-		VoteMsg msg=new VoteMsg();
-		msg.setAgree(true);
-		msg.setAppId("3");
-		msg.setHash("111");
-		msg.setNumber(1);
-		List<VoteMsg> vo=new ArrayList<VoteMsg>();
-		vo.add(msg);
-		voteMsgConcurrentHashMap.put(hash, vo);
-		List<VoteMsg> voteMsgs=voteMsgConcurrentHashMap.get(hash);
+		logger.info("votemsg hash "+hash);
+		List<VoteMsg> voteMsgs;
+		if(voteMsgConcurrentHashMap.isEmpty()){
+			voteMsgs=new ArrayList<VoteMsg>();
+		}
+		else{
+			voteMsgs=voteMsgConcurrentHashMap.get(hash);
+		}
 		if(CollectionUtil.isEmpty(voteMsgs)){
 			voteMsgs=new ArrayList<VoteMsg>();
 			voteMsgConcurrentHashMap.put(hash, voteMsgs);
 		}else{
 			//如果不空的情况下，判断本地集合是否已经存在完全相同的voteMsg了
             for (VoteMsg temp : voteMsgs) {
-            	System.out.println("当前voteMsgs中的Number" + temp.getNumber());
+            	//System.out.println("当前voteMsgs中的Number" + temp.getNumber());
                 if (temp.getAppId().equals(voteMsg.getAppId())) {
                     return;
                 }
@@ -79,7 +78,7 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
      *         hash
      * @return 是否超过
      */
-	public boolean hasOtherConfirm(String hash,int number){
+	public boolean hasOtherConfirm(String hash,long l){
 		//遍历该阶段的所有投票信息
 		for(String key:voteMsgConcurrentHashMap.keySet()){
 			//如果下一阶段存在同一个hash的投票，则不理会
@@ -87,7 +86,7 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
                 continue;
             }
           //如果下一阶段的number比当前投票的小，则不理会
-            if (voteMsgConcurrentHashMap.get(key).get(0).getNumber() < number) {
+            if (voteMsgConcurrentHashMap.get(key).get(0).getNumber() < l) {
             	continue;
             }
             else

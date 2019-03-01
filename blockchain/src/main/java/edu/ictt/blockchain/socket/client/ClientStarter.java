@@ -31,6 +31,8 @@ import com.google.common.collect.Maps;
 import edu.ictt.blockchain.common.CommonUtil;
 import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.core.event.NodesConnectedEvent;
+import edu.ictt.blockchain.core.requestbody.BlockRequesbody;
+import edu.ictt.blockchain.core.service.BlockService;
 import edu.ictt.blockchain.socket.body.BaseBody;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.NextBlockPacketBuilder;
@@ -56,6 +58,8 @@ public class ClientStarter {
     private RestTemplate restTemplate;
     @Resource
     private NodeService nodeService;
+    @Resource
+    private BlockService blockService;
     //@Resource
     //private PermissionManager permissionManager;
     //@Value("${managerUrl}")
@@ -104,14 +108,16 @@ public class ClientStarter {
     /**
      * 每30秒群发一次消息，和别人对比最新的Block
      */
-    @Scheduled(fixedDelay = 30000)
+    @Scheduled(initialDelay=5000,fixedDelay = 60000)
     public void heartBeat() {
     	if(!isNodesReady)return;
         logger.info("---------开始心跳包--------");
-        logger.info(""+clientGroupContext.getName());
-        BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.HEART_BEAT).setBody(new BaseBody()).build();//NextBlockPacketBuilder.build();
+        //logger.info(""+clientGroupContext.getName());
+        //BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.HEART_BEAT).setBody(new BaseBody()).build();//NextBlockPacketBuilder.build();
         //packetSender.sendGroup(blockPacket);
-        Tio.sendToGroup(clientGroupContext, GROUP_NAME, blockPacket);
+        BlockRequesbody blockRequesbody=new BlockRequesbody();
+        blockService.addBlock(blockRequesbody);
+        //Tio.sendToGroup(clientGroupContext, GROUP_NAME, blockPacket);
     }
 
     public void onNodesReady() {

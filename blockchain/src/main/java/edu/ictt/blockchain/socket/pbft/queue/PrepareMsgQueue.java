@@ -68,11 +68,11 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
      *         hash
      * @return 是否存在
      */
-    public boolean otherConfirm(String hash, int number) {
-       if (commitMsgQueue.hasOtherConfirm(hash, number)) {
+    public boolean otherConfirm(String hash, long l) {
+       if (commitMsgQueue.hasOtherConfirm(hash, l)) {
             return false;
         }
-        return hasOtherConfirm(hash, number);
+        return hasOtherConfirm(hash, l);
             
     }
     

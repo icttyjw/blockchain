@@ -42,13 +42,13 @@ public class CommitMsgQueue extends AbstractVoteMsgQueue{
 	        if (count >= pbftAgreesize()) {
 	            Block block = preMsgQueue.findByHash(hash);
 	            if (block == null) {
-	                return;
+	                //return;
 	            }
 	            //本地落地
 	            voteStateConcurrentHashMap.put(hash, true);
+	            logger.info("成功落地");
 	            //发布生成区块的事件
 	        }
-	        System.out.println("commit end");
 	}
 	
 	//@Order(3)

@@ -4,17 +4,21 @@ import cn.hutool.crypto.digest.DigestUtil;
 
 import java.io.Serializable;
 
-public class Block implements Serializable{
+import com.alibaba.fastjson.annotation.JSONField;
 
-	private static final long serialVersionUID = 6457204987118872125L;
+public class Block {
+
 
 	//区块头
+	 @JSONField(ordinal=1)
 	private BlockHeader blockHeader;
 
 	//区块体
+	 @JSONField(ordinal=2)
 	private  BlockBody blockBody;
 
 	//区块哈希
+	 @JSONField(ordinal=3)
 	private String blockHash;
 
 	public Block(){}
@@ -45,11 +49,19 @@ public class Block implements Serializable{
 		return blockHash;
 	}
 
-	public void setblockHash(String blockHash) {
+	public void setBlockHash(String blockHash) {
 
 		this.blockHash = blockHash;
 	}
 
+	@Override
+	public String toString(){
+		return "Block{" +
+                "blockHeader=" + blockHeader +
+                ", blockBody=" + blockBody +
+                ", hash='" + blockHash + '\'' +
+                '}';
+	}
 	/**
 	 * 根据该区块所有属性计算sha256
 	 * @return
