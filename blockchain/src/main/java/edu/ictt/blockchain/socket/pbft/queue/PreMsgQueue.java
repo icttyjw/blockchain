@@ -61,7 +61,7 @@ public class PreMsgQueue extends BaseMsgQueue{
         VoteMsg prepareMsg = new VoteMsg();
         BeanUtil.copyProperties(voteMsg, prepareMsg);
         prepareMsg.setVoteType(VoteType.prepare);
-        //prepareMsg.setAppId(AppId.value);
+        prepareMsg.setAppId("ddd");
         eventPublisher.publishEvent(new MsgPrepareEvent(prepareMsg));
 	}
 

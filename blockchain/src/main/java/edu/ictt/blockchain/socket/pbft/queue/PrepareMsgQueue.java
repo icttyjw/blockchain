@@ -42,7 +42,7 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
         VoteMsg commitMsg = new VoteMsg();
         BeanUtil.copyProperties(voteMsg, commitMsg);
         commitMsg.setVoteType(VoteType.commit);
-        commitMsg.setAppId("f");
+        commitMsg.setAppId("ddd");
         //开始校验并决定是否进入commit阶段
         //校验该vote是否合法
         if (commitMsgQueue.hasOtherConfirm(hash, voteMsg.getNumber())) {
@@ -90,6 +90,7 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
         logger.info("Prepare阶段完毕，是否进入commit的标志是：" + flag);
         //发出拒绝commit的消息
         commitMsg.setAgree(flag);
+        logger.info("com: "+commitMsg);
         voteStateConcurrentHashMap.put(commitMsg.getHash(), flag);
         eventPublisher.publishEvent(new MsgCommitEvent(commitMsg));
     }
