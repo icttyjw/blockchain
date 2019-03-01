@@ -38,7 +38,7 @@ public class GenerateBlockRequestHandler extends AbstractBlockHandler<RpcBlockBo
             VotePreMsg votePreMsg = new VotePreMsg();
             votePreMsg.setBlock(block);
             votePreMsg.setVoteType(VoteType.prepare);
-            votePreMsg.setNumber(block.getBlockHeader().getBlockMumber());//
+            votePreMsg.setNumber(block.getBlockHeader().getBlockNumber());//
             votePreMsg.setAppId(rpcBlockBody.getAppId());
             votePreMsg.setHash(block.getBlockHash());
             votePreMsg.setAgree(true);

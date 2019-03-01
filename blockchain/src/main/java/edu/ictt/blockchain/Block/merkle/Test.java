@@ -20,6 +20,8 @@ public class Test {
         merkleTree.appendLeaf(merkleNode3);
         merkleTree.buildTree();
         System.out.println(merkleTree.getRoot().getHash());
+        //merkle校验“a”是否在路径中
         List<MerkleProofHash> hashes = merkleTree.auditProof(MerkleHash.create("a"));
+        System.out.println("a是否是叶子节点" + merkleNode0.isLeaf());
     }
 }

@@ -114,14 +114,6 @@ public class BlockHeader {
         this.blockTimeStamp = blockTimeStamp;
     }
 
-    public long getBlockMumber() {
-        return blockNumber;
-    }
-
-    public void setBlockMumber(long blockNumber) {
-        this.blockNumber = blockNumber;
-    }
-
     public int getRecordCount() {
         return recordCount;
     }

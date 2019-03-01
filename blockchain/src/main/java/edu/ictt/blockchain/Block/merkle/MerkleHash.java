@@ -17,7 +17,7 @@ public class MerkleHash {
     }
 
     /**
-     * Create a MerkleHash from an array of bytes.
+     * 用给定字节数组设置Merkle Hash
      *
      * @param buffer of bytes
      * @return a MerkleHash
@@ -41,8 +41,7 @@ public class MerkleHash {
     }
 
     /**
-     * Create a MerkleHash from two MerkleHashes by concatenation
-     * of the byte arrays. Used for internal nodes.
+     * 通过给定的左右子节点，构造其父节点的hash值
      *
      * @param left  subtree hash
      * @param right subtree hash
@@ -53,7 +52,7 @@ public class MerkleHash {
     }
 
     /**
-     * Get the byte value of a MerkleHash.
+     * 获得MerkleHash值.
      *
      * @return an array of bytes
      */
@@ -62,7 +61,7 @@ public class MerkleHash {
     }
 
     /**
-     * Compare the MerkleHash with a given byte array.
+     *与给定的hash值数组比较
      *
      * @param hash as byte array
      * @return boolean
@@ -72,7 +71,7 @@ public class MerkleHash {
     }
 
     /**
-     * Compare the MerkleHash with a given MerkleHash.
+     * 与给定的MerkleHash进行比较
      *
      * @param hash as MerkleHash
      * @return boolean
@@ -101,7 +100,7 @@ public class MerkleHash {
     }
 
     /**
-     * Compute SHA256 hash of a byte array.
+     * 计算自己数组的Hash值
      *
      * @param buffer of bytes
      */
@@ -114,8 +113,7 @@ public class MerkleHash {
         }
     }
 
-    /**
-     * Concatenate two array of bytes.
+    /**连接两个字节数组
      *
      * @param a is the first array
      * @param b is the second array

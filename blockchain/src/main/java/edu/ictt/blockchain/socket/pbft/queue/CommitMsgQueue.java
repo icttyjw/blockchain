@@ -55,7 +55,7 @@ public class CommitMsgQueue extends AbstractVoteMsgQueue{
 	//@EventListener(AddBlockEvent.class)
 	 public void blockGenerated(AddBlockEvent addBlockEvent) {
 	        Block block = (Block) addBlockEvent.getSource();
-	        clearOldBlockHash(block.getBlockHeader().getBlockMumber());
+	        clearOldBlockHash(block.getBlockHeader().getBlockNumber());
 	    }
 	
 }

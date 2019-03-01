@@ -13,10 +13,19 @@ public class MerkleNode {
     public MerkleNode() {
     }
 
+    /**
+     * 用给定哈希值构造Merkle Node
+     * @param hash
+     */
     public MerkleNode(MerkleHash hash) {
         this.hash = hash;
     }
 
+    /**
+     * 用给定左右子节点构造Merkle Node
+     * @param left
+     * @param right
+     */
     public MerkleNode(MerkleNode left, MerkleNode right) {
 
         this.leftNode = left;
@@ -28,6 +37,10 @@ public class MerkleNode {
         this.computeHash();
     }
 
+    /**
+     * 判断某节点是否是叶子节点
+     * @return
+     */
     public boolean isLeaf() {
         return this.leftNode == null && this.rightNode == null;
     }
@@ -37,6 +50,10 @@ public class MerkleNode {
         return hash.toString();
     }
 
+    /**
+     * 将左节点设置给定节点
+     * @param node
+     */
     public void setLeftNode(MerkleNode node) {
         if (node.hash == null) {
             throw new InvalidParameterException("Node hash must be initialized!");
@@ -48,6 +65,10 @@ public class MerkleNode {
         this.computeHash();
     }
 
+    /**
+     * 将右节点设置给定节点
+     * @param node
+     */
     public void setRightNode(MerkleNode node) {
         if (node.hash == null) {
             throw new InvalidParameterException("Node hash must be initialized!");
@@ -61,10 +82,18 @@ public class MerkleNode {
         }
     }
 
+    /**
+     * 哈希值能否被验证
+     * @return
+     */
     public boolean canVerifyHash() {
         return (this.leftNode != null && this.rightNode != null) || (this.leftNode != null);
     }
 
+    /**
+     * 验证哈希值是否正确
+     * @return
+     */
     public boolean verifyHash() {
         if (this.leftNode == null && this.rightNode == null) return true;
         if (this.rightNode == null) return hash.equals(leftNode.hash);
@@ -77,6 +106,11 @@ public class MerkleNode {
         return hash.equals(leftRightHash);
     }
 
+    /**
+     * 判断是否有其他节点的哈希值与自己相同
+     * @param other
+     * @return
+     */
     public boolean equals(MerkleNode other) {
         return this.hash.equals(other.hash);
     }
@@ -97,6 +131,9 @@ public class MerkleNode {
         return rightNode;
     }
 
+    /**
+     * 计算哈希值
+     */
     public void computeHash() {
 
         if (this.rightNode == null) {

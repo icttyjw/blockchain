@@ -82,7 +82,7 @@ public class PreMsgQueue extends BaseMsgQueue{
     //@EventListener(AddBlockEvent.class)
     public void blockGenerated(AddBlockEvent addBlockEvent) {
         Block block = (Block) addBlockEvent.getSource();
-        long number = block.getBlockHeader().getBlockMumber();
+        long number = block.getBlockHeader().getBlockNumber();
         TimerManager.schedule(() -> {
             for (String key : blockConcurrentHashMap.keySet()) {
                 if (blockConcurrentHashMap.get(key).getNumber() <= number) {

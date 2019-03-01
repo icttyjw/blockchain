@@ -1,5 +1,8 @@
 package edu.ictt.blockchain.Block.merkle;
 
+/**
+ * Merkle校验路径上的节点
+ */
 public class MerkleProofHash {
     public enum Branch {
         LEFT,
