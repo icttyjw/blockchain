@@ -50,7 +50,9 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
         } else {
             //开始校验拜占庭数量，如果agree的超过2f + 1，就commit
             long agreeCount = voteMsgs.stream().filter(VoteMsg::isAgree).count();
+            logger.info("agreecount:"+agreeCount);
             long unAgreeCount = voteMsgs.size() - agreeCount;
+            logger.info("disagreecount:"+unAgreeCount);
             //开始发出commit的同意or拒绝的消息
             if (agreeCount >= pbftAgreesize()) {
                 agree(commitMsg, true);

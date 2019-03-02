@@ -23,27 +23,21 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
      * 存储所有的hash的投票集合
      */
 	
-	public static ConcurrentHashMap<String , List<VoteMsg>> voteMsgConcurrentHashMap=new ConcurrentHashMap<>();
+	protected ConcurrentHashMap<String , List<VoteMsg>> voteMsgConcurrentHashMap=new ConcurrentHashMap<>();
 	 /**
      * 存储本节点已确认状态的hash的集合，即本节点已对外广播过允许commit或拒绝commit的消息了
      */
-	public static ConcurrentHashMap<String, Boolean> voteStateConcurrentHashMap=new ConcurrentHashMap<>();
+	protected ConcurrentHashMap<String, Boolean> voteStateConcurrentHashMap=new ConcurrentHashMap<>();
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	abstract void deal(VoteMsg voteMsg,List<VoteMsg> voteMsgs);
 	
 	@Override
-	public void push(VoteMsg voteMsg) {
+	protected void push(VoteMsg voteMsg) {
 		String hash=voteMsg.getHash();
 		logger.info("votemsg hash "+voteMsg);
-		List<VoteMsg> voteMsgs;
-		if(voteMsgConcurrentHashMap.isEmpty()){
-			voteMsgs=new ArrayList<VoteMsg>();
-		}
-		else{
-			voteMsgs=voteMsgConcurrentHashMap.get(hash);
-		}
+		List<VoteMsg> voteMsgs=voteMsgConcurrentHashMap.get(hash);
 		if(CollectionUtil.isEmpty(voteMsgs)){
 			voteMsgs=new ArrayList<VoteMsg>();
 			voteMsgConcurrentHashMap.put(hash, voteMsgs);
@@ -52,13 +46,17 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
             for (VoteMsg temp : voteMsgs) {
             	//System.out.println("当前voteMsgs中的Number" + temp.getNumber());
             	logger.info("votemsg hash "+temp);
-                if (temp.getAppId().equals(voteMsg.getAppId())) {
+                if (temp.getAppId().equals(voteMsg.getAppId())&&(temp.getVoteType()==voteMsg.getVoteType())) {
                     return;
                 }
             }
 		}
 		//添加进去
         voteMsgs.add(voteMsg);
+        for (VoteMsg temp : voteMsgs) {
+        	//System.out.println("当前voteMsgs中的Number" + temp.getNumber());
+        	logger.info("votemsg hash "+temp);
+        }
         //如果已经对该hash投过票了，就不再继续
         if (voteStateConcurrentHashMap.get(hash) != null) {
 
@@ -81,8 +79,6 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
      */
 	public boolean hasOtherConfirm(String hash,long l){
 		//遍历该阶段的所有投票信息
-		if(voteMsgConcurrentHashMap.isEmpty())
-			return true;
 		for(String key:voteMsgConcurrentHashMap.keySet()){
 			//如果下一阶段存在同一个hash的投票，则不理会
             if (hash.equals(key)) {
@@ -92,8 +88,6 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
             if (voteMsgConcurrentHashMap.get(key).get(0).getNumber() < l) {
             	continue;
             }
-            else
-            System.out.println("big");
             //只有别的>=number的Block已经达成共识了，则返回true，那么将会拒绝该hash进入下一阶段
             if (voteStateConcurrentHashMap.get(key) != null && voteStateConcurrentHashMap.get(key)) {
                 return true;
