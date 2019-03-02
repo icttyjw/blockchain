@@ -10,15 +10,15 @@ public class Block {
 
 
 	//区块头
-	 //@JSONField(ordinal=1)
+	 @JSONField(ordinal=1)
 	private BlockHeader blockHeader;
 
 	//区块体
-	 //@JSONField(ordinal=2)
+	 @JSONField(ordinal=2)
 	private  BlockBody blockBody;
 
 	//区块哈希
-	// @JSONField(ordinal=3)
+	@JSONField(ordinal=3)
 	private String blockHash;
 
 	public Block(){}
