@@ -60,4 +60,5 @@ public interface PacketType {
      * pbft投票
      */
     byte PBFT_VOTE = 10;
+	byte RECEIVE_RECORD = 7;
 }
