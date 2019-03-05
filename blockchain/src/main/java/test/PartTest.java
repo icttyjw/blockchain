@@ -1,6 +1,9 @@
 package test;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import edu.ictt.blockchainmanager.NodeState;
 import org.junit.Test;
@@ -10,10 +13,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 
+import cn.hutool.core.collection.CollectionUtil;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.block.BlockHeader;
+import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchainmanager.NodeState;
 import edu.ictt.blockchain.common.CommonUtil;
 import edu.ictt.blockchain.common.Const;
@@ -44,6 +49,13 @@ import static edu.ictt.blockchain.socket.pbft.Message.findByHash;
 
 public class PartTest {
 
+	@Test
+	public void hash(){
+		ConcurrentHashMap<String,  Integer> csi=new ConcurrentHashMap<String, Integer>();
+		if(csi.contains("111"))
+			System.out.println(1);
+	}
+	
 	@Test
 	public void msgtest() throws UnsupportedEncodingException{
 		BlockHeader blockHeader=new BlockHeader();

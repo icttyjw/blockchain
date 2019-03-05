@@ -28,8 +28,25 @@ public class BlockService {
 	
 	Logger logger=LoggerFactory.getLogger(getClass());
 	
-	public Block addBlock(BlockRequesbody blockRequesbody){
-		BlockBody blockBody=blockRequesbody.getBlockBody();
+	public Block addBlock(BlockBody blockbody){
+		BlockHeader blockHeader=new BlockHeader();
+		blockHeader.setBlockTimeStamp(CommonUtil.getNow());		
+		blockHeader.setBlockNumber(dbBlockManager.getLastBlockNumber()+1);
+		blockHeader.setHashPreviousBlock(dbBlockManager.getLastBlockHash());
+		Block block=new Block();
+		block.setBlockHeader(blockHeader);
+		block.setBlockBody(blockbody);
+		block.setBlockHash(SHA256.sha256(blockHeader.toString())+SHA256.sha256(blockbody.toString()));
+		logger.info("block"+block);
+		RpcBlockBody rpcBlockBody=new RpcBlockBody(block);
+		BlockPacket blockPacket=new PacketBuilder<>().setType(PacketType.GENERATE_BLOCK_REQUEST).setBody(
+				rpcBlockBody).build();
+		logger.info(rpcBlockBody.toString());
+		packetSender.sendGroup(blockPacket);
+		return block;
+	}
+	public Block addBlock(BlockRequesbody blockrequesbody){
+		BlockBody blockBody=blockrequesbody.getBlockBody();
 		BlockHeader blockHeader=new BlockHeader();
 		blockHeader.setBlockTimeStamp(CommonUtil.getNow());		
 		blockHeader.setBlockNumber(dbBlockManager.getLastBlockNumber()+1);

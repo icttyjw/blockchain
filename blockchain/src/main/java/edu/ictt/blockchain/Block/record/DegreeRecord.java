@@ -24,7 +24,7 @@ public class DegreeRecord implements Serializable, Record {
      * 记录时间戳
      */
     private long recordTimeStamp;
-
+    private String hash;
     public DegreeRecord(){}
 
     public DegreeRecord(SchoolInfo schoolInfo, DegreeInfo degreeInfo, long recordTimeStamp){
@@ -56,7 +56,16 @@ public class DegreeRecord implements Serializable, Record {
     public void setRecordTimeStamp(long recordTimeStamp) {
         this.recordTimeStamp = recordTimeStamp;
     }
+    @Override
+	public void setHash(String hash) {
+		this.hash=hash;
+		
+	}
 
+	@Override
+	public String getHash() {
+		return hash;
+	}
     @Override
     public String toString() {
         return "DegreeRecord{" +
@@ -65,5 +74,7 @@ public class DegreeRecord implements Serializable, Record {
                 ", recordTimeStamp=" + recordTimeStamp +
                 '}';
     }
+
+	
 
 }

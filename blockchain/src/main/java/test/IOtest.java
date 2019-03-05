@@ -45,7 +45,6 @@ public class IOtest {
 		 Node serverNode = new Node("127.0.0.1", Const.PORT);
     	//用来自动连接的，不想自动连接请设为null
     	ReconnConf reconnConf = null;
-
     	 BlockClientAioHandler bcah=new BlockClientAioHandler();
     	 BlockClientAioListener bcal=new BlockClientAioListener();
     	 ClientGroupContext clientGroupContext = new ClientGroupContext(bcah, bcal, reconnConf);

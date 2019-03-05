@@ -11,4 +11,6 @@ import java.io.Serializable;
 public interface Record {
 
 
+	public void setHash(String hash);
+	public String getHash();
 }
