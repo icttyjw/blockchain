@@ -18,6 +18,14 @@ public class RocksDbStoreImpl implements DbStore{
 	@Resource
     private RocksDB rocksDB;
 
+    public RocksDB getRocksDB() {
+        return rocksDB;
+    }
+
+    public void setRocksDB(RocksDB rocksDB) {
+        this.rocksDB = rocksDB;
+    }
+
     @Override
     public void put(String key, String value) {
         try {
@@ -26,7 +34,6 @@ public class RocksDbStoreImpl implements DbStore{
             e.printStackTrace();
         }
     }
-
 
     @Override
     public String get(String key) {

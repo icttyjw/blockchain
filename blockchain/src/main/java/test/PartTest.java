@@ -1,10 +1,19 @@
 package test;
 
 import java.io.UnsupportedEncodingException;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import edu.ictt.blockchain.Block.check.DbBlockChecker;
+import edu.ictt.blockchain.Block.db.DbInitConfig;
+import edu.ictt.blockchain.Block.db.DbStore;
+import edu.ictt.blockchain.Block.db.RocksDbStoreImpl;
+import edu.ictt.blockchain.Block.record.GradeRecord;
+import edu.ictt.blockchain.core.event.AddBlockEvent;
+import edu.ictt.blockchain.core.manager.DbBlockGenerator;
+import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchainmanager.NodeState;
 import org.junit.Test;
 import org.tio.utils.json.Json;
@@ -49,6 +58,74 @@ import static edu.ictt.blockchain.socket.pbft.Message.findByHash;
 
 public class PartTest {
 
+	/**
+	 * 将区块写入rocksBD测试
+	 */
+	@Test
+	public void rockstest(){
+		BlockHeader blockHeader = new BlockHeader();
+		blockHeader.setBlockTimeStamp(CommonUtil.getNow());
+
+		Block block = new Block();
+		block.setBlockHeader(blockHeader);
+		block.setBlockHash(SHA256.sha256(blockHeader.toString()));
+
+		////创建一个数据库操作对象，并与数据库建立连接,写入一个区块(json形式）
+		DbInitConfig dbInitConfig = new DbInitConfig();
+		RocksDbStoreImpl rocksDbStore = new RocksDbStoreImpl();
+		rocksDbStore.setRocksDB(dbInitConfig.rocksDB());
+
+		//将区块转换为json格式存到rocksdb，并重新读出还原
+		RpcBlockBody rpcBlockBody=new RpcBlockBody(block);
+		String jsonStr = JSON.toJSONString(rpcBlockBody);
+		rocksDbStore.put("1", jsonStr);
+		System.out.println("save this block success");
+		System.out.println("read a block: " + JSON.parseObject(rocksDbStore.get("1"), new TypeReference<RpcBlockBody>(){}));
+
+		//String blockjson = rocksDbStore.get("1");
+		//Block readBlock = FastJsonUtil.toBean(blockjson, Block.class);
+		//System.out.println("read the block second time:" + readBlock);
+
+		//写入记录需要有put(key,List<>的实现)
+
+
+		//往数据库中写入区块
+		//AddBlockEvent addBlockEvent = new AddBlockEvent(block);
+		//DbBlockGenerator dbBlockGenerator = new DbBlockGenerator();
+		//dbBlockGenerator.setDbStore(new RocksDbStoreImpl());
+		//dbBlockGenerator.addBlock(addBlockEvent);
+	}
+
+	/**
+	 * 校验测试
+	 * 使用本地区块对新区块校验
+	 */
+	@Test
+	public void blockcheckertest(){
+
+		//新区块
+		BlockHeader blockHeader = new BlockHeader();
+		blockHeader.setBlockTimeStamp(CommonUtil.getNow());
+		blockHeader.setBlockNumber(2);
+		Block newBlock = new Block();
+		newBlock.setBlockHeader(blockHeader);
+
+
+		DbInitConfig dbInitConfig = new DbInitConfig();
+		RocksDbStoreImpl rocksDbStore = new RocksDbStoreImpl();
+		rocksDbStore.setRocksDB(dbInitConfig.rocksDB());
+		String blockjson = rocksDbStore.get("1");
+		//Block block = FastJsonUtil.toBean(blockjson, Block.class);
+		//System.out.println("本地区块：" + block);
+
+		DbBlockChecker dbBlockChecker = new DbBlockChecker();
+		DbBlockManager dbBlockManager = new DbBlockManager();
+		dbBlockManager.setDbStore(rocksDbStore);
+		dbBlockChecker.setDbBlockManager(dbBlockManager);
+		dbBlockChecker.checkNum(newBlock);
+	}
+
+
 	@Test
 	public void hash(){
 		ConcurrentHashMap<String,  Integer> csi=new ConcurrentHashMap<String, Integer>();
@@ -74,6 +151,7 @@ public class PartTest {
 		System.out.println(bsBody);
 		bsBody=JSON.parseObject(jsonStr,new TypeReference<RpcBlockBody>(){});
 		System.out.println(bsBody);
+
 	}
 	
 	@Test
@@ -143,9 +221,9 @@ public class PartTest {
 	@Test
 	public void inserttest(){
 		NodeState rs=new NodeState("1","ss","123","1","1","main","12:00:00","fdf","fdf");
-		//ManageMessage mm=new ManageMessage();
+		ManageMessage mm=new ManageMessage();
 		System.out.println(rs.toString());
-		//mm.Regist(rs);
+		mm.Regist(rs);
 	}
 	@Test
 	public void updatetest(){

@@ -62,7 +62,7 @@ public class DerbyDBUtil {
 		}
 	}
 	 /**  
-     * 写入修改Tabel时使用这个方法
+     * 写入修改Table时使用这个方法
      * @param sql 完整的sql语句
      */  
 	public static void executeUpdate(String sql) {

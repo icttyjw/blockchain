@@ -6,6 +6,13 @@ public class BlockRequesbody {
 
 	private BlockBody blockBody;
 
+	public BlockRequesbody() {
+	}
+
+	public BlockRequesbody(BlockBody blockBody) {
+		this.blockBody = blockBody;
+	}
+
 	public BlockBody getBlockBody() {
 		return blockBody;
 	}

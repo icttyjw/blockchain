@@ -16,7 +16,7 @@ import edu.ictt.blockchain.common.FastJsonUtil;
 public class DbBlockManager {
 
 	 @Resource
-	    private DbStore dbStore;
+	 private DbStore dbStore;
 	 private Logger logger=LoggerFactory.getLogger(getClass());
 
 	    /**
@@ -104,4 +104,12 @@ public class DbBlockManager {
 	        String blockJson = dbStore.get(hash);
 	        return FastJsonUtil.toBean(blockJson, Block.class);
 	    }
+
+	public DbStore getDbStore() {
+		return dbStore;
+	}
+
+	public void setDbStore(DbStore dbStore) {
+		this.dbStore = dbStore;
+	}
 }

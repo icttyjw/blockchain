@@ -4,26 +4,18 @@ import edu.ictt.blockchain.Block.block.Block;
 
 /**
  * @Author:zoe
- * @Description: 区块校验
+ * @Description: 区块校验，暂时未考虑权限
  * @Date:
  */
-public interface BlockChecker {/**
- * 比较目标区块和自己本地的区块num大小
- * @param block
- * 被比较的区块
- * @return
- * 本地与目标区块的差值
- */
-int checkNum(Block block);
-
+public interface BlockChecker {
     /**
-     * 校验区块内操作的权限是否合法
-     * @param block
-     * block
-     * @return
-     * 大于0合法
-     */
-    int checkPermission(Block block);
+    * 比较目标区块和自己本地的区块num大小
+    * @param block
+    * 被比较的区块
+    * @return
+    * 本地与目标区块的差值
+    */
+    int checkNum(Block block);
 
     /**
      * 校验hash，包括prevHash、内部hash（merkle tree root hash）
@@ -42,7 +34,7 @@ int checkNum(Block block);
     int checkTime(Block block);
 
     /**
-     * 校验签名
+     * 校验摘要签名
      * @param block  block
      * @return block
      */
@@ -57,13 +49,12 @@ int checkNum(Block block);
 
 
     /**
-     * @Author:zoe
-     * @Description:
-     * @Date:
-     *
+     * 校验区块内操作的权限是否合法
+     * @param block
+     * block
+     * @return
+     * 大于0合法
      */
-    class BlockVerify {
+    //int checkPermission(Block block);
 
-
-    }
 }

@@ -48,6 +48,11 @@ public class BlockHeader {
      */
     private int recordCount;
 
+    /**
+     * 该区块签名的公钥
+     */
+    private String publicKey;
+
     /**区块头摘要签名
      *
      */
@@ -138,19 +143,27 @@ public class BlockHeader {
 
     public void setHashList(List<String> hashList) { this.hashList = hashList; }
 
+    public String getPublicKey() {
+        return publicKey;
+    }
+
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
+    }
+
     @Override
     public String toString() {
-        return "BlockHeader：{" +
-                ", hashPreviousBlock='" + hashPreviousBlock +
-                ", hashMerkleRoot='" + hashMerkleRoot +
-                ", nounce='" + nounce +
+        return "BlockHeader{" +
+                "hashPreviousBlock='" + hashPreviousBlock + '\'' +
+                ", hashMerkleRoot='" + hashMerkleRoot + '\'' +
+                ", nounce=" + nounce +
                 ", difficultGoal=" + difficultGoal +
                 ", blockTimeStamp=" + blockTimeStamp +
                 ", blockNumber=" + blockNumber +
                 ", recordCount=" + recordCount +
-                ", blockHeaderSign" + blockHeaderSign +
+                ", publicKey='" + publicKey + '\'' +
+                ", blockHeaderSign='" + blockHeaderSign + '\'' +
+                ", hashList=" + hashList +
                 '}';
     }
-
-
 }
