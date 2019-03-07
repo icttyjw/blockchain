@@ -17,6 +17,7 @@ import edu.ictt.blockchain.socket.server.handler.HeartbeatReqHandler;
 import edu.ictt.blockchain.socket.server.handler.LoginReqHandler;
 import edu.ictt.blockchain.socket.server.handler.NextBlockRequestHandler;
 import edu.ictt.blockchain.socket.server.handler.PbftVoteHandler;
+import edu.ictt.blockchain.socket.server.handler.RecieveRecordHandler;
 
 @Component
 public class DisruptorServerConsumer implements MessageConsumer{
@@ -29,6 +30,7 @@ public class DisruptorServerConsumer implements MessageConsumer{
 	    	handlerMap.put(PacketType.LOGIN_REQUEST, new LoginReqHandler());
 	    	handlerMap.put(PacketType.NEXT_BLOCK_INFO_REQUEST, new NextBlockRequestHandler());
 	    	handlerMap.put(PacketType.GENERATE_BLOCK_REQUEST, new GenerateBlockRequestHandler());
+	    	handlerMap.put(PacketType.RECEIVE_RECORD,new RecieveRecordHandler());
 	    }
 
 	    @Override
