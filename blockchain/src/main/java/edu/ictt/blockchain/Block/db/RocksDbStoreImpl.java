@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 
 import javax.annotation.Resource;
 
+import org.rocksdb.ColumnFamilyDescriptor;
+import org.rocksdb.ColumnFamilyHandle;
 import org.rocksdb.RocksDB;
 import org.rocksdb.RocksDBException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -28,7 +30,7 @@ public class RocksDbStoreImpl implements DbStore{
 
     @Override
     public void put(String key, String value) {
-        try {
+    	try {
             rocksDB.put(key.getBytes(Const.CHARSET), value.getBytes(Const.CHARSET));
         } catch (RocksDBException | UnsupportedEncodingException e) {
             e.printStackTrace();

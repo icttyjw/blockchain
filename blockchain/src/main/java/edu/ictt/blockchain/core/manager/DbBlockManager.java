@@ -1,5 +1,7 @@
 package edu.ictt.blockchain.core.manager;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import cn.hutool.core.util.StrUtil;
 import edu.ictt.blockchain.Block.db.DbStore;
+import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.common.Constants;
 import edu.ictt.blockchain.common.FastJsonUtil;
@@ -104,7 +107,16 @@ public class DbBlockManager {
 	        String blockJson = dbStore.get(hash);
 	        return FastJsonUtil.toBean(blockJson, Block.class);
 	    }
+	    
+	    public void put(String key,String value){
+	    	dbStore.put(key, value);
+	    }
 
+	    public List<Record> getRecordList(String hash){
+	    	String listjaso=dbStore.get(hash);
+	    	return FastJsonUtil.toList(listjaso, Record.class);
+	    }
+	    
 	public DbStore getDbStore() {
 		return dbStore;
 	}
