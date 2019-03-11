@@ -38,8 +38,8 @@ import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.NextBlockPacketBuilder;
 import edu.ictt.blockchain.socket.packet.PacketBuilder;
 import edu.ictt.blockchain.socket.packet.PacketType;
-import edu.ictt.blockchain.sql.service.NodeService;
-import edu.ictt.blockchainmanager.NodeState;
+import edu.ictt.blockchainmanager.groupmodel.NodeState;
+import edu.ictt.blockchainmanager.sql.service.NodeService;
 
 
 

@@ -26,14 +26,15 @@
                               <Label fx:id="Name" layoutX="105.0" layoutY="38.0" text="高校:" />
                               <Label fx:id="ConState" layoutX="105.0" layoutY="105.0" text="通信状态:" />
                               <Label fx:id="LastCon" layoutX="107.0" layoutY="131.0" text="最后一次通信时间:" />
-                              <Label fx:id="ip" layoutX="214.0" layoutY="15.0" prefHeight="15.0" prefWidth="163.0" text="id1" />
-                              <Label fx:id="state" layoutX="214.0" layoutY="38.0" prefHeight="15.0" prefWidth="163.0" text="schoolname" />
-                              <Label fx:id="pubkey" layoutX="214.0" layoutY="81.0" prefHeight="15.0" prefWidth="163.0" text="state" />
-                              <Label fx:id="id" layoutX="214.0" layoutY="60.0" prefHeight="15.0" prefWidth="163.0" text="ip" />
-                              <Label fx:id="name" layoutX="214.0" layoutY="105.0" prefHeight="15.0" prefWidth="163.0" text="state" />
-                              <Label fx:id="constate" layoutX="214.0" layoutY="152.0" prefHeight="15.0" prefWidth="163.0" text="pubKey" />
-                              <Label fx:id="lasocon" layoutX="214.0" layoutY="130.0" prefHeight="15.0" prefWidth="163.0" text="lastcon" />
+                              <Label fx:id="id" layoutX="214.0" layoutY="15.0" prefHeight="15.0" prefWidth="163.0" />
+                              <Label fx:id="name" layoutX="214.0" layoutY="38.0" prefHeight="15.0" prefWidth="163.0" />
+                              <Label fx:id="state" layoutX="214.0" layoutY="81.0" prefHeight="15.0" prefWidth="163.0" />
+                              <Label fx:id="ip" layoutX="214.0" layoutY="60.0" prefHeight="15.0" prefWidth="163.0" />
+                              <Label fx:id="constate" layoutX="214.0" layoutY="105.0" prefHeight="15.0" prefWidth="163.0" />
+                              <Label fx:id="pubkey" layoutX="214.0" layoutY="152.0" prefHeight="15.0" prefWidth="163.0" />
+                              <Label fx:id="lasocon" layoutX="214.0" layoutY="130.0" prefHeight="15.0" prefWidth="163.0" />
                               <Button fx:id="refresh" layoutX="403.0" layoutY="157.0" mnemonicParsing="false" onAction="#jumpToSchool" text="刷新" />
+                              <Button fx:id="save" layoutX="22.0" layoutY="157.0" mnemonicParsing="false" onAction="#save" text="save" />
                            </children>
                         </AnchorPane>
                      </children>

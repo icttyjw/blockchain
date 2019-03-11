@@ -14,7 +14,7 @@ import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.core.event.AddBlockEvent;
 import edu.ictt.blockchain.core.manager.DbBlockGenerator;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
-import edu.ictt.blockchainmanager.NodeState;
+
 import org.junit.Test;
 import org.tio.utils.json.Json;
 
@@ -28,7 +28,6 @@ import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.block.BlockHeader;
 import edu.ictt.blockchain.Block.record.Record;
-import edu.ictt.blockchainmanager.NodeState;
 import edu.ictt.blockchain.common.CommonUtil;
 import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.common.FastJsonUtil;
@@ -50,6 +49,7 @@ import edu.ictt.blockchain.socket.pbft.queue.BaseMsgQueue;
 import edu.ictt.blockchain.socket.pbft.queue.CommitMsgQueue;
 import edu.ictt.blockchain.socket.pbft.queue.PreMsgQueue;
 import edu.ictt.blockchain.socket.pbft.queue.PrepareMsgQueue;
+import edu.ictt.blockchainmanager.groupmodel.NodeState;
 
 import static edu.ictt.blockchain.socket.pbft.Message.blockConcurrentHashMap;
 import static edu.ictt.blockchain.socket.pbft.Message.findByHash;

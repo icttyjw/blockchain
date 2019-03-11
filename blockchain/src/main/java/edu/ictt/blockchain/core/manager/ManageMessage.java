@@ -3,8 +3,8 @@ package edu.ictt.blockchain.core.manager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import edu.ictt.blockchainmanager.NodeState;
 import edu.ictt.blockchain.common.util.DerbyDBUtil;
+import edu.ictt.blockchainmanager.groupmodel.NodeState;
 
 /*
  * 管理节点信息

@@ -2,11 +2,15 @@ package edu.ictt.blockchainmanager.groupmodel.userinterface;
 
 import java.util.ResourceBundle;
 
+import javax.annotation.Resource;
 import javax.print.DocFlavor.URL;
 
 import de.felixroske.jfxsupport.FXMLController;
+import edu.ictt.blockchainmanager.groupmodel.NodeState;
+import edu.ictt.blockchainmanager.sql.service.NodeService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -16,7 +20,7 @@ import javafx.scene.control.Label;
  *
  */
 @FXMLController
-public class NodesInfromUIController {
+public class NodesInfromUIController  implements Initializable{
 
     @FXML
     private Label LastCon;
@@ -62,10 +66,31 @@ public class NodesInfromUIController {
 
     @FXML
     private Label pubkey;
+    
+    @FXML
+    private Button save;
+    
+    @Resource
+    private NodeService nodeService;
 
     @FXML
     void jumpToSchool(ActionEvent event) {
 
     }
+    
+    public void save(ActionEvent event){
+    	NodeState nodeState=new NodeState(null, "node", "127", "1", "0", "1", "0", "pubKey", "priKey");
+    	nodeService.saveLocalNode(nodeState);
+    }
+
+	@Override
+	public void initialize(java.net.URL location, ResourceBundle resources) {
+		NodeState nodeState=nodeService.queryLocalNode("1");
+		id.setText(nodeState.getId());
+		name.setText(nodeState.getName());
+		pubkey.setText(nodeState.getPubKey());
+		state.setText(nodeState.getState());
+		ip.setText(nodeState.getIp());
+	}
 
 }

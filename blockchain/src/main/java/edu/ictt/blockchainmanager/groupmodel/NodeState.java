@@ -1,13 +1,15 @@
-package edu.ictt.blockchainmanager;
+package edu.ictt.blockchainmanager.groupmodel;
 
 import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 @Entity
+@Table
 public class NodeState implements Serializable{
 
 	/**

@@ -1,13 +1,13 @@
-package edu.ictt.blockchain.sql.service;
+package edu.ictt.blockchainmanager.sql.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.ictt.blockchain.sql.repository.NodeRepositroy;
-import edu.ictt.blockchainmanager.NodeState;
 import edu.ictt.blockchainmanager.groupmodel.Node;
+import edu.ictt.blockchainmanager.groupmodel.NodeState;
+import edu.ictt.blockchainmanager.sql.repository.NodeRepositroy;
 
 @Service
 public class NodeService {
