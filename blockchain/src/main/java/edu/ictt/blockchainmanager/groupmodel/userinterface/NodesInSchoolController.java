@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 
 import javax.print.DocFlavor.URL;
 
+import de.felixroske.jfxsupport.FXMLController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,6 +16,7 @@ import javafx.scene.control.ListView;
  * @author zoe
  *
  */
+@FXMLController
 public class NodesInSchoolController implements Initializable {
 	
 	@FXML

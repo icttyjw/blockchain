@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 
 import javax.print.DocFlavor.URL;
 
+import de.felixroske.jfxsupport.FXMLController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,7 +15,7 @@ import javafx.scene.control.Label;
  * @author zoe
  *
  */
-
+@FXMLController
 public class NodesInfromUIController {
 
     @FXML
