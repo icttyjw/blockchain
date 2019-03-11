@@ -150,15 +150,18 @@ public class NodeState implements Serializable{
 		this.priKey = priKey;
 	}
 	@Override
-	public String toString(){
-		return "id:"+id+"\n"+
-				"name:"+name+"\n"+
-				"Ip:"+Ip+"\n"+
-				"state："+state+"\n"+
-				"main："+main+"\n"+
-				"connectstate:"+connectstate+"\n"+
-				"lastConnect:"+lastConnect+"\n"+
-				"pubKeyX:"+pubKey;
+	public String toString() {
+		return "NodeState{" +
+				"id='" + id + '\'' +
+				", name='" + name + '\'' +
+				", nodetype='" + nodetype + '\'' +
+				", Ip='" + Ip + '\'' +
+				", state='" + state + '\'' +
+				", connectstate='" + connectstate + '\'' +
+				", lastConnect='" + lastConnect + '\'' +
+				", pubKey='" + pubKey + '\'' +
+				", main='" + main + '\'' +
+				", priKey='" + priKey + '\'' +
+				'}';
 	}
-	
 }

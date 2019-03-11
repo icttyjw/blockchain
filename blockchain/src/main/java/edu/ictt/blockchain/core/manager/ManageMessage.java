@@ -19,7 +19,7 @@ public class ManageMessage {
 		 if(doesTableExist==false)
 		 {
 			 String sql="create table node (Id varchar(10),name varchar(10),Ip varchar(20),state varchar(10),"
-			 		+ "connectstate varchar(10),lastConnect varchar(10),main varchar(10),priKey varchar(80),pubKey varchar(80))";
+			 		+ "connectstate varchar(10),lastConnect varchar(10),main varchar(10),nodeType varchar(10),priKey varchar(80),pubKey varchar(80))";
 			 DerbyDBUtil.executeInit(sql);
 		 }
 	}
@@ -28,7 +28,7 @@ public class ManageMessage {
 	 * 将注册信息写入数据库
 	 */
 	public void Regist(NodeState rs){
-		String sql="insert into node(Id,name,Ip,state,connectstate,main,lastConnect,priKey,pubKey)values('"
+		String sql="insert into node(Id,name,Ip,state,connectstate,main,nodeType,lastConnect,priKey,pubKey)values('"
 				+rs.getId()
 				+"','"
 				+rs.getName()
@@ -41,6 +41,8 @@ public class ManageMessage {
 				+"','"
 				+rs.getMain()
 				+"','"
+                +rs.getNodetype()
+                +"','"
 				+rs.getLastConnect()
 				+"','"
 				+rs.getPriKey()
@@ -50,7 +52,7 @@ public class ManageMessage {
 		DerbyDBUtil.executeUpdate(sql);
 	}
 	/*
-	 * 暂时是通过name修改其余信息，不能修改公私钥
+	 * 暂时是通过name修改其余信息，不能修改公私钥,不能修改节点类型
 	 */
 	public void Update(NodeState rs){
 		String sql="update node set id='"+rs.getId()
@@ -81,11 +83,12 @@ public class ManageMessage {
 				String s=rs.getString("state");
 				String cs=rs.getString("connectstate");
 				String main=rs.getString("main");
+				String ns=rs.getNString("nodeType");
 				String lc=rs.getString("lastConnect");
 				String prik=rs.getString("priKey");
 				String pubk=rs.getString("pubKey");
 				
-				rstate=new NodeState(id,name,Ip,s,cs,main,lc,prik,pubk);
+				rstate=new NodeState(id,name,Ip,s,cs,main,ns,lc,prik,pubk);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
