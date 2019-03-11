@@ -65,7 +65,7 @@ public class NodeState implements Serializable{
 	private String priKey;
 	
 	public NodeState(String id,String name,String Ip,String state,String connectstate,String main,
-					String lastConnect,String pubKey,String priKey){
+					String nodeType,String lastConnect,String pubKey,String priKey){
 		this.id=id;
 		this.name=name;
 		this.Ip=Ip;
@@ -73,6 +73,7 @@ public class NodeState implements Serializable{
 		this.connectstate =connectstate;
 		this.main=main;
 		this.lastConnect=lastConnect;
+		this.nodetype=nodeType;
 		this.pubKey=pubKey;
 		this.priKey=priKey;
 	}

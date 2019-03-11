@@ -79,7 +79,7 @@ public class NodesInfromUIController  implements Initializable{
     }
     
     public void save(ActionEvent event){
-    	NodeState nodeState=new NodeState(null, "node", "127", "1", "0", "1", "0", "pubKey", "priKey");
+    	NodeState nodeState=new NodeState(null, "node", "127", "1", "0", "1","1", "0", "pubKey", "priKey");
     	nodeService.saveLocalNode(nodeState);
     }
 
