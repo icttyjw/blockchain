@@ -59,7 +59,7 @@ public class BlockHeader {
     private String blockHeaderSign;
 
     /**
-     * 该区块里每条交易信息的hash集合，按顺序来的，通过该hash集合能算出根节点hash
+     * 这个不需要放在区块头。该区块里每条交易信息的hash集合，按顺序来的，通过该hash集合能算出根节点hash
      */
     private List<String> hashList;
 

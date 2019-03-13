@@ -7,7 +7,7 @@ import java.io.Serializable;
  * 记录的基类定义
  */
 
-public class GradeRecord implements Serializable,Record {
+public class GradeRecord extends Record implements Serializable {
 
 
 	private static final long serialVersionUID = 466699300984328279L;
@@ -37,11 +37,6 @@ public class GradeRecord implements Serializable,Record {
 	 */
 	private String schoolSign;
 
-	/**
-	 * 记录时间戳
-	 */
-	private long recordTimeStamp;
-	private String hash;
 	public GradeRecord(){}
 
 	public GradeRecord(SchoolInfo schoolInfo, FacultyInfo facultyInfo, GradeInfo gradeInfo, String teacherSign,
@@ -99,22 +94,11 @@ public class GradeRecord implements Serializable,Record {
 		this.schoolSign = schoolSign;
 	}
 
-	public long getRecordTimeStamp() {
-		return recordTimeStamp;
+	@Override
+	public String getSign() {
+		return teacherSign+schoolSign;
 	}
 
-	public void setRecordTimeStamp(long recordTimeStamp) {
-		this.recordTimeStamp = recordTimeStamp;
-	}
-	@Override
-	public void setHash(String hash) {
-		this.hash=hash;
-	}
-
-	@Override
-	public String getHash() {
-		return hash;
-	}
 	@Override
 	public String toString() {
 		return "GradeRecord{" +

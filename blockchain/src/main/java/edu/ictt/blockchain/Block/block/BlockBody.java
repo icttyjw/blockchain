@@ -15,7 +15,7 @@ public class BlockBody {
     //记录集合，其中第一条记录为特殊记录
     private List<Record> recordsList;
 
-    //记录哈希值集合
+    //这个不需要放在区块中。记录哈希值集合
     private List<String> recordHashList;
 
     public BlockBody(){};
