@@ -45,7 +45,7 @@ public interface BlockChecker {
      * @param  block
      * @return
      */
-    String checkBlock(Block block);
+    int checkBlock(Block block);
 
 
     /**

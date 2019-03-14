@@ -5,6 +5,7 @@ import cn.hutool.crypto.digest.DigestUtil;
 import java.io.Serializable;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import edu.ictt.blockchain.common.SHA256;
 
 public class Block {
 
@@ -68,7 +69,7 @@ public class Block {
 	 * sha256hex
 	 */
 	private String calculateHash() {
-		return DigestUtil.sha256Hex(
+		return SHA256.sha256(
 				blockHeader.toString() + blockBody.toString()
 		);
 	}

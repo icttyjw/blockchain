@@ -1,15 +1,22 @@
 package edu.ictt.blockchain.Block.check;
 
 import edu.ictt.blockchain.Block.block.Block;
+import edu.ictt.blockchain.Block.merkle.MerkleHash;
+import edu.ictt.blockchain.Block.merkle.MerkleNode;
+import edu.ictt.blockchain.Block.merkle.MerkleTree;
+import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchain.common.SHA256;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
-import edu.ictt.blockchain.core.requestbody.BlockRequesbody;
 import edu.ictt.blockchain.core.service.BlockService;
 
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+
 import cn.hutool.core.util.StrUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 使用本地Block信息对新来的block进行校验,暂时没有考虑权限
@@ -25,6 +32,17 @@ public class DbBlockChecker implements BlockChecker {
     
     @Resource
     private BlockService blockService;
+
+    //检查区块的time，hash，sign和num;
+    public boolean checkAll(Block block){
+
+        int checkResult = checkNum(block)+checkHash(block)+checkSign(block)+checkTime(block);
+
+        if (checkResult == 0)
+            return true;
+        return false;
+    }
+
 
     @Override
     public int checkNum(Block block) {
@@ -77,27 +95,33 @@ public class DbBlockChecker implements BlockChecker {
     	}
     	return 0;
     }
-    
-    public String checkBlock(Block block) {
-    	if(!checkBlockHashSign(block)) return block.getBlockHash();
-    	
-    	String preHash = block.getBlockHeader().getHashPreviousBlock();
-    	if(preHash == null) return null;
-    	
-    	Block preBlock = dbBlockManager.getBlockByHash(preHash);
-    	if(preBlock == null) return block.getBlockHash();
-    	
-		long localNum = preBlock.getBlockHeader().getBlockNumber();
-        //当前区块+1等于下一个区块时才同意
-        if (localNum + 1 != block.getBlockHeader().getBlockNumber()) {
-            return block.getBlockHash();
+
+    /**
+     * 校验区块本身内容，即记录联合merkleroot
+     * @param  block
+     * @return
+     */
+    @Override
+    public int checkBlock(Block block) {
+
+        List<Record> records = new ArrayList<>();
+        //获取记录列表重新生成记录的哈希列表
+        records.addAll(block.getBlockBody().getRecordsList());
+
+        //重新建树
+        MerkleTree merkleTree = new MerkleTree();
+        List<MerkleNode> merkleNodes = new ArrayList<>();
+        for (Record record:records){
+            merkleNodes.add(new MerkleNode(MerkleHash.create(record.toString())));
         }
-        if(block.getBlockHeader().getBlockTimeStamp() <= preBlock.getBlockHeader().getBlockTimeStamp()) {
-        	return block.getBlockHash();
+
+        merkleTree.buildTree(merkleNodes);
+
+        if(merkleTree.getRoot().getHash().toString() == block.getBlockHeader().getHashMerkleRoot()){
+            return 0;
         }
-    	
-    		
-    	return null;
+
+    	return -1;
     }
 
     /**
