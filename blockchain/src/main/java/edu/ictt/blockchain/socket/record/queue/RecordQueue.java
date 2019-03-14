@@ -40,7 +40,7 @@ public class RecordQueue {
 	 * 课程名列表
 	 * 恢复时通过这个表找到所有需要恢复的课程
 	 */
-	private List<String> course=new ArrayList<String>();
+	private List<String> course=new ArrayList< >();
 	
 	@Resource
 	private BlockService blockService;

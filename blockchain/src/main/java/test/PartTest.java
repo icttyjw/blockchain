@@ -59,34 +59,42 @@ import static edu.ictt.blockchain.socket.pbft.Message.findByHash;
 public class PartTest {
 
 	/**
-	 * 将区块写入rocksBD测试
+	 * 将区块写入rocksDB测试
 	 */
 	@Test
 	public void rockstest(){
-		BlockHeader blockHeader = new BlockHeader();
-		blockHeader.setBlockTimeStamp(CommonUtil.getNow());
-
-		Block block = new Block();
-		block.setBlockHeader(blockHeader);
-		block.setBlockHash(SHA256.sha256(blockHeader.toString()));
 
 		////创建一个数据库操作对象，并与数据库建立连接,写入一个区块(json形式）
 		DbInitConfig dbInitConfig = new DbInitConfig();
 		RocksDbStoreImpl rocksDbStore = new RocksDbStoreImpl();
 		rocksDbStore.setRocksDB(dbInitConfig.rocksDB());
 
-		//将区块转换为json格式存到rocksdb，并重新读出还原
-		RpcBlockBody rpcBlockBody=new RpcBlockBody(block);
-		String jsonStr = JSON.toJSONString(rpcBlockBody);
-		rocksDbStore.put("1", jsonStr);
-		System.out.println("save this block success");
-		System.out.println("read a block: " + JSON.parseObject(rocksDbStore.get("1"), new TypeReference<RpcBlockBody>(){}));
+		//写入100个区块
+		for(int i=0; i<100; i++){
+			BlockHeader blockHeader = new BlockHeader();
+			blockHeader.setBlockTimeStamp(CommonUtil.getNow());
 
-		//String blockjson = rocksDbStore.get("1");
-		//Block readBlock = FastJsonUtil.toBean(blockjson, Block.class);
-		//System.out.println("read the block second time:" + readBlock);
+			Block block = new Block();
+			block.setBlockHeader(blockHeader);
+			block.setBlockHash(SHA256.sha256(blockHeader.toString()));
 
-		//写入记录需要有put(key,List<>的实现)
+			//将区块转换为json格式存到rocksdb，并重新读出还原
+			String jsonStr = JSON.toJSONString(block);
+			rocksDbStore.put("1", jsonStr);
+			System.out.println("save this block success");
+
+		}
+		//读出区块
+
+		for(int i=0; i<100; i++){
+			System.out.println("read block: " + "i" + JSON.parseObject(rocksDbStore.get("i"), new TypeReference<Block>(){}));
+
+			//String blockjson = rocksDbStore.get("i");
+			//Block readBlock = FastJsonUtil.toBean(blockjson, Block.class);
+			//System.out.println("read the block second time:" + readBlock);
+
+
+		}
 
 
 		//往数据库中写入区块
