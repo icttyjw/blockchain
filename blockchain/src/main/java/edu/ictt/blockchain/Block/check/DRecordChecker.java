@@ -1,6 +1,8 @@
 package edu.ictt.blockchain.Block.check;
 
+import edu.ictt.blockchain.Block.record.DegreeRecord;
 import edu.ictt.blockchain.Block.record.Record;
+import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
 
 /**
  * @Author:zoe
@@ -17,6 +19,19 @@ public class DRecordChecker extends RecordChecker {
      */
     @Override
     public int checkSign(Record record) {
-        return 0;
+
+        DegreeRecord degreeRecord = (DegreeRecord) record;
+
+        String schPublicKey = degreeRecord.getSchoolInfo().getSchoolPairKey().getPublicKey();
+
+        try {
+            if(ECDSAAlgorithm.verify(degreeRecord.toString(), degreeRecord.getSchoolSign(), schPublicKey)){
+                return 1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return -1;
     }
 }

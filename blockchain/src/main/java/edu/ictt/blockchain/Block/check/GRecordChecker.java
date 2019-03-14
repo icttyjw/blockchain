@@ -1,7 +1,12 @@
 package edu.ictt.blockchain.Block.check;
 
-import edu.ictt.blockchain.Block.record.GradeRecord;
-import edu.ictt.blockchain.Block.record.Record;
+import edu.ictt.blockchain.Block.record.*;
+import edu.ictt.blockchain.common.ObjectAndByte;
+import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
+import edu.ictt.blockchain.common.ecc.ECkeyUtil;
+import sun.security.ec.ECPublicKeyImpl;
+
+import java.security.PublicKey;
 
 /**
  * @Author:zoe
@@ -19,6 +24,59 @@ public class GRecordChecker extends RecordChecker {
     @Override
     public int checkSign(Record record) {
 
-        return 0;
+        GradeRecord gradeRecord = (GradeRecord) record;
+
+        if(checkTeacherSign(gradeRecord) == 1 && checkSchoolSign(gradeRecord) == 1){
+            return 1;
+        }
+        return -1;
     }
+
+    //校验教师的签名
+    public int checkTeacherSign(GradeRecord gradeRecord){
+        String graRecord = gradeRecord.getSchoolInfo().toString()+gradeRecord.getFacultyInfo().toString()
+                +gradeRecord.getGradeInfo().toString();
+
+        TeacherInfo[] teacherInfos = gradeRecord.getGradeInfo().getTeacherInfo();
+
+        int checkFlag = -1;
+
+        //如果有多个任课教师，任课教师中任一一人的签名匹配即可
+
+        for(TeacherInfo teacherInfo:teacherInfos){
+            String teaPublicKey = teacherInfo.getteacherPairKey().getPublicKey();
+            try {
+                if(ECDSAAlgorithm.verify(graRecord, gradeRecord.getTeacherSign(), teaPublicKey))
+                    checkFlag = 1;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return checkFlag;
+    }
+
+    //校验学院的签名
+    public int checkSchoolSign(GradeRecord gradeRecord){
+        String graRecord = gradeRecord.getSchoolInfo().toString()+gradeRecord.getFacultyInfo().toString()
+                +gradeRecord.getGradeInfo().toString() + gradeRecord.getTeacherSign();
+
+        FacultyInfo facultyInfo = gradeRecord.getFacultyInfo();
+
+        int checkFlag = -1;
+
+        String facPublicKey = facultyInfo.getFaculthPairKey().getPublicKey();
+
+        try {
+            if((ECDSAAlgorithm.verify(graRecord, gradeRecord.getSign(), facPublicKey))){
+                checkFlag = 1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return checkFlag;
+    }
+
+
+
 }

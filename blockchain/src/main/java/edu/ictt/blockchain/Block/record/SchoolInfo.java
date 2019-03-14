@@ -42,8 +42,7 @@ public class SchoolInfo{
         return schoolName;
     }
 
-    public PairKey schoolPairKey() {
-
+    public PairKey getSchoolPairKey() {
         return schoolPairKey;
     }
 
