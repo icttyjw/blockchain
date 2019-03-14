@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * NodesInfrom Controller
@@ -22,6 +23,8 @@ import javafx.scene.control.Label;
 @FXMLController
 public class NodesInfromUIController  implements Initializable{
 
+	@FXML
+	private AnchorPane anchorPane;
     @FXML
     private Label LastCon;
 
@@ -79,12 +82,16 @@ public class NodesInfromUIController  implements Initializable{
     }
     
     public void save(ActionEvent event){
-    	NodeState nodeState=new NodeState(null, "node", "127", "1", "0", "1","1", "0", "pubKey", "priKey");
-    	nodeService.saveLocalNode(nodeState);
+    	
     }
 
 	@Override
 	public void initialize(java.net.URL location, ResourceBundle resources) {
+		//anchorPane.getScene().getWindow().setHeight(223);
+		anchorPane.setMaxSize(450, 223);
+		anchorPane.setPrefHeight(223);
+		anchorPane.setPrefWidth(450);
+		//anchorPane.getScene().getWindow().setWidth(450);
 		NodeState nodeState=nodeService.queryLocalNode("1");
 		id.setText(nodeState.getId());
 		name.setText(nodeState.getName());

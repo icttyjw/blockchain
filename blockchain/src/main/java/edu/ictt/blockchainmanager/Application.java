@@ -19,6 +19,6 @@ public class Application  extends AbstractJavaFxApplicationSupport {
 	        super.start(primaryStage);
 	    }
 	 public static void main(String[] args) {
-		 launchApp(Application.class, MainView.class, args);
+	     launchApp(Application.class, MainView.class, args);
 	 }
 }
