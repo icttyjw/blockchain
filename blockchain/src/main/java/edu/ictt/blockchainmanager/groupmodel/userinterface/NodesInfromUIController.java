@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.print.DocFlavor.URL;
 
 import de.felixroske.jfxsupport.FXMLController;
+import edu.ictt.blockchainmanager.Application;
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
 import edu.ictt.blockchainmanager.sql.service.NodeService;
 import javafx.event.ActionEvent;
@@ -85,6 +86,8 @@ public class NodesInfromUIController  implements Initializable{
 
 	@Override
 	public void initialize(java.net.URL location, ResourceBundle resources) {
+		Application.getScene().getWindow().setWidth(480);
+		Application.getScene().getWindow().setHeight(250);
 		NodeState nodeState=nodeService.queryLocalNode("1");
 		id.setText(nodeState.getId());
 		name.setText(nodeState.getName());
