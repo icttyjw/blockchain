@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import edu.ictt.blockchainmanager.view.MainView;
+import edu.ictt.blockchainmanager.view.RegistView;
 import javafx.stage.Stage;
 
 @SpringBootApplication
@@ -14,11 +15,11 @@ import javafx.stage.Stage;
 public class Application  extends AbstractJavaFxApplicationSupport {
 	 @Override
 	    public void start(Stage primaryStage) throws Exception {
-		 primaryStage.setTitle("SignUp");
-			primaryStage.setResizable(false);
+		 //primaryStage.setTitle("SignUp");
+			//primaryStage.setResizable(false);
 	        super.start(primaryStage);
 	    }
 	 public static void main(String[] args) {
-	     launchApp(Application.class, MainView.class, args);
+	     launchApp(Application.class, RegistView.class, args);
 	 }
 }
