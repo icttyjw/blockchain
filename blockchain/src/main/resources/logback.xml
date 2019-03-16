@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"  encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
 
     <!-- 本地日志文件 -->
-    <appender name="MY_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+ <!--   <appender name="MY_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <Prudent>true</Prudent>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
@@ -19,10 +19,17 @@
         <encoder>
             <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
+    </appender> -->
+	<appender name="MyLogback"
+        class="edu.ictt.blockchainmanager.console.TextAreaAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- 日志收集最低日志级别 -->
+            <level>INFO</level>
+        </filter>
+       
     </appender>
-
     <root level="INFO">
-        <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="MY_FILE"/>
+         <!--<appender-ref ref="CONSOLE"/>-->
+        <appender-ref ref="MyLogback"/>
     </root>
 </configuration>

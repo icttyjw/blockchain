@@ -5,6 +5,9 @@ import java.util.ResourceBundle;
 import javax.annotation.Resource;
 import javax.print.DocFlavor.URL;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.felixroske.jfxsupport.FXMLController;
 import edu.ictt.blockchainmanager.Application;
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
@@ -23,6 +26,8 @@ import javafx.scene.control.Label;
 @FXMLController
 public class NodesInfromUIController  implements Initializable{
 
+	private Logger logger=LoggerFactory.getLogger(getClass());
+	
     @FXML
     private Label LastCon;
 
@@ -86,6 +91,7 @@ public class NodesInfromUIController  implements Initializable{
 
 	@Override
 	public void initialize(java.net.URL location, ResourceBundle resources) {
+		logger.info("Node initial");
 		Application.getScene().getWindow().setWidth(480);
 		Application.getScene().getWindow().setHeight(250);
 		NodeState nodeState=nodeService.queryLocalNode("1");
