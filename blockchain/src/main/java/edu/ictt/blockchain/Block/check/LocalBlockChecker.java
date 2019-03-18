@@ -1,6 +1,7 @@
 package edu.ictt.blockchain.Block.check;
 
 import edu.ictt.blockchain.Block.block.Block;
+import org.springframework.stereotype.Component;
 
 /**
  * @Author:zoe
@@ -8,6 +9,8 @@ import edu.ictt.blockchain.Block.block.Block;
  * @Date:
  * @Modified By:
  */
+
+@Component
 public class LocalBlockChecker implements BlockChecker{
 
     /**

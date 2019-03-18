@@ -3,6 +3,7 @@ package edu.ictt.blockchain.Block.check;
 import edu.ictt.blockchain.Block.record.DegreeRecord;
 import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
+import org.springframework.stereotype.Component;
 
 /**
  * @Author:zoe
@@ -10,6 +11,8 @@ import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
  * @Date:
  * @Modified By:
  */
+
+@Component
 public class DRecordChecker extends RecordChecker {
 
     /**

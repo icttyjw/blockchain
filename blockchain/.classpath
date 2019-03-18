@@ -120,5 +120,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Maven: org.slf4j:slf4j-api:1.7.25"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Maven: org.t-io:tio-utils:3.2.1.v20181024-RELEASE"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Maven: com.github.ben-manes.caffeine:caffeine:2.3.5"/>
+	<classpathentry kind="lib" path="C:/Users/zoe/.m2/repository/org/rocksdb/rocksdbjni/5.15.10/rocksdbjni-5.15.10-sources.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

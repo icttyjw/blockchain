@@ -30,13 +30,17 @@
                                                 <Label fx:id="Id" layoutX="105.0" layoutY="15.0" text="ID:" />
                                             </children>
                                         </Group>
-                                        <Label fx:id="id" layoutX="214.0" layoutY="15.0" prefHeight="15.0" prefWidth="163.0" />
-                                        <Label fx:id="name" layoutX="214.0" layoutY="38.0" prefHeight="15.0" prefWidth="163.0" />
-                                        <Label fx:id="state" layoutX="214.0" layoutY="81.0" prefHeight="15.0" prefWidth="163.0" />
-                                        <Label fx:id="ip" layoutX="214.0" layoutY="60.0" prefHeight="15.0" prefWidth="163.0" />
-                                        <Label fx:id="constate" layoutX="214.0" layoutY="105.0" prefHeight="15.0" prefWidth="163.0" />
-                                        <Label fx:id="pubkey" layoutX="214.0" layoutY="152.0" prefHeight="15.0" prefWidth="163.0" />
-                                        <Label fx:id="lasocon" layoutX="214.0" layoutY="130.0" prefHeight="15.0" prefWidth="163.0" />
+                              <Group>
+                                 <children>
+                                              <Label fx:id="ip" layoutX="214.0" layoutY="60.0" prefHeight="15.0" prefWidth="163.0" />
+                                              <Label fx:id="name" layoutX="214.0" layoutY="38.0" prefHeight="15.0" prefWidth="163.0" />
+                                              <Label fx:id="state" layoutX="214.0" layoutY="81.0" prefHeight="15.0" prefWidth="163.0" />
+                                              <Label fx:id="lasocon" layoutX="214.0" layoutY="130.0" prefHeight="15.0" prefWidth="163.0" />
+                                              <Label fx:id="constate" layoutX="214.0" layoutY="105.0" prefHeight="15.0" prefWidth="163.0" />
+                                              <Label fx:id="pubkey" layoutX="214.0" layoutY="152.0" prefHeight="15.0" prefWidth="163.0" />
+                                              <Label fx:id="id" layoutX="214.0" layoutY="15.0" prefHeight="15.0" prefWidth="163.0" />
+                                 </children>
+                              </Group>
                                         <Button fx:id="refresh" layoutX="403.0" layoutY="157.0" mnemonicParsing="false" onAction="#jumpToSchool" text="刷新" />
                                         <Button fx:id="save" layoutX="22.0" layoutY="157.0" mnemonicParsing="false" onAction="#save" text="save" />
                                     </children>
@@ -60,6 +64,11 @@
                         <fx:include source="AllNodes.fxml" />
                     </content>
                 </Tab>
+            <Tab text="运行日志">
+               <content>
+                  <fx:include source="Textareasample.fxml" />
+               </content>
+            </Tab>
             </tabs>
         </TabPane>
     </children>

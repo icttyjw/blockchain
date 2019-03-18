@@ -4,6 +4,7 @@ import edu.ictt.blockchain.Block.record.*;
 import edu.ictt.blockchain.common.ObjectAndByte;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
 import edu.ictt.blockchain.common.ecc.ECkeyUtil;
+import org.springframework.stereotype.Component;
 import sun.security.ec.ECPublicKeyImpl;
 
 import java.security.PublicKey;
@@ -14,6 +15,8 @@ import java.security.PublicKey;
  * @Date:
  * @Modified By:
  */
+
+@Component
 public class GRecordChecker extends RecordChecker {
 
     /**

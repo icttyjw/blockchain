@@ -1,58 +1,37 @@
 package test;
 
-import java.io.UnsupportedEncodingException;
-import java.util.AbstractList;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-
-import edu.ictt.blockchain.Block.check.DbBlockChecker;
-import edu.ictt.blockchain.Block.db.DbInitConfig;
-import edu.ictt.blockchain.Block.db.DbStore;
-import edu.ictt.blockchain.Block.db.RocksDbStoreImpl;
-import edu.ictt.blockchain.Block.record.GradeRecord;
-import edu.ictt.blockchain.core.event.AddBlockEvent;
-import edu.ictt.blockchain.core.manager.DbBlockGenerator;
-import edu.ictt.blockchain.core.manager.DbBlockManager;
-
-import org.junit.Test;
-import org.tio.utils.json.Json;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-
-import cn.hutool.core.collection.CollectionUtil;
-import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
-
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.block.BlockHeader;
-import edu.ictt.blockchain.Block.record.Record;
+import edu.ictt.blockchain.Block.check.DbBlockChecker;
+import edu.ictt.blockchain.Block.db.DbInitConfig;
+import edu.ictt.blockchain.Block.db.RocksDbStoreImpl;
 import edu.ictt.blockchain.common.CommonUtil;
-import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.PairKey;
 import edu.ictt.blockchain.common.SHA256;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
 import edu.ictt.blockchain.common.util.DerbyDBUtil;
+import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.manager.ManageMessage;
 import edu.ictt.blockchain.socket.body.BaseBody;
 import edu.ictt.blockchain.socket.body.RpcBlockBody;
 import edu.ictt.blockchain.socket.body.StateBody;
-import edu.ictt.blockchain.socket.packet.BlockPacket;
-import edu.ictt.blockchain.socket.packet.PacketBuilder;
-import edu.ictt.blockchain.socket.packet.PacketType;
 import edu.ictt.blockchain.socket.pbft.VoteType;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 import edu.ictt.blockchain.socket.pbft.msg.VotePreMsg;
 import edu.ictt.blockchain.socket.pbft.queue.BaseMsgQueue;
 import edu.ictt.blockchain.socket.pbft.queue.CommitMsgQueue;
-import edu.ictt.blockchain.socket.pbft.queue.PreMsgQueue;
-import edu.ictt.blockchain.socket.pbft.queue.PrepareMsgQueue;
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
+import org.junit.Test;
+import org.rocksdb.Options;
+import org.rocksdb.RocksDB;
+import org.rocksdb.RocksDBException;
 
-import static edu.ictt.blockchain.socket.pbft.Message.blockConcurrentHashMap;
-import static edu.ictt.blockchain.socket.pbft.Message.findByHash;
+import java.io.UnsupportedEncodingException;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 
@@ -61,6 +40,38 @@ public class PartTest {
 	/**
 	 * 将区块写入rocksDB测试
 	 */
+	@Test
+	public void saveblocktorockstest(){
+
+		//创建一个数据库操作对象，并与数据库建立连接,写入一个区块(json形式）
+
+		DbInitConfig dbInitConfig = new DbInitConfig();
+		RocksDbStoreImpl rocksDbStore = new RocksDbStoreImpl();
+		rocksDbStore.setRocksDB(dbInitConfig.rocksDB());
+
+		//写入10个区块
+		for(int i=0; i<10; i++){
+			BlockHeader blockHeader = new BlockHeader();
+			blockHeader.setBlockTimeStamp(CommonUtil.getNow());
+
+			Block block = new Block();
+			block.setBlockHeader(blockHeader);
+			block.setBlockHash(SHA256.sha256(blockHeader.toString()));
+
+			//将区块转换为json格式存到rocksdb，并重新读出还原
+			String jsonStr = JSON.toJSONString(block);
+			rocksDbStore.put("i", jsonStr);
+			System.out.println(jsonStr);
+			System.out.println("save this block success");
+
+		}
+		//往数据库中写入区块
+		//AddBlockEvent addBlockEvent = new AddBlockEvent(block);
+		//DbBlockGenerator dbBlockGenerator = new DbBlockGenerator();
+		//dbBlockGenerator.setDbStore(new RocksDbStoreImpl());
+		//dbBlockGenerator.addBlock(addBlockEvent);
+	}
+
 	@Test
 	public void rockstest(){
 
@@ -102,6 +113,26 @@ public class PartTest {
 		//DbBlockGenerator dbBlockGenerator = new DbBlockGenerator();
 		//dbBlockGenerator.setDbStore(new RocksDbStoreImpl());
 		//dbBlockGenerator.addBlock(addBlockEvent);
+	}
+
+	/**
+	 * 从本地读区块
+	 */
+	@Test
+	public void readblockfd(){
+		//ConnectRocksDB rocksDB = new ConnectRocksDB();
+
+		DbInitConfig dbInitConfig = new DbInitConfig();
+
+		RocksDbStoreImpl rocksDbStore = new RocksDbStoreImpl();
+
+		rocksDbStore.setRocksDB(dbInitConfig.rocksDB());
+
+
+		for(int i=0; i<10; i++){
+			System.out.println("read block" + i + " : " +
+					JSON.parseObject(rocksDbStore.get("i"), new TypeReference<Block>(){}));
+		}
 	}
 
 	/**
