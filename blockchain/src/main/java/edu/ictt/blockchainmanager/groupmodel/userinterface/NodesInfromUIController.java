@@ -92,8 +92,8 @@ public class NodesInfromUIController  implements Initializable{
 	@Override
 	public void initialize(java.net.URL location, ResourceBundle resources) {
 		logger.info("Node initial");
-		Application.getScene().getWindow().setWidth(480);
-		Application.getScene().getWindow().setHeight(250);
+		//Application.getScene().getWindow().setWidth(480);
+		//Application.getScene().getWindow().setHeight(250);
 		NodeState nodeState=nodeService.queryLocalNode("1");
 		id.setText(nodeState.getId());
 		name.setText(nodeState.getName());
