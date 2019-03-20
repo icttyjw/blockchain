@@ -10,12 +10,16 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import cn.hutool.core.collection.CollectionUtil;
 import edu.ictt.blockchain.Block.block.BlockBody;
 import edu.ictt.blockchain.Block.record.Record;
+import edu.ictt.blockchain.Block.record.RecordParse;
 import edu.ictt.blockchain.common.FastJsonUtil;
+import edu.ictt.blockchain.common.timer.TimerManager;
+import edu.ictt.blockchain.core.event.DelRecordEvent;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.service.BlockService;
 import edu.ictt.blockchain.socket.body.RecordBody;
@@ -78,5 +82,17 @@ public class RecordQueue {
 			String couselist=FastJsonUtil.toJSONString(ls);
 			dbBlockManager.put(hash, couselist);
 		}
+	}
+	
+	@EventListener(DelRecordEvent.class)
+	public void blockGenerate(DelRecordEvent delRecordEvent){
+		RecordParse recordParse=(RecordParse)delRecordEvent.getSource();
+		String hash=recordParse.getCoursehash();
+		TimerManager.schedule(() -> {
+			recordConcurrentHashMap.remove(hash);
+			recordcountConcurrentHashMap.remove(hash);
+			dbBlockManager.getDbStore().remove(hash);
+			return null;
+		},2000);
 	}
 }
