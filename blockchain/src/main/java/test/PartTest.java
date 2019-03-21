@@ -6,8 +6,14 @@ import com.alibaba.fastjson.TypeReference;
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.block.BlockHeader;
 import edu.ictt.blockchain.Block.check.DbBlockChecker;
+import edu.ictt.blockchain.Block.db.ConnectRocksDB;
 import edu.ictt.blockchain.Block.db.DbInitConfig;
+import edu.ictt.blockchain.Block.db.RecoverLocalRecord;
 import edu.ictt.blockchain.Block.db.RocksDbStoreImpl;
+import edu.ictt.blockchain.Block.generatorUtil.GenerateRecord;
+import edu.ictt.blockchain.Block.merkle.MerkleHash;
+import edu.ictt.blockchain.Block.merkle.MerkleNode;
+import edu.ictt.blockchain.Block.record.*;
 import edu.ictt.blockchain.common.CommonUtil;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.PairKey;
@@ -17,6 +23,7 @@ import edu.ictt.blockchain.common.util.DerbyDBUtil;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.manager.ManageMessage;
 import edu.ictt.blockchain.socket.body.BaseBody;
+import edu.ictt.blockchain.socket.body.RecordBody;
 import edu.ictt.blockchain.socket.body.RpcBlockBody;
 import edu.ictt.blockchain.socket.body.StateBody;
 import edu.ictt.blockchain.socket.pbft.VoteType;
@@ -24,6 +31,7 @@ import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 import edu.ictt.blockchain.socket.pbft.msg.VotePreMsg;
 import edu.ictt.blockchain.socket.pbft.queue.BaseMsgQueue;
 import edu.ictt.blockchain.socket.pbft.queue.CommitMsgQueue;
+import edu.ictt.blockchain.socket.record.queue.RecordQueue;
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
 import org.junit.Test;
 import org.rocksdb.Options;
@@ -31,107 +39,103 @@ import org.rocksdb.RocksDB;
 import org.rocksdb.RocksDBException;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 
 
 public class PartTest {
 
+	/*
+	 RecordQueue写记录测试
+	 */
+	@Test
+	public void recordQueueTest(){
+
+		RecordQueue recordQueue = new RecordQueue();
+		DbBlockManager dbBlockManager = new DbBlockManager();
+		List<RecordBody> recordBodyList = new ArrayList<>();
+
+		GradeRecord record = GenerateRecord.geneGRecord();
+		RecordBody theFirstRB = new RecordBody(record,
+				SHA256.sha256(String.valueOf(record.getGradeInfo().getCourseInfo().getCourseId())));
+		theFirstRB.setCount(10);
+		recordBodyList.add(theFirstRB);
+		System.out.println("课程索引" + SHA256.sha256(String.valueOf(record.getGradeInfo().getCourseInfo().getCourseId())));
+		for(int i=1; i<10; i++){
+			record = GenerateRecord.geneGRecord();
+			recordBodyList.add(new RecordBody(record,
+					SHA256.sha256(String.valueOf(record.getGradeInfo().getCourseInfo().getCourseId()))));
+		}
+
+		//连到数据库
+		try {
+			ConnectRocksDB connectRocksDB = new ConnectRocksDB(3);
+			dbBlockManager.setDbStore(connectRocksDB.getRocksDbStore());
+			recordQueue.setDbBlockManager(dbBlockManager);
+		} catch (RocksDBException e) {
+			e.printStackTrace();
+		}
+
+		for(RecordBody recordBody:recordBodyList){
+			recordQueue.receive(recordBody);
+		}
+
+	}
+
+	/**
+	 * 读记录(读的时候会校验记录
+	 */
+	@Test
+	public void readrecordtest(){
+		try {
+			RecoverLocalRecord recoverLocalRecord = new RecoverLocalRecord();
+			recoverLocalRecord.recoverRecord();
+			
+		} catch (RocksDBException e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * 将区块写入rocksDB测试
 	 */
 	@Test
-	public void saveblocktorockstest(){
+	public void saveblocktorockstest() throws RocksDBException {
 
-		//创建一个数据库操作对象，并与数据库建立连接,写入一个区块(json形式）
+		//创建一个数据库操作对象，并与数据库建立连接
 
-		DbInitConfig dbInitConfig = new DbInitConfig();
-		RocksDbStoreImpl rocksDbStore = new RocksDbStoreImpl();
-		rocksDbStore.setRocksDB(dbInitConfig.rocksDB());
+        ConnectRocksDB rocksDB = new ConnectRocksDB(1);
 
 		//写入10个区块
-		for(int i=0; i<10; i++){
+		for(int i=0; i<100; i++){
 			BlockHeader blockHeader = new BlockHeader();
 			blockHeader.setBlockTimeStamp(CommonUtil.getNow());
+			blockHeader.setBlockNumber(i);
 
 			Block block = new Block();
 			block.setBlockHeader(blockHeader);
 			block.setBlockHash(SHA256.sha256(blockHeader.toString()));
 
-			//将区块转换为json格式存到rocksdb，并重新读出还原
+			//将区块转换为json格式存到rocksdb
 			String jsonStr = JSON.toJSONString(block);
-			rocksDbStore.put("i", jsonStr);
+			rocksDB.getRocksDbStore().put("i", jsonStr);
 			System.out.println(jsonStr);
 			System.out.println("save this block success");
-
 		}
-		//往数据库中写入区块
-		//AddBlockEvent addBlockEvent = new AddBlockEvent(block);
-		//DbBlockGenerator dbBlockGenerator = new DbBlockGenerator();
-		//dbBlockGenerator.setDbStore(new RocksDbStoreImpl());
-		//dbBlockGenerator.addBlock(addBlockEvent);
-	}
-
-	@Test
-	public void rockstest(){
-
-		////创建一个数据库操作对象，并与数据库建立连接,写入一个区块(json形式）
-		DbInitConfig dbInitConfig = new DbInitConfig();
-		RocksDbStoreImpl rocksDbStore = new RocksDbStoreImpl();
-		rocksDbStore.setRocksDB(dbInitConfig.rocksDB());
-
-		//写入100个区块
-		for(int i=0; i<100; i++){
-			BlockHeader blockHeader = new BlockHeader();
-			blockHeader.setBlockTimeStamp(CommonUtil.getNow());
-
-			Block block = new Block();
-			block.setBlockHeader(blockHeader);
-			block.setBlockHash(SHA256.sha256(blockHeader.toString()));
-
-			//将区块转换为json格式存到rocksdb，并重新读出还原
-			String jsonStr = JSON.toJSONString(block);
-			rocksDbStore.put("1", jsonStr);
-			System.out.println("save this block success");
-
-		}
-		//读出区块
-
-		for(int i=0; i<100; i++){
-			System.out.println("read block: " + "i" + JSON.parseObject(rocksDbStore.get("i"), new TypeReference<Block>(){}));
-
-			//String blockjson = rocksDbStore.get("i");
-			//Block readBlock = FastJsonUtil.toBean(blockjson, Block.class);
-			//System.out.println("read the block second time:" + readBlock);
-
-
-		}
-
-
-		//往数据库中写入区块
-		//AddBlockEvent addBlockEvent = new AddBlockEvent(block);
-		//DbBlockGenerator dbBlockGenerator = new DbBlockGenerator();
-		//dbBlockGenerator.setDbStore(new RocksDbStoreImpl());
-		//dbBlockGenerator.addBlock(addBlockEvent);
 	}
 
 	/**
-	 * 从本地读区块
+	 * 从本地读区块 + 校验区块
 	 */
 	@Test
-	public void readblockfd(){
-		//ConnectRocksDB rocksDB = new ConnectRocksDB();
-
-		DbInitConfig dbInitConfig = new DbInitConfig();
-
-		RocksDbStoreImpl rocksDbStore = new RocksDbStoreImpl();
-
-		rocksDbStore.setRocksDB(dbInitConfig.rocksDB());
-
+	public void readblocktest() throws RocksDBException {
+		ConnectRocksDB rocksDB = new ConnectRocksDB(1);
 
 		for(int i=0; i<10; i++){
 			System.out.println("read block" + i + " : " +
-					JSON.parseObject(rocksDbStore.get("i"), new TypeReference<Block>(){}));
+					JSON.parseObject(rocksDB.getRocksDbStore().get("i"), new TypeReference<Block>(){}));
 		}
 	}
 
@@ -140,7 +144,7 @@ public class PartTest {
 	 * 使用本地区块对新区块校验
 	 */
 	@Test
-	public void blockcheckertest(){
+	public void blockcheckertest() throws RocksDBException {
 
 		//新区块
 		BlockHeader blockHeader = new BlockHeader();
@@ -150,18 +154,11 @@ public class PartTest {
 		newBlock.setBlockHeader(blockHeader);
 
 
-		DbInitConfig dbInitConfig = new DbInitConfig();
-		RocksDbStoreImpl rocksDbStore = new RocksDbStoreImpl();
-		rocksDbStore.setRocksDB(dbInitConfig.rocksDB());
-		String blockjson = rocksDbStore.get("1");
-		//Block block = FastJsonUtil.toBean(blockjson, Block.class);
-		//System.out.println("本地区块：" + block);
+		ConnectRocksDB rocksDB = new ConnectRocksDB('1');
+
 
 		DbBlockChecker dbBlockChecker = new DbBlockChecker();
-		DbBlockManager dbBlockManager = new DbBlockManager();
-		dbBlockManager.setDbStore(rocksDbStore);
-		dbBlockChecker.setDbBlockManager(dbBlockManager);
-		dbBlockChecker.checkNum(newBlock);
+		System.out.println("当前区块校验结果"+ dbBlockChecker.checkAll(JSON.parseObject(rocksDB.getRocksDbStore().get("i"), new TypeReference<Block>(){})));
 	}
 
 

@@ -19,6 +19,18 @@ import java.security.PublicKey;
 @Component
 public class GRecordChecker extends RecordChecker {
 
+
+    @Override
+    public boolean checkRecord(Record record){
+        GradeRecord gradeRecord = (GradeRecord) record;
+        int checkResult = checkSchoolSign(gradeRecord) + checkTeacherSign(gradeRecord) + checkSign(gradeRecord) + checkTimeStamp(gradeRecord);
+
+        if (checkResult == 0){
+            return true;
+        }
+        return false;
+    }
+
     /**
      * 教师和学校公钥重新对记录签名，与记录当前的签名比较
      * @param record
@@ -30,7 +42,7 @@ public class GRecordChecker extends RecordChecker {
         GradeRecord gradeRecord = (GradeRecord) record;
 
         if(checkTeacherSign(gradeRecord) == 1 && checkSchoolSign(gradeRecord) == 1){
-            return 1;
+            return 0;
         }
         return -1;
     }
@@ -71,7 +83,7 @@ public class GRecordChecker extends RecordChecker {
 
         try {
             if((ECDSAAlgorithm.verify(graRecord, gradeRecord.getSign(), facPublicKey))){
-                checkFlag = 1;
+                checkFlag = 0;
             }
         } catch (Exception e) {
             e.printStackTrace();

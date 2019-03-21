@@ -11,6 +11,13 @@ import edu.ictt.blockchain.Block.record.Record;
 public abstract class RecordChecker {
 
     /**
+     * 校验记录的关键字段
+     */
+    public boolean checkRecord(Record record){
+        return false;
+    }
+
+    /**
      * 校验记录的时间戳,暂时简单的用本地的系统时间。
      */
     public int checkTimeStamp(Record record) {

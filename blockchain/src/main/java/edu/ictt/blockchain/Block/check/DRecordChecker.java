@@ -1,6 +1,7 @@
 package edu.ictt.blockchain.Block.check;
 
 import edu.ictt.blockchain.Block.record.DegreeRecord;
+import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class DRecordChecker extends RecordChecker {
 
+
+
+    @Override
+    public boolean checkRecord(Record record){
+        DegreeRecord degreeRecord = (DegreeRecord) record;
+        int checkResult = checkSign(degreeRecord) + checkTimeStamp(degreeRecord);
+
+        if (checkResult == 0){
+            return true;
+        }
+        return false;
+    }
     /**
      * 学校公钥重新对记录签名，与记录当前的签名比较
      * @param record

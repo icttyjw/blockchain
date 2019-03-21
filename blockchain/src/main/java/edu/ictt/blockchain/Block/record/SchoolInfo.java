@@ -56,6 +56,22 @@ public class SchoolInfo{
         this.schoolPro = schoolPro;
     }
 
+    public void setSchoolId(int schoolId) {
+        this.schoolId = schoolId;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
+
+    public void setSchoolPairKey(PairKey schoolPairKey) {
+        this.schoolPairKey = schoolPairKey;
+    }
+
+    public void setSchoolPro(List<String> schoolPro) {
+        this.schoolPro = schoolPro;
+    }
+
     @Override
     public String toString() {
         return "SchoolInfo{" +
