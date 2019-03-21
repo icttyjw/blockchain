@@ -87,7 +87,7 @@ public class RecordQueue {
 		{//备份记录
 			String recordlist=FastJsonUtil.toJSONString(ls);
 			dbBlockManager.put(hash, recordlist);
-			System.out.println("备份的记录对应的课程" + hash + ":" + "记录" + recordlist);
+			//System.out.println("备份的记录对应的课程" + hash + ":" + "记录" + recordlist);
 
 			//备份每个课程的记录数量
 			//dbBlockManager.put(FastJsonUtil.toJSONString(course),FastJsonUtil.toJSONNoFeatures(recordCount));
