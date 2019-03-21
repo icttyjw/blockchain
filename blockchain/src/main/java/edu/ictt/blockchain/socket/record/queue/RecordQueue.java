@@ -2,23 +2,24 @@ package edu.ictt.blockchain.socket.record.queue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
-import javax.persistence.criteria.CriteriaBuilder;
 
-import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import cn.hutool.core.collection.CollectionUtil;
 import edu.ictt.blockchain.Block.block.BlockBody;
 import edu.ictt.blockchain.Block.record.Record;
+import edu.ictt.blockchain.Block.record.RecordParse;
 import edu.ictt.blockchain.common.FastJsonUtil;
+import edu.ictt.blockchain.common.timer.TimerManager;
+import edu.ictt.blockchain.core.event.DelRecordEvent;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.service.BlockService;
 import edu.ictt.blockchain.socket.body.RecordBody;
@@ -38,15 +39,12 @@ public class RecordQueue {
 	/*
 	 * 记录每类记录需要的数量
 	 */
-	protected ConcurrentHashMap<String, Integer> recordcountConcurrentHashMap =new ConcurrentHashMap<String, Integer>();
-
+	protected ConcurrentHashMap<String, Integer> recordcountConcurrentHashMap=new ConcurrentHashMap<String, Integer>();
 	/*
-	 * 课程名列表以及课程对应的课程数量
+	 * 课程名列表
 	 * 恢复时通过这个表找到所有需要恢复的课程
 	 */
 	private List<String> course=new ArrayList< >();
-	//private List<Integer> recordCount = new ArrayList<>();
-	private  int recordCount;
 	
 	@Resource
 	private BlockService blockService;
@@ -55,7 +53,6 @@ public class RecordQueue {
 	
 	public void receive(RecordBody recordBody){
 		String hash=recordBody.getIndexhash();
-		//count这块需要做处理，否则每条记录都会有
 		int count=recordBody.getCount();
 		List<Record> ls=recordConcurrentHashMap.get(hash);
 		/*
@@ -67,15 +64,12 @@ public class RecordQueue {
 		{
 			ls=new ArrayList<Record>();
 			course.add(hash);//对课程名进行记录
-			recordCount = count;//课程的记录数量
 			String cstring=FastJsonUtil.toJSONString(course);
 			dbBlockManager.put("course", cstring);
-			System.out.println("新增一门课程：" + cstring);
 		}
 		ls.add(recordBody.getRecord());
-		if(count!=-1){
+		if(count!=-1)
 			recordcountConcurrentHashMap.put(hash, count);
-		}
 		else
 			count=recordcountConcurrentHashMap.get(hash);
 		if(ls.size()==count)
@@ -85,21 +79,20 @@ public class RecordQueue {
 			blockService.addBlock(blockbody);
 		}else
 		{//备份记录
-			String recordlist=FastJsonUtil.toJSONString(ls);
-			dbBlockManager.put(hash, recordlist);
-			//System.out.println("备份的记录对应的课程" + hash + ":" + "记录" + recordlist);
-
-			//备份每个课程的记录数量
-			//dbBlockManager.put(FastJsonUtil.toJSONString(course),FastJsonUtil.toJSONNoFeatures(recordCount));
-			//System.out.println("备份课程的记录数量" + hash + ":" + "记录数量" + recordCount);
+			String couselist=FastJsonUtil.toJSONString(ls);
+			dbBlockManager.put(hash, couselist);
 		}
 	}
-
-	public DbBlockManager getDbBlockManager() {
-		return dbBlockManager;
-	}
-
-	public void setDbBlockManager(DbBlockManager dbBlockManager) {
-		this.dbBlockManager = dbBlockManager;
+	
+	@EventListener(DelRecordEvent.class)
+	public void blockGenerate(DelRecordEvent delRecordEvent){
+		RecordParse recordParse=(RecordParse)delRecordEvent.getSource();
+		String hash=recordParse.getCoursehash();
+		TimerManager.schedule(() -> {
+			recordConcurrentHashMap.remove(hash);
+			recordcountConcurrentHashMap.remove(hash);
+			dbBlockManager.getDbStore().remove(hash);
+			return null;
+		},2000);
 	}
 }

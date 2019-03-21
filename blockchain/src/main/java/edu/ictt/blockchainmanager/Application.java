@@ -27,7 +27,7 @@ public class Application  extends AbstractJavaFxApplicationSupport {
 	       // setupLogginView();
 	    }
 	 public static void main(String[] args) {
-	     launchApp(Application.class, TextView.class, args);
+	     launchApp(Application.class, MainView.class, args);
 	 }
 	 private void setupLogginView() {
 	        loggingView.setLayoutX(17);
