@@ -5,9 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="181.0" prefWidth="352.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane prefHeight="181.0" prefWidth="352.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ictt.blockchainmanager.groupmodel.userinterface.AlertController">
    <children>
-      <Label fx:id="text" layoutX="111.0" layoutY="77.0" prefHeight="27.0" prefWidth="130.0" text="   message" />
+      <Label fx:id="text" layoutX="130.0" layoutY="80.0" prefHeight="22.0" prefWidth="92.0" />
    </children>
 </AnchorPane>
