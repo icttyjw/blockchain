@@ -1,13 +1,8 @@
 package edu.ictt.blockchain.Block.check;
 
 import edu.ictt.blockchain.Block.record.*;
-import edu.ictt.blockchain.common.ObjectAndByte;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
-import edu.ictt.blockchain.common.ecc.ECkeyUtil;
 import org.springframework.stereotype.Component;
-import sun.security.ec.ECPublicKeyImpl;
-
-import java.security.PublicKey;
 
 /**
  * @Author:zoe
@@ -23,7 +18,7 @@ public class GRecordChecker extends RecordChecker {
     @Override
     public boolean checkRecord(Record record){
         GradeRecord gradeRecord = (GradeRecord) record;
-        int checkResult = checkSchoolSign(gradeRecord) + checkTeacherSign(gradeRecord) + checkSign(gradeRecord) + checkTimeStamp(gradeRecord);
+        int checkResult = checkFalSign(gradeRecord) + checkTeacherSign(gradeRecord) + checkSign(gradeRecord) + checkTimeStamp(gradeRecord);
 
         if (checkResult == 0){
             return true;
@@ -41,7 +36,7 @@ public class GRecordChecker extends RecordChecker {
 
         GradeRecord gradeRecord = (GradeRecord) record;
 
-        if(checkTeacherSign(gradeRecord) == 1 && checkSchoolSign(gradeRecord) == 1){
+        if(checkTeacherSign(gradeRecord) == 1 && checkFalSign(gradeRecord) == 1){
             return 0;
         }
         return -1;
@@ -50,7 +45,8 @@ public class GRecordChecker extends RecordChecker {
     //校验教师的签名
     public int checkTeacherSign(GradeRecord gradeRecord){
         String graRecord = gradeRecord.getSchoolInfo().toString()+gradeRecord.getFacultyInfo().toString()
-                +gradeRecord.getGradeInfo().toString();
+                +gradeRecord.getGradeInfo().toString() + gradeRecord.getRecordTimeStamp();
+
 
         TeacherInfo[] teacherInfos = gradeRecord.getGradeInfo().getTeacherInfo();
 
@@ -59,7 +55,8 @@ public class GRecordChecker extends RecordChecker {
         //如果有多个任课教师，任课教师中任一一人的签名匹配即可
 
         for(TeacherInfo teacherInfo:teacherInfos){
-            String teaPublicKey = teacherInfo.getteacherPairKey().getPublicKey();
+            String teaPublicKey = teacherInfo.getTeacherPairKey().getPublicKey();
+            System.out.println("当前教师签名" + gradeRecord.getTeacherSign());
             try {
                 if(ECDSAAlgorithm.verify(graRecord, gradeRecord.getTeacherSign(), teaPublicKey))
                     checkFlag = 1;
@@ -71,18 +68,20 @@ public class GRecordChecker extends RecordChecker {
     }
 
     //校验学院的签名
-    public int checkSchoolSign(GradeRecord gradeRecord){
+    public int checkFalSign(GradeRecord gradeRecord){
         String graRecord = gradeRecord.getSchoolInfo().toString()+gradeRecord.getFacultyInfo().toString()
-                +gradeRecord.getGradeInfo().toString() + gradeRecord.getTeacherSign();
-
-        FacultyInfo facultyInfo = gradeRecord.getFacultyInfo();
+                +gradeRecord.getGradeInfo().toString() + gradeRecord.getRecordTimeStamp() + gradeRecord.getTeacherSign();
 
         int checkFlag = -1;
 
-        String facPublicKey = facultyInfo.getFaculthPairKey().getPublicKey();
+        System.out.println("当前学院公钥" + gradeRecord.getFacultyInfo().getFacultyPairKey().getPublicKey());
+        String facPublicKey = gradeRecord.getFacultyInfo().getFacultyPairKey().getPublicKey();
 
         try {
-            if((ECDSAAlgorithm.verify(graRecord, gradeRecord.getSign(), facPublicKey))){
+            //System.out.println("当前记录：" + graRecord);
+            System.out.println("当前学院签名" + gradeRecord.getFalSign());
+            //System.out.println("当前学院公钥：" + facPublicKey);
+            if(ECDSAAlgorithm.verify(graRecord, gradeRecord.getFalSign(), facPublicKey)){
                 checkFlag = 0;
             }
         } catch (Exception e) {

@@ -21,11 +21,7 @@ public class GenerateRecord {
         SchoolInfo schoolInfo = new SchoolInfo();
         schoolInfo.setSchoolId(10001);
         schoolInfo.setSchoolName("清华");
-
-        PairKey pairKey = new PairKey();
-        pairKey.setPublicKey(ECDSAAlgorithm.generatePublicKey("1"));
-        pairKey.setPrivateKey(ECDSAAlgorithm.generatePrivateKey());
-        schoolInfo.setSchoolPairKey(pairKey);
+        schoolInfo.setSchoolPairKey(new PairKey());
 
         List<String> scPro = new ArrayList<>();
         scPro.add("重点");
@@ -42,10 +38,11 @@ public class GenerateRecord {
         facultyInfo.setFacultyName("计算机");
         facultyInfo.setFacultyPro("重点学科");
 
-        PairKey pairKey = new PairKey();
-        pairKey.setPublicKey(ECDSAAlgorithm.generatePublicKey("2"));
-        pairKey.setPrivateKey(ECDSAAlgorithm.generatePrivateKey());
-        facultyInfo.setFaculthPairKey(pairKey);
+        facultyInfo.setFacultyPairKey(new PairKey());
+
+        //System.out.println("学院公钥" + pairKey.getPublicKey());
+        //System.out.println("学院私钥" + pairKey.getPrivateKey());
+        //System.out.println("学院信息：" + facultyInfo);
 
         return facultyInfo;
     }
@@ -77,15 +74,15 @@ public class GenerateRecord {
         teacherInfo.setTeacherName("李老师");
         teacherInfo.setTeacherTitle("教授");
 
-        PairKey pairKey = new PairKey();
-        pairKey.setPublicKey(ECDSAAlgorithm.generatePublicKey("3"));
-        pairKey.setPrivateKey(ECDSAAlgorithm.generatePrivateKey());
-        teacherInfo.setteacherPairKey(pairKey);
+        teacherInfo.setTeacherPairKey(new PairKey());
+
+        //System.out.println("教师公钥" + pairKey.getPublicKey());
+        //System.out.println("教师私钥" + pairKey.getPrivateKey());
 
         return teacherInfo;
     }
 
-    public static GradeInfo geneGradaInfo(){
+    public static GradeInfo geneGradeInfo(){
 
         GradeInfo gradeInfo = new GradeInfo();
         gradeInfo.setCourseInfo(geneCurseInfo());
@@ -95,12 +92,12 @@ public class GenerateRecord {
         TeacherInfo[] teacherInfos = new TeacherInfo[3];
         for(int i=0; i<teacherInfos.length; i++){
             teacherInfos[i] = geneTeacherInfo();
+            System.out.println("教师信息" + teacherInfos.toString());
         }
-         gradeInfo.setTeacherInfo(teacherInfos);
+        gradeInfo.setTeacherInfo(teacherInfos);
 
         return gradeInfo;
     }
-
 
     //成绩记录:int facultyId, String facultyName, String facultyPro,PairKey faculthPairKey
     public static GradeRecord geneGRecord(){
@@ -109,16 +106,23 @@ public class GenerateRecord {
 
         record.setSchoolInfo(geneSchoolInfo());
         record.setFacultyInfo(geneFaculthInfo());
-        record.setGradeInfo(geneGradaInfo());
+        record.setGradeInfo(geneGradeInfo());
         record.setRecordTimeStamp(System.currentTimeMillis());
 
 
         TeacherInfo[] teacherInfos = record.getGradeInfo().getTeacherInfo();
-        String teaPriKey = teacherInfos[0].getteacherPairKey().getPrivateKey();
-        String schPriKey = record.getSchoolInfo().getSchoolPairKey().getPrivateKey();
+        String teaPriKey = teacherInfos[0].getTeacherPairKey().getPrivateKey();
+        String falPriKey = record.getFacultyInfo().getFacultyPairKey().getPrivateKey();
         try {
-            record.setTeacherSign(ECDSAAlgorithm.sign(teaPriKey,record.toString()));
-            record.setSchoolSign(ECDSAAlgorithm.sign(schPriKey,record.toString()));
+            String recordStr = record.getSchoolInfo().toString()+record.getFacultyInfo().toString()
+                    +record.getGradeInfo().toString()+record.getRecordTimeStamp();
+            record.setTeacherSign(ECDSAAlgorithm.sign(teaPriKey, recordStr));
+            System.out.println("被签名的记录为：" + recordStr);
+            System.out.println("记录的教师签名为：" + record.getTeacherSign());
+            recordStr = record.getSchoolInfo().toString()+record.getFacultyInfo().toString()
+                    +record.getGradeInfo().toString()+record.getRecordTimeStamp()+ record.getTeacherSign();
+            record.setFalSign(ECDSAAlgorithm.sign(falPriKey,recordStr));
+            System.out.println("记录的学院签名为：" + record.getFalSign());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

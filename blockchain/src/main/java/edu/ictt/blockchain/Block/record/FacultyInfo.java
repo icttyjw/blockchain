@@ -21,15 +21,15 @@ public class FacultyInfo {
     private String facultyPro;
 
     //学院密钥对
-    private PairKey faculthPairKey;
+    private PairKey facultyPairKey;
 
     public FacultyInfo(){}
 
-    public FacultyInfo(int facultyId, String facultyName, String facultyPro,PairKey faculthPairKey){
+    public FacultyInfo(int facultyId, String facultyName, String facultyPro,PairKey facultyPairKey){
         this.facultyId = facultyId;
         this.facultyName = facultyName;
         this.facultyPro = facultyPro;
-        this.faculthPairKey = faculthPairKey;
+        this.facultyPairKey = facultyPairKey;
     }
 
     public int getFacultyId() {
@@ -62,12 +62,12 @@ public class FacultyInfo {
         this.facultyPro = facultyPro;
     }
 
-    public PairKey getFaculthPairKey() {
-        return faculthPairKey;
+    public PairKey getFacultyPairKey() {
+        return facultyPairKey;
     }
 
-    public void setFaculthPairKey(PairKey faculthPairKey) {
-        this.faculthPairKey = faculthPairKey;
+    public void setFacultyPairKey(PairKey facultyPairKey) {
+        this.facultyPairKey = facultyPairKey;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class FacultyInfo {
                 "facultyId=" + facultyId +
                 ", facultyName='" + facultyName + '\'' +
                 ", facultyPro='" + facultyPro + '\'' +
-                ", faculthPairKey=" + faculthPairKey +
+                ", facultyPairKey=" + facultyPairKey +
                 '}';
     }
 }

@@ -35,17 +35,17 @@ public class GradeRecord extends Record implements Serializable {
 	/**
 	 * 学院签名
 	 */
-	private String schoolSign;
+	private String falSign;
 
 	public GradeRecord(){}
 
 	public GradeRecord(SchoolInfo schoolInfo, FacultyInfo facultyInfo, GradeInfo gradeInfo, String teacherSign,
-					 String schoolSign, long recordTimeStamp){
+					 String falSign, long recordTimeStamp){
 		this.schoolInfo = schoolInfo;
 		this.facultyInfo = facultyInfo;
 		this.gradeInfo = gradeInfo;
 		this.teacherSign = teacherSign;
-		this.schoolSign = schoolSign;
+		this.falSign = falSign;
 		this.recordTimeStamp = recordTimeStamp;
 
 	}
@@ -86,17 +86,17 @@ public class GradeRecord extends Record implements Serializable {
 		this.teacherSign = teacherSign;
 	}
 
-	public String getSchoolSign() {
-		return schoolSign;
+	public String getFalSign() {
+		return falSign;
 	}
 
-	public void setSchoolSign(String schoolSign) {
-		this.schoolSign = schoolSign;
+	public void setFalSign(String falSign) {
+		this.falSign = falSign;
 	}
 
 	@Override
 	public String getSign() {
-		return teacherSign+schoolSign;
+		return teacherSign+falSign;
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class GradeRecord extends Record implements Serializable {
 				", facultyInfo=" + facultyInfo +
 				", gradeInfo=" + gradeInfo +
 				", teacherSign='" + teacherSign + '\'' +
-				", schoolSign='" + schoolSign + '\'' +
+				", falSign='" + falSign + '\'' +
 				", recordTimeStamp=" + recordTimeStamp +
 				'}';
 	}

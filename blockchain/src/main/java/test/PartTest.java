@@ -57,16 +57,13 @@ public class PartTest {
 		DbBlockManager dbBlockManager = new DbBlockManager();
 		List<RecordBody> recordBodyList = new ArrayList<>();
 
-		GradeRecord record = GenerateRecord.geneGRecord();
-		RecordBody theFirstRB = new RecordBody(record,
-				SHA256.sha256(String.valueOf(record.getGradeInfo().getCourseInfo().getCourseId())));
-		theFirstRB.setCount(10);
-		recordBodyList.add(theFirstRB);
-		System.out.println("课程索引" + SHA256.sha256(String.valueOf(record.getGradeInfo().getCourseInfo().getCourseId())));
-		for(int i=1; i<10; i++){
-			record = GenerateRecord.geneGRecord();
-			recordBodyList.add(new RecordBody(record,
-					SHA256.sha256(String.valueOf(record.getGradeInfo().getCourseInfo().getCourseId()))));
+		for(int i=0; i<2; i++){
+			GradeRecord record = GenerateRecord.geneGRecord();
+			System.out.println("记录" + i + record);
+			RecordBody recordBody = new RecordBody(record,
+					SHA256.sha256(String.valueOf(record.getGradeInfo().getCourseInfo().getCourseId())));
+			recordBody.setCount(2);
+			recordBodyList.add(recordBody);
 		}
 
 		//连到数据库

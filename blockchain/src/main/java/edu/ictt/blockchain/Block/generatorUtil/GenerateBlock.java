@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class GenerateBlock {
 
-    public Block generateBlock(int i){
+    public static Block generateBlock(int i){
 
         //生成记录
         List<Record> records = new ArrayList<>();

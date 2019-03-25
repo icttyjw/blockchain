@@ -46,7 +46,7 @@ public class TeacherInfo{
         return teacherTitle;
     }
 
-    public PairKey getteacherPairKey() {
+    public PairKey getTeacherPairKey() {
         return teacherPairKey;
     }
 
@@ -62,7 +62,7 @@ public class TeacherInfo{
         this.teacherTitle = teacherTitle;
     }
 
-    public void setteacherPairKey(PairKey teacherPairKey) {
+    public void setTeacherPairKey(PairKey teacherPairKey) {
         this.teacherPairKey = teacherPairKey;
     }
 

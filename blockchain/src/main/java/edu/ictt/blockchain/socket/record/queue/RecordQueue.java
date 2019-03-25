@@ -11,6 +11,8 @@ import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import edu.ictt.blockchain.Block.record.RecordParse;
 import edu.ictt.blockchain.common.timer.TimerManager;
 import edu.ictt.blockchain.core.event.DelRecordEvent;
@@ -37,6 +39,7 @@ public class RecordQueue {
 	
 	/*
 	 * 接收的记录按课程分类  下列三个都需要进行初始化，如果db中存在对应元素，应当填入，如果不存在则为空
+	 *
 	 */
 	protected ConcurrentHashMap<String, List<Record>> recordConcurrentHashMap=new ConcurrentHashMap<String, List<Record>>();
 	/*
@@ -71,33 +74,44 @@ public class RecordQueue {
 		{
 			ls=new ArrayList<Record>();
 			course.add(hash);//对课程名进行记录
-			recordCount = count;//课程的记录数量
+			//recordCount = count;//课程的记录数量
 			String cstring=FastJsonUtil.toJSONString(course);
 			dbBlockManager.put("course", cstring);
 			System.out.println("新增一门课程：" + cstring);
 		}
+		//System.out.println("要存储的记录：" + recordBody.getRecord());
 		ls.add(recordBody.getRecord());
+
 		if(count!=-1){
 			recordcountConcurrentHashMap.put(hash, count);
 		}
-		else
+		else{
 			count=recordcountConcurrentHashMap.get(hash);
+		}
 		if(ls.size()==count)
 		{
 			List<String> hashlist=ls.stream().map(Record::getHash).collect(Collectors.toList());
 			BlockBody blockbody=new BlockBody(ls, hashlist);
-			blockService.addBlock(blockbody);
+			//测试queue先把这句注释了
+			//blockService.addBlock(blockbody);
 		}else
 		{//备份记录
 			String recordlist=FastJsonUtil.toJSONString(ls);
+			//String recordlist= JSON.toJSON(ls).toString();
+
+			//System.out.println("将要被存储的记录" + hash + ":" + "记录" + recordlist);
+			recordConcurrentHashMap.put(hash, ls);//说明当前课程的记录还没全部收到，需要暂时放到MAP
+
+			//System.out.println("已存储的记录" + hash + ":" + "记录" + recordlist);
 			dbBlockManager.put(hash, recordlist);
-			//System.out.println("备份的记录对应的课程" + hash + ":" + "记录" + recordlist);
 
 			//备份每个课程的记录数量
 			//dbBlockManager.put(FastJsonUtil.toJSONString(course),FastJsonUtil.toJSONNoFeatures(recordCount));
 			//System.out.println("备份课程的记录数量" + hash + ":" + "记录数量" + recordCount);
 		}
 	}
+
+	//判断是否有
 
 	@EventListener(DelRecordEvent.class)
 	public void blockGenerate(DelRecordEvent delRecordEvent){

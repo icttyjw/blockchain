@@ -14,7 +14,6 @@ import edu.ictt.blockchain.socket.server.handler.HeartbeatReqHandler;
 import edu.ictt.blockchain.socket.server.handler.LoginReqHandler;
 import edu.ictt.blockchain.socket.server.handler.PbftVoteHandler;
 import edu.ictt.blockchainmanager.Application;
-import edu.ictt.blockchainmanager.bean.MessageProperty;
 import edu.ictt.blockchainmanager.groupmodel.UITask;
 import edu.ictt.blockchainmanager.groupmodel.UiBaseService;
 import edu.ictt.blockchainmanager.groupmodel.userinterface.AlertController;
@@ -59,7 +58,7 @@ public  class BlockServerAioHandler extends AbstractAioHandler  implements Serve
 	//@Resource
 	//private AlertController alertController;
 	@Resource 
-	private MessageProperty messageProperty;
+	//private MessageProperty messageProperty;
 	Logger logger=LoggerFactory.getLogger(getClass());
     @Override
     public void handler(Packet packet, ChannelContext channelContext) throws Exception {

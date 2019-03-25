@@ -1,11 +1,13 @@
 package edu.ictt.blockchain.Block.record;
 
+import javax.annotation.Resource;
 import java.io.Serializable;
 
 /**
  * @Author:zoe
  * @Description:
  * @Date:
+ *
  *
  */
 public class DegreeRecord extends Record implements Serializable {

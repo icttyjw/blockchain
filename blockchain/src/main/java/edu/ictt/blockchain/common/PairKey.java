@@ -6,6 +6,10 @@
  * Copyright (c) 2017, Tencent All Rights Reserved.
  */
 package edu.ictt.blockchain.common;
+
+import static edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm.generatePrivateKey;
+import static edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm.generatePublicKey;
+
 /**
  * ClassName:PairKey <br/>
  * Date:     Jul 26, 2017 10:27:04 AM <br/>
@@ -16,6 +20,11 @@ public class PairKey {
 
     private String publicKey;
     private String privateKey;
+
+    public PairKey() {
+        privateKey = generatePrivateKey();
+        publicKey = generatePublicKey(privateKey, true);
+    }
 
     public String getPublicKey() {
         return publicKey;
