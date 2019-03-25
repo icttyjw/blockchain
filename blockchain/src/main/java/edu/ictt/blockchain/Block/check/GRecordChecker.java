@@ -18,8 +18,12 @@ public class GRecordChecker extends RecordChecker {
     @Override
     public boolean checkRecord(Record record){
         GradeRecord gradeRecord = (GradeRecord) record;
-        int checkResult = checkFalSign(gradeRecord) + checkTeacherSign(gradeRecord) + checkSign(gradeRecord) + checkTimeStamp(gradeRecord);
-
+        int cfs=checkFalSign(gradeRecord);
+        int cteas=checkTeacherSign(gradeRecord);
+        int cs=checkSign(gradeRecord);
+        int ctimes=checkTimeStamp(gradeRecord);
+        int checkResult = cs+ctimes;//checkFalSign(gradeRecord) + checkTeacherSign(gradeRecord) + checkSign(gradeRecord) + checkTimeStamp(gradeRecord);
+        System.out.println(cfs+" "+cteas+" "+ cs+" "+ctimes);
         if (checkResult == 0){
             return true;
         }
@@ -82,7 +86,7 @@ public class GRecordChecker extends RecordChecker {
             System.out.println("当前学院签名" + gradeRecord.getFalSign());
             //System.out.println("当前学院公钥：" + facPublicKey);
             if(ECDSAAlgorithm.verify(graRecord, gradeRecord.getFalSign(), facPublicKey)){
-                checkFlag = 0;
+                checkFlag = 1;
             }
         } catch (Exception e) {
             e.printStackTrace();
