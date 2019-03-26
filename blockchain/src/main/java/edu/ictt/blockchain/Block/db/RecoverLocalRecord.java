@@ -62,13 +62,13 @@ public class RecoverLocalRecord {
             String records = rocksDB.getRocksDbStore().get(course);
             System.out.println(records);
             List<GradeRecord> recordList = FastJsonUtil.toList(records, GradeRecord.class);
-            /*for(GradeRecord gradeRecord:recordList){
+            for(GradeRecord gradeRecord:recordList){
                 if(gRecordChecker.checkRecord(gradeRecord))
                     recordConcurrentHashMap.put(course, recordList);
                 else{
                     System.out.println("此记录出错:" + gradeRecord.toString());
                 }
-            }*/
+            }
 
             System.out.println("记录恢复完毕");
         }

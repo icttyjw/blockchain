@@ -6,6 +6,7 @@ import com.alibaba.fastjson.TypeReference;
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.block.BlockHeader;
 import edu.ictt.blockchain.Block.check.DbBlockChecker;
+import edu.ictt.blockchain.Block.check.GRecordChecker;
 import edu.ictt.blockchain.Block.db.ConnectRocksDB;
 import edu.ictt.blockchain.Block.db.DbInitConfig;
 import edu.ictt.blockchain.Block.db.RecoverLocalRecord;
@@ -80,6 +81,13 @@ public class PartTest {
 		}
 
 	}
+	
+	@Test
+	public void checktest(){
+		//GenerateRecord generateRecord=new GenerateRecord();
+		GRecordChecker checker=new GRecordChecker();
+		System.out.println(checker.checkRecord(GenerateRecord.geneGRecord()));//(GenerateRecord.geneGRecord());//(checker.checkRecord(GenerateRecord.geneGRecord()));
+	}
 
 	/**
 	 * 读记录(读的时候会校验记录
@@ -93,6 +101,14 @@ public class PartTest {
 		} catch (RocksDBException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void deleterecord() throws Exception{
+		ConnectRocksDB rocksDB= new ConnectRocksDB(3);
+		  List<String> courseList;
+		  ConcurrentHashMap<String, List<GradeRecord>> recordConcurrentHashMap=new ConcurrentHashMap<String, List<GradeRecord>>();
+		  
 	}
 
 	/**

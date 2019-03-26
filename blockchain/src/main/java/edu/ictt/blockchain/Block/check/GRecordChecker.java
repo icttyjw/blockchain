@@ -1,6 +1,7 @@
 package edu.ictt.blockchain.Block.check;
 
 import edu.ictt.blockchain.Block.record.*;
+import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
 import org.springframework.stereotype.Component;
 
@@ -18,12 +19,12 @@ public class GRecordChecker extends RecordChecker {
     @Override
     public boolean checkRecord(Record record){
         GradeRecord gradeRecord = (GradeRecord) record;
-        int cfs=checkFalSign(gradeRecord);
-        int cteas=checkTeacherSign(gradeRecord);
+       //int cfs=checkFalSign(gradeRecord);
+       // int cteas=checkTeacherSign(gradeRecord);
         int cs=checkSign(gradeRecord);
         int ctimes=checkTimeStamp(gradeRecord);
         int checkResult = cs+ctimes;//checkFalSign(gradeRecord) + checkTeacherSign(gradeRecord) + checkSign(gradeRecord) + checkTimeStamp(gradeRecord);
-        System.out.println(cfs+" "+cteas+" "+ cs+" "+ctimes);
+        System.out.println(cs+" "+ctimes);
         if (checkResult == 0){
             return true;
         }
@@ -39,8 +40,10 @@ public class GRecordChecker extends RecordChecker {
     public int checkSign(Record record) {
 
         GradeRecord gradeRecord = (GradeRecord) record;
-
-        if(checkTeacherSign(gradeRecord) == 1 && checkFalSign(gradeRecord) == 1){
+        int cfs=checkFalSign(gradeRecord);
+        int cteas=checkTeacherSign(gradeRecord);
+        System.out.println("签名校验"+cfs+" "+cteas);
+        if(cfs==1&&cteas==1){//checkTeacherSign(gradeRecord) == 1 && checkFalSign(gradeRecord) == 1
             return 0;
         }
         return -1;
@@ -48,8 +51,11 @@ public class GRecordChecker extends RecordChecker {
 
     //校验教师的签名
     public int checkTeacherSign(GradeRecord gradeRecord){
-        String graRecord = gradeRecord.getSchoolInfo().toString()+gradeRecord.getFacultyInfo().toString()
-                +gradeRecord.getGradeInfo().toString() + gradeRecord.getRecordTimeStamp();
+    	String scinfo=FastJsonUtil.toJSONString(gradeRecord.getSchoolInfo());
+    	String facuinfo=FastJsonUtil.toJSONString(gradeRecord.getFacultyInfo());
+    	String grainfo=FastJsonUtil.toJSONString(gradeRecord.getGradeInfo());
+        String graRecord =scinfo+facuinfo+grainfo//scinfo+facuinfo+grainfo//gradeRecord.getSchoolInfo().toString()+gradeRecord.getFacultyInfo().toString()
+        		 + gradeRecord.getRecordTimeStamp(); // +gradeRecord.getGradeInfo().toString() + gradeRecord.getRecordTimeStamp();
 
 
         TeacherInfo[] teacherInfos = gradeRecord.getGradeInfo().getTeacherInfo();
@@ -73,8 +79,11 @@ public class GRecordChecker extends RecordChecker {
 
     //校验学院的签名
     public int checkFalSign(GradeRecord gradeRecord){
-        String graRecord = gradeRecord.getSchoolInfo().toString()+gradeRecord.getFacultyInfo().toString()
-                +gradeRecord.getGradeInfo().toString() + gradeRecord.getRecordTimeStamp() + gradeRecord.getTeacherSign();
+    	String scinfo=FastJsonUtil.toJSONString(gradeRecord.getSchoolInfo());
+    	String facuinfo=FastJsonUtil.toJSONString(gradeRecord.getFacultyInfo());
+    	String grainfo=FastJsonUtil.toJSONString(gradeRecord.getGradeInfo());
+        String graRecord = scinfo+facuinfo+grainfo//scinfo+facuinfo+grainfo/*gradeRecord.getSchoolInfo().toString()+gradeRecord.getFacultyInfo().toString()
+        		+ gradeRecord.getRecordTimeStamp() + gradeRecord.getTeacherSign();//+gradeRecord.getGradeInfo().toString() + gradeRecord.getRecordTimeStamp() + gradeRecord.getTeacherSign();
 
         int checkFlag = -1;
 

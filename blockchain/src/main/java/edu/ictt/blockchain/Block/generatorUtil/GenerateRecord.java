@@ -1,6 +1,7 @@
 package edu.ictt.blockchain.Block.generatorUtil;
 
 import edu.ictt.blockchain.Block.record.*;
+import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.PairKey;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
 
@@ -92,7 +93,8 @@ public class GenerateRecord {
         TeacherInfo[] teacherInfos = new TeacherInfo[3];
         for(int i=0; i<teacherInfos.length; i++){
             teacherInfos[i] = geneTeacherInfo();
-            System.out.println("教师信息" + teacherInfos.toString());
+            System.out.println("教师信息" + teacherInfos[i].getTeacherPairKey());
+            System.out.println("教师信息" + teacherInfos[i].toString());
         }
         gradeInfo.setTeacherInfo(teacherInfos);
 
@@ -107,20 +109,25 @@ public class GenerateRecord {
         record.setSchoolInfo(geneSchoolInfo());
         record.setFacultyInfo(geneFaculthInfo());
         record.setGradeInfo(geneGradeInfo());
-        record.setRecordTimeStamp(System.currentTimeMillis());
+        record.setRecordTimeStamp(System.currentTimeMillis());//System.currentTimeMillis()
 
 
         TeacherInfo[] teacherInfos = record.getGradeInfo().getTeacherInfo();
         String teaPriKey = teacherInfos[0].getTeacherPairKey().getPrivateKey();
         String falPriKey = record.getFacultyInfo().getFacultyPairKey().getPrivateKey();
+        String scinfo=FastJsonUtil.toJSONString(record.getSchoolInfo());
+    	String facuinfo=FastJsonUtil.toJSONString(record.getFacultyInfo());
+    	String grainfo=FastJsonUtil.toJSONString(record.getGradeInfo());
         try {
-            String recordStr = record.getSchoolInfo().toString()+record.getFacultyInfo().toString()
-                    +record.getGradeInfo().toString()+record.getRecordTimeStamp();
+            String recordStr = scinfo+facuinfo+grainfo//scinfo+facuinfo+grainfo//record.getSchoolInfo().toString()+record.getFacultyInfo().toString()
+            		+record.getRecordTimeStamp();//+record.getGradeInfo().toString()+record.getRecordTimeStamp();
             record.setTeacherSign(ECDSAAlgorithm.sign(teaPriKey, recordStr));
             System.out.println("被签名的记录为：" + recordStr);
             System.out.println("记录的教师签名为：" + record.getTeacherSign());
-            recordStr = record.getSchoolInfo().toString()+record.getFacultyInfo().toString()
-                    +record.getGradeInfo().toString()+record.getRecordTimeStamp()+ record.getTeacherSign();
+            
+            recordStr = scinfo+facuinfo+grainfo//scinfo+facuinfo+grainfo//record.getSchoolInfo().toString()+record.getFacultyInfo().toString()
+            		+record.getRecordTimeStamp()+ record.getTeacherSign();//+record.getGradeInfo().toString()+record.getRecordTimeStamp()+ record.getTeacherSign();
+            System.out.println(recordStr);
             record.setFalSign(ECDSAAlgorithm.sign(falPriKey,recordStr));
             System.out.println("记录的学院签名为：" + record.getFalSign());
         } catch (UnsupportedEncodingException e) {
