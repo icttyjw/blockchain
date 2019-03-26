@@ -28,7 +28,7 @@ public class UITask {
 			}
 			updateMessage("suc");
     		AlertController alertController=loader.getController();
-			alertController.set("suc");
+			alertController.set("");
     	}
 	};
 }

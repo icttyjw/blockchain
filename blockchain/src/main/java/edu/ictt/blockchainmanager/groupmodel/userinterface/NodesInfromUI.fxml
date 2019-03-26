@@ -45,6 +45,7 @@
                                         <Button fx:id="save" layoutX="22.0" layoutY="157.0" mnemonicParsing="false" onAction="#save" text="save" />
                                     </children>
                                 </AnchorPane>
+                        <Button fx:id="start" layoutX="245.0" layoutY="225.0" mnemonicParsing="false" onAction="#statr" text="start server" />
                             </children>
                         </Pane>
                     </content>

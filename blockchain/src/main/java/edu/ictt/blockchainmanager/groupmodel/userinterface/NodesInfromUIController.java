@@ -11,12 +11,17 @@ import org.slf4j.LoggerFactory;
 import de.felixroske.jfxsupport.FXMLController;
 import edu.ictt.blockchainmanager.Application;
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
+import edu.ictt.blockchainmanager.groupmodel.UITask;
+import edu.ictt.blockchainmanager.socket.test.server.BlockServerStarter;
 import edu.ictt.blockchainmanager.sql.service.NodeService;
+import edu.ictt.blockchainmanager.view.AlertView;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 
 /**
  * NodesInfrom Controller
@@ -78,6 +83,9 @@ public class NodesInfromUIController  implements Initializable{
     
     @Resource
     private NodeService nodeService;
+    
+    @FXML
+    private Button start;
 
     @FXML
     void jumpToSchool(ActionEvent event) {
@@ -100,6 +108,27 @@ public class NodesInfromUIController  implements Initializable{
 		pubkey.setText(nodeState.getPubKey());
 		state.setText(nodeState.getState());
 		ip.setText(nodeState.getIp());
+	}
+	
+	public void statr(ActionEvent event){
+		Task<Void> task=new Task<Void>(){
+
+			@Override
+			protected Void call() throws Exception {
+				BlockServerStarter.serverStart();
+				return null;
+			}
+			
+			@Override
+			protected void succeeded(){
+				Application.showView(AlertView.class, Modality.WINDOW_MODAL);
+			}
+			
+		};
+		Thread th=new Thread(task);
+		th.setDaemon(true);
+		th.start();
+		
 	}
 
 }

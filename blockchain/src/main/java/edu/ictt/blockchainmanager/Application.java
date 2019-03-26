@@ -9,8 +9,10 @@ import edu.ictt.blockchainmanager.console.TextAreaAppender;
 import edu.ictt.blockchainmanager.view.MainView;
 import edu.ictt.blockchainmanager.view.RegistView;
 import edu.ictt.blockchainmanager.view.TextView;
+import javafx.event.EventHandler;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 @SpringBootApplication
 @EntityScan(value="edu.ictt.blockchainmanager.groupmodel")
@@ -23,6 +25,12 @@ public class Application  extends AbstractJavaFxApplicationSupport {
 		 //primaryStage.setTitle("SignUp");
 			//primaryStage.setResizable(false);
 		//TextAreaAppender.setTextArea(loggingView);
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                System.exit(0);
+            }
+        });
 	        super.start(primaryStage);
 	       // setupLogginView();
 	    }

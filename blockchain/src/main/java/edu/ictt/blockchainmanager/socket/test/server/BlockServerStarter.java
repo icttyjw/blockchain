@@ -24,13 +24,14 @@ import javax.annotation.PostConstruct;
 @Component
 public class BlockServerStarter {
 
-	private Logger logger = LoggerFactory.getLogger(getClass());
-    @PostConstruct
-    public void serverStart() throws IOException {
+	private static Logger logger = LoggerFactory.getLogger(BlockServerStarter.class);
+    //@PostConstruct
+	private static ServerAioHandler serverAioHandler = new BlockServerAioHandler();
+    private static ServerAioListener serverAioListener = new BlockServerAioListener();
+     private static ServerGroupContext serverGroupContext = new ServerGroupContext(serverAioHandler, serverAioListener);
+    public static void serverStart() throws IOException {
     	logger.info("启动server");
-        ServerAioHandler serverAioHandler = new BlockServerAioHandler();
-        ServerAioListener serverAioListener = new BlockServerAioListener();
-        ServerGroupContext serverGroupContext = new ServerGroupContext(serverAioHandler, serverAioListener);
+       
         //serverGroupContext.setHeartbeatTimeout(Const.TIMEOUT);
         TioServer tioServer = new TioServer(serverGroupContext);
         //本机启动服务

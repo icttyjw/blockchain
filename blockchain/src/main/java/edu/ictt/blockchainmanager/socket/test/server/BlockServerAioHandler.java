@@ -55,10 +55,6 @@ public  class BlockServerAioHandler extends AbstractAioHandler  implements Serve
      * @throws Exception 
      */
 	
-	//@Resource
-	//private AlertController alertController;
-	@Resource 
-	//private MessageProperty messageProperty;
 	Logger logger=LoggerFactory.getLogger(getClass());
     @Override
     public void handler(Packet packet, ChannelContext channelContext) throws Exception {
