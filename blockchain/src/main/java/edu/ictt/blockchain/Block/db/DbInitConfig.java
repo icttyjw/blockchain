@@ -25,7 +25,8 @@ public class DbInitConfig {
 
         Options options = new Options().setCreateIfMissing(true);
         try {
-            if (dataType == 1) {
+        	return RocksDB.open(options, "./rocksDB");
+          /*  if (dataType == 1) {
                 return RocksDB.open(options, "./Block");
             }
             if (dataType == 2) {
@@ -36,7 +37,7 @@ public class DbInitConfig {
             }
             else {
                 return RocksDB.open(options, "./OtherInformation");
-            }
+            }*/
         } catch (RocksDBException e1) {
             e1.printStackTrace();
         }

@@ -33,7 +33,7 @@ public class BlockService {
 		blockHeader.setBlockTimeStamp(CommonUtil.getNow());		
 		blockHeader.setBlockNumber(dbBlockManager.getLastBlockNumber()+1);
 		blockHeader.setHashPreviousBlock(dbBlockManager.getLastBlockHash());
-		Block block=new Block();
+		Block block=new Block(); 
 		block.setBlockHeader(blockHeader);
 		block.setBlockBody(blockbody);
 		block.setBlockHash(SHA256.sha256(blockHeader.toString())+SHA256.sha256(blockbody.toString()));

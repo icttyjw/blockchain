@@ -46,7 +46,7 @@ public class DbBlockChecker implements BlockChecker {
 
     @Override
     public int checkNum(Block block) {
-        Block localBlock = getLastBlock();
+        Block localBlock = dbBlockManager.getLastBlock();//getLastBlock();
         long localNum = 0;
         if (localBlock != null) {
             localNum = localBlock.getBlockHeader().getBlockNumber();

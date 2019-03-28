@@ -56,8 +56,8 @@ public class ClientStarter {
     private PacketSender packetSender;
     @Resource
     private RestTemplate restTemplate;
-    @Resource
-    private NodeService nodeService;
+    //@Resource
+    //private NodeService nodeService;
     @Resource
     private BlockService blockService;
     //@Resource
@@ -88,7 +88,7 @@ public class ClientStarter {
         String localIp = CommonUtil.getLocalIp();
         logger.info("本机IP：{}",localIp);
         //校内和组内信息为长连，组间在投票时连接
-        List<NodeState> nodelist=nodeService.queryAllNodes();
+        /*List<NodeState> nodelist=nodeService.queryAllNodes();
         if(nodelist.isEmpty())
         {
         	logger.info("请先初始化");
@@ -99,7 +99,7 @@ public class ClientStarter {
         for(NodeState nodestate:nodelist){
         	 Node node = new Node(nodestate.getIp(), Const.PORT);
              nodes.add(node);
-        }
+        }*/
         Node node=new Node(localIp,Const.PORT);
         nodes.add(node);
         bindServerGroup(nodes);
