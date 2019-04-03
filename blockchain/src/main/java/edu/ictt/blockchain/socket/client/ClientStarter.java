@@ -119,9 +119,10 @@ public class ClientStarter {
         List<Record> records = new ArrayList<>();
         Record record = GenerateRecord.geneGRecord();
         records.add(record);
-        List<String> recordsHash = new ArrayList<>();
-        recordsHash.add(MerkleHash.create(record.toString()).toString());
-        BlockBody blockBody = new BlockBody(records,recordsHash);
+        //List<String> recordsHash = new ArrayList<>();
+        //recordsHash.add(MerkleHash.create(record.toString()).toString());
+        //BlockBody blockBody = new BlockBody(records,recordsHash);
+        BlockBody blockBody = new BlockBody(records);
         BlockRequesbody blockRequesbody=new BlockRequesbody(blockBody);
         System.out.println("本地生成的新区块体为：" + blockRequesbody);
         blockService.addBlock(blockRequesbody);

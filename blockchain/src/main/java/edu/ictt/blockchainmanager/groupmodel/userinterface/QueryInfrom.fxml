@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ictt.blockchainmanager.groupmodel.userinterface.QueryInfromController">
+   <children>
+      <Pane prefHeight="120.0" prefWidth="600.0">
+         <children>
+            <TextField fx:id="queryField" layoutX="196.0" layoutY="51.0" text="输入要查询的内容" />
+            <Button fx:id="queryButton" layoutX="371.0" layoutY="51.0" mnemonicParsing="false" onAction="#queryInDB" text="查询" />
+         </children>
+      </Pane>
+      <ScrollPane layoutY="113.0" prefHeight="237.0" prefWidth="600.0">
+         <content>
+            <TableView fx:id="recordTable" disable="true" prefHeight="230.0" prefWidth="600.0">
+              <columns>
+                <TableColumn maxWidth="1.7976931348623157E308" prefWidth="75.0" text="学校" />
+                <TableColumn prefWidth="75.0" text="学院" />
+                  <TableColumn prefWidth="75.0" text="课程" />
+                  <TableColumn prefWidth="75.0" text="任课教师" />
+                  <TableColumn prefWidth="75.0" text="学生" />
+                  <TableColumn prefWidth="50.0" text="成绩" />
+                  <TableColumn prefWidth="75.0" text="教师审核" />
+                  <TableColumn prefWidth="75.0" text="学院审核" />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+   </children>
+</Pane>

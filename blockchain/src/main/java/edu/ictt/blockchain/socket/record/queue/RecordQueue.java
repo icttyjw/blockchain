@@ -90,10 +90,11 @@ public class RecordQueue {
 		}
 		if(ls.size()==count)
 		{
-			List<String> hashlist=ls.stream().map(Record::getHash).collect(Collectors.toList());
-			BlockBody blockbody=new BlockBody(ls, hashlist);
+			//List<String> hashlist=ls.stream().map(Record::getHash).collect(Collectors.toList());
+			//BlockBody blockbody=new BlockBody(ls, hashlist);
+			BlockBody blockbody=new BlockBody(ls);
 			//测试queue先把这句注释了
-			//blockService.addBlock(blockbody);
+			blockService.addBlock(blockbody);
 		}else
 		{//备份记录
 			String recordlist=FastJsonUtil.toJSONString(ls);

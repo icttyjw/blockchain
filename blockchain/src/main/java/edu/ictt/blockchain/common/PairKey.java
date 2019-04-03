@@ -22,8 +22,8 @@ public class PairKey {
     private String privateKey;
 
     public PairKey() {
-        privateKey = generatePrivateKey();
-        publicKey = generatePublicKey(privateKey, true);
+        //privateKey = generatePrivateKey();
+       // publicKey = generatePublicKey(privateKey, true);
     }
 
     public String getPublicKey() {

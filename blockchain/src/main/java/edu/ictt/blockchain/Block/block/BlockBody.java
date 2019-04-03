@@ -5,7 +5,7 @@ import edu.ictt.blockchain.Block.record.Record;
 import java.util.List;
 
 /**
- * @Author:zoe
+ * @Author:
  * @Description:
  * @Date:
  *
@@ -16,14 +16,16 @@ public class BlockBody {
     private List<Record> recordsList;
 
     //这个不需要放在区块中。记录哈希值集合
-    private List<String> recordHashList;
+    //private List<String> recordHashList;
 
     public BlockBody(){};
 
-    public BlockBody(List<Record> recordsList, List<String> recordHashList) {
-        this.recordsList = recordsList;
-        this.recordHashList = recordHashList;
-    }
+    
+    public BlockBody(List<Record> recordsList) {
+		super();
+		this.recordsList = recordsList;
+	}
+
 
     public List<Record> getRecordsList() {
         return recordsList;
@@ -33,13 +35,13 @@ public class BlockBody {
         this.recordsList = recordsList;
     }
 
-    public List<String> getRecordHashList() {
+    /*public List<String> getRecordHashList() {
         return recordHashList;
     }
 
     public void setRecordHashList(List<String> recordHashList) {
         this.recordHashList = recordHashList;
-    }
+    }*/
 
     @Override
     public String toString() {
