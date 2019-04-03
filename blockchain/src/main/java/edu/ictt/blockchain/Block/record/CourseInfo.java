@@ -6,21 +6,30 @@ package edu.ictt.blockchain.Block.record;
 
 public class CourseInfo{
 
-    //课程id
+    /**
+     * 课程id
+     */
     private int courseId;
 
-    //课程名
+    /**
+     * 课程名
+     */
     private String courseName;
 
-    //课程学分
+    /**
+     * 课程学分
+     */
     private int courseCredit;
 
-    //开课学期
+    /**
+     * 开课学期
+     */
     private String courseDate;
 
-    //课程属性:必修学位，必修非学位等等
+    /**
+     * 课程属性:必修学位，必修非学位等等
+     */
     private String coursePro;
-
 
     public CourseInfo(){}
 
@@ -77,13 +86,8 @@ public class CourseInfo{
     }
 
     @Override
-    public String toString() {
-        return "CourseInfo{" +
-                "courseId=" + courseId +
-                ", courseName='" + courseName + '\'' +
-                ", courseCredit=" + courseCredit +
-                ", courseDate='" + courseDate + '\'' +
-                ", coursePro='" + coursePro + '\'' +
-                '}';
-    }
+	public String toString() {
+		return "CourseInfo [courseId=" + courseId + ", courseName=" + courseName + ", courseCredit=" + courseCredit
+				+ ", courseDate=" + courseDate + ", coursePro=" + coursePro + "]";
+	}
 }

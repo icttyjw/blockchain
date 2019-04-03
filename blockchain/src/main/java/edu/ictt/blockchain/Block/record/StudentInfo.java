@@ -8,13 +8,19 @@ package edu.ictt.blockchain.Block.record;
  */
 public class StudentInfo {
 
-    //学生学号
+    /**
+     * 学生学号
+     */
     private int studentId;
 
-    //学生姓名
+    /**
+     * 学生姓名
+     */
     private String studentName;
 
-    //学生属性
+    /**
+     * 学生属性
+     */
     private String studentPro;
 
     public StudentInfo(){};
@@ -50,11 +56,8 @@ public class StudentInfo {
     }
 
     @Override
-    public String toString() {
-        return "StudentInfo{" +
-                "studentId=" + studentId +
-                ", studentName='" + studentName + '\'' +
-                ", studentPro='" + studentPro + '\'' +
-                '}';
-    }
+	public String toString() {
+		return "StudentInfo [studentId=" + studentId + ", studentName=" + studentName + ", studentPro=" + studentPro
+				+ "]";
+	}
 }

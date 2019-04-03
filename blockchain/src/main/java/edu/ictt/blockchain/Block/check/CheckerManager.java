@@ -15,27 +15,22 @@ public class CheckerManager {
 
 	@Resource
 	private DbBlockChecker dbBlockChecker;
-	 public RpcCheckBlockBody check(Block block) {
+	
+	public RpcCheckBlockBody check(Block block) {
 
 		 //DbBlockChecker dbBlockChecker = new DbBlockChecker();
 
-		 if (dbBlockChecker.checkAll(block)) {
-			 return new RpcCheckBlockBody(0, "OK", block);
-		 } else {
-			 if (dbBlockChecker.checkNum(block) == 0) {
-				 if (dbBlockChecker.checkHash(block) == 0) {
-				 	if(dbBlockChecker.checkTime(block) == 0){
-						return new RpcCheckBlockBody(-10, "Illegal block", block);
-
-					}
-					 return new RpcCheckBlockBody(-3, "Block time errror", block);
-
-				 }
-				 return new RpcCheckBlockBody(-2, "Block hash errror", block);
-			 }
+		 if (dbBlockChecker.checkNum(block) != 0) {
 			 return new RpcCheckBlockBody(-1, "Block number errror", block);
-		 }
-
-
-	 }
+		 }else if (dbBlockChecker.checkHash(block) != 0) {
+			 return new RpcCheckBlockBody(-3, "Block hash errror", block);
+		 }else if(dbBlockChecker.checkTime(block) != 0){
+			 return new RpcCheckBlockBody(-4, "Block time errror", block);
+		 }else if(dbBlockChecker.checkBlock(block) !=0){
+			 return new RpcCheckBlockBody(-10, "Illeagl Block ", block); 
+		 }else {
+			 return new RpcCheckBlockBody(0, "OK", block);
+		 }	
+		
+	 }					
 }

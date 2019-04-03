@@ -22,11 +22,9 @@ public class GenerateRecord {
         SchoolInfo schoolInfo = new SchoolInfo();
         schoolInfo.setSchoolId(10001);
         schoolInfo.setSchoolName("清华");
-        schoolInfo.setSchoolPairKey(new PairKey());
+        schoolInfo.setSchoolPubKey(new PairKey().getPublicKey());
 
-        List<String> scPro = new ArrayList<>();
-        scPro.add("重点");
-        scPro.add("985");
+        String scPro = "重点" + "985";
         schoolInfo.setSchoolPro(scPro);
 
         return schoolInfo;
@@ -39,7 +37,7 @@ public class GenerateRecord {
         facultyInfo.setFacultyName("计算机");
         facultyInfo.setFacultyPro("重点学科");
 
-        facultyInfo.setFacultyPairKey(new PairKey());
+        facultyInfo.setFacultyPubKey(new PairKey().getPublicKey());
 
         //System.out.println("学院公钥" + pairKey.getPublicKey());
         //System.out.println("学院私钥" + pairKey.getPrivateKey());
@@ -75,7 +73,7 @@ public class GenerateRecord {
         teacherInfo.setTeacherName("李老师");
         teacherInfo.setTeacherTitle("教授");
 
-        teacherInfo.setTeacherPairKey(new PairKey());
+        teacherInfo.setTeacherPubKey(new PairKey().getPublicKey());
 
         //System.out.println("教师公钥" + pairKey.getPublicKey());
         //System.out.println("教师私钥" + pairKey.getPrivateKey());
@@ -93,7 +91,7 @@ public class GenerateRecord {
         TeacherInfo[] teacherInfos = new TeacherInfo[3];
         for(int i=0; i<teacherInfos.length; i++){
             teacherInfos[i] = geneTeacherInfo();
-            System.out.println("教师信息" + teacherInfos[i].getTeacherPairKey());
+            System.out.println("教师信息" + teacherInfos[i].getTeacherPubKey());
             System.out.println("教师信息" + teacherInfos[i].toString());
         }
         gradeInfo.setTeacherInfo(teacherInfos);
@@ -113,8 +111,11 @@ public class GenerateRecord {
 
 
         TeacherInfo[] teacherInfos = record.getGradeInfo().getTeacherInfo();
-        String teaPriKey = teacherInfos[0].getTeacherPairKey().getPrivateKey();
-        String falPriKey = record.getFacultyInfo().getFacultyPairKey().getPrivateKey();
+        
+        
+        //^^^^^^^^^^^^^^^^^^^^此处有问题，私钥需存到数据库
+        String teaPriKey = teacherInfos[0].getTeacherPubKey();
+        String falPriKey = record.getFacultyInfo().getFacultyPubKey();
         String scinfo=FastJsonUtil.toJSONString(record.getSchoolInfo());
     	String facuinfo=FastJsonUtil.toJSONString(record.getFacultyInfo());
     	String grainfo=FastJsonUtil.toJSONString(record.getGradeInfo());
@@ -128,8 +129,8 @@ public class GenerateRecord {
             recordStr = scinfo+facuinfo+grainfo//scinfo+facuinfo+grainfo//record.getSchoolInfo().toString()+record.getFacultyInfo().toString()
             		+record.getRecordTimeStamp()+ record.getTeacherSign();//+record.getGradeInfo().toString()+record.getRecordTimeStamp()+ record.getTeacherSign();
             System.out.println(recordStr);
-            record.setFalSign(ECDSAAlgorithm.sign(falPriKey,recordStr));
-            System.out.println("记录的学院签名为：" + record.getFalSign());
+            record.setFacultySign(ECDSAAlgorithm.sign(falPriKey,recordStr));
+            System.out.println("记录的学院签名为：" + record.getFacultySign());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

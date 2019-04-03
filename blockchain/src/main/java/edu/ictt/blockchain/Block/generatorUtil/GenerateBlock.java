@@ -25,20 +25,21 @@ public class GenerateBlock {
         //生成记录
         List<Record> records = new ArrayList<>();
         List<String> recordHash = new ArrayList<>();
-        MerkleNode[] merkleNodes = new MerkleNode[10];
+        List<MerkleNode> merkleNodes = new ArrayList<>();
         for(int j=0; j<10; j++){
             Record record = GenerateRecord.geneGRecord();
             records.add(record);
 
             //注意MerkleHash不是用SHA256生成的
             MerkleNode merkleNode = new MerkleNode(MerkleHash.create(record.toString()));
-            merkleNodes[i] = merkleNode;
+            merkleNodes.add(merkleNode);
             recordHash.add(merkleNode.getHash().toString());
         }
 
         //生成MerkleRoot
         MerkleTree merkleTree = new MerkleTree();
-        merkleTree.appendLeaves(merkleNodes);
+        //merkleTree.appendLeaves(merkleNodes);
+        merkleTree.buildTree(merkleNodes);
 
         //用记录生成blockbody
         BlockBody blockBody = new BlockBody();

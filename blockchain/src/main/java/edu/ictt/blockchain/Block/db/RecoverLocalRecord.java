@@ -63,7 +63,7 @@ public class RecoverLocalRecord {
             System.out.println(records);
             List<GradeRecord> recordList = FastJsonUtil.toList(records, GradeRecord.class);
             for(GradeRecord gradeRecord:recordList){
-                if(gRecordChecker.checkRecord(gradeRecord))
+                if(gRecordChecker.checkRecord(gradeRecord) == 0)
                     recordConcurrentHashMap.put(course, recordList);
                 else{
                     System.out.println("此记录出错:" + gradeRecord.toString());

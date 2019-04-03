@@ -10,15 +10,20 @@ import java.util.Arrays;
  */
 public class GradeInfo {
 
-    //课程信息，对学位来说
+    /**
+     * 课程信息
+     */
     private CourseInfo courseInfo;
 
-    //任课教师信息,每门课程最多三个老师
+    /**
+     * 任课教师信息,每门课程最多三个老师 
+     */
     private TeacherInfo[] teacherInfo = new TeacherInfo[3];
 
-    //学生信息
+    /**
+     * 学生信息
+     */
     private StudentInfo studentInfo;
-
 
     /**
      * 成绩信息
@@ -67,13 +72,9 @@ public class GradeInfo {
     }
 
     @Override
-    public String toString() {
-        return "GradeInfo{" +
-                "courseInfo=" + courseInfo +
-                ", teacherInfo=" + Arrays.toString(teacherInfo) +
-                ", studentInfo=" + studentInfo +
-                ", grade=" + grade +
-                '}';
-    }
+	public String toString() {
+		return "GradeInfo [courseInfo=" + courseInfo + ", teacherInfo=" + Arrays.toString(teacherInfo)
+				+ ", studentInfo=" + studentInfo + ", grade=" + grade + "]";
+	}
 
 }

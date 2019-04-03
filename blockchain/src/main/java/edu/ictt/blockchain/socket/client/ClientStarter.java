@@ -2,16 +2,17 @@ package edu.ictt.blockchain.socket.client;
 
 import static edu.ictt.blockchain.common.Const.GROUP_NAME;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import edu.ictt.blockchain.Block.block.BlockBody;
+import edu.ictt.blockchain.Block.generatorUtil.GenerateRecord;
+import edu.ictt.blockchain.Block.merkle.MerkleHash;
+import edu.ictt.blockchain.Block.record.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -115,7 +116,14 @@ public class ClientStarter {
         //logger.info(""+clientGroupContext.getName());
         //BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.HEART_BEAT).setBody(new BaseBody()).build();//NextBlockPacketBuilder.build();
         //packetSender.sendGroup(blockPacket);
-        BlockRequesbody blockRequesbody=new BlockRequesbody();
+        List<Record> records = new ArrayList<>();
+        Record record = GenerateRecord.geneGRecord();
+        records.add(record);
+        List<String> recordsHash = new ArrayList<>();
+        recordsHash.add(MerkleHash.create(record.toString()).toString());
+        BlockBody blockBody = new BlockBody(records,recordsHash);
+        BlockRequesbody blockRequesbody=new BlockRequesbody(blockBody);
+        System.out.println("本地生成的新区块体为：" + blockRequesbody);
         blockService.addBlock(blockRequesbody);
         //Tio.sendToGroup(clientGroupContext, GROUP_NAME, blockPacket);
     }

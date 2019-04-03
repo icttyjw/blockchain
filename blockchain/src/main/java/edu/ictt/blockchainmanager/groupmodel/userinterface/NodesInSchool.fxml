@@ -9,31 +9,59 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="223.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ictt.blockchainmanager.groupmodel.userinterface.NodesInSchoolController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="351.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ictt.blockchainmanager.groupmodel.userinterface.NodesInSchoolController">
    <children>
-      <Pane layoutX="2.0" layoutY="87.0" prefHeight="138.0" prefWidth="309.0">
+      <HBox prefHeight="351.0" prefWidth="600.0">
          <children>
-            <Label id="offNodeLabel" layoutX="133.0" layoutY="14.0" prefHeight="15.0" prefWidth="88.0" text="离线节点" />
-            <Circle id="offNodeSign" fill="#848587" layoutX="109.0" layoutY="21.0" radius="8.0" stroke="#848587" strokeType="INSIDE" />
-            <Label id="failNodeLabel" layoutX="133.0" layoutY="39.0" prefHeight="15.0" prefWidth="88.0" text="故障节点" />
-            <Circle id="failNodeSign" fill="#f4606c" layoutX="109.0" layoutY="46.0" radius="8.0" stroke="#f4606c" strokeType="INSIDE" />
-            <Label id="nodeLabel" layoutX="133.0" layoutY="63.0" prefHeight="15.0" prefWidth="88.0" text="正常运行" />
-            <Circle id="nodeSign" fill="#19caad" layoutX="109.0" layoutY="70.0" radius="8.0" stroke="#19caad" strokeType="INSIDE" />
-            <Button id="refreshButton" fx:id="refresh" layoutX="263.0" layoutY="59.0" mnemonicParsing="false" text="刷新" />
+            <VBox prefHeight="351.0" prefWidth="525.0">
+               <children>
+                  <Pane prefHeight="181.0" prefWidth="463.0">
+                     <children>
+                        <Circle id="FailNode" fill="#f4606c" layoutX="210.0" layoutY="108.0" radius="11.0" stroke="#f4606c" strokeType="INSIDE" />
+                        <Circle id="Node2" fill="#19caad" layoutX="243.0" layoutY="46.0" radius="11.0" stroke="#19caad" strokeType="INSIDE" />
+                        <Circle id="Node1" fill="#19caad" layoutX="328.0" layoutY="57.0" radius="11.0" stroke="#19caad" strokeType="INSIDE" />
+                        <Circle id="OffLineNodes" fill="#848587" layoutX="134.0" layoutY="57.0" radius="11.0" stroke="#848587" strokeType="INSIDE" />
+                     </children>
+                  </Pane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="162.0" prefWidth="463.0" spacing="10.0">
+                           <children>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Circle id="failNodeSign" fill="#f4606c" layoutX="109.0" layoutY="46.0" radius="8.0" stroke="#f4606c" strokeType="INSIDE" GridPane.rowIndex="1" />
+                                    <Label id="failNodeLabel" alignment="CENTER" layoutX="133.0" layoutY="39.0" prefHeight="15.0" prefWidth="88.0" text="故障节点" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Circle id="offNodeSign" fill="#848587" radius="8.0" stroke="#848587" strokeType="INSIDE" />
+                                    <Label id="offNodeLabel" alignment="CENTER" prefHeight="15.0" prefWidth="88.0" text="离线节点" textAlignment="CENTER" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Circle id="nodeSign" fill="#19caad" layoutX="109.0" layoutY="70.0" radius="8.0" stroke="#19caad" strokeType="INSIDE" GridPane.rowIndex="2" />
+                                    <Label id="nodeLabel" alignment="CENTER" layoutX="133.0" layoutY="63.0" prefHeight="15.0" prefWidth="88.0" text="正常运行" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="87.0" prefWidth="463.0">
+                     <children>
+                        <Button id="refreshButton" fx:id="refresh" alignment="CENTER" mnemonicParsing="false" text="刷新" textAlignment="CENTER" />
+                     </children>
+                  </StackPane>
+               </children>
+            </VBox>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <ListView fx:id="nodesList" prefHeight="351.0" prefWidth="229.0" />
+               </children>
+            </StackPane>
          </children>
-      </Pane>
-      <Pane prefHeight="101.0" prefWidth="309.0">
-         <children>
-            <Circle id="FailNode" fill="#f4606c" layoutX="172.0" layoutY="68.0" radius="11.0" stroke="#f4606c" strokeType="INSIDE" />
-            <Circle id="Node2" fill="#19caad" layoutX="124.0" layoutY="46.0" radius="11.0" stroke="#19caad" strokeType="INSIDE" />
-            <Circle id="Node1" fill="#19caad" layoutX="214.0" layoutY="35.0" radius="11.0" stroke="#19caad" strokeType="INSIDE" />
-            <Circle id="OffLineNodes" fill="#848587" layoutX="67.0" layoutY="57.0" radius="11.0" stroke="#848587" strokeType="INSIDE" />
-         </children>
-      </Pane>
-      <Pane layoutX="313.0" prefHeight="223.0" prefWidth="143.0">
-         <children>
-            <ListView fx:id="nodesList" layoutX="-2.0" prefHeight="223.0" prefWidth="149.0" />
-         </children>
-      </Pane>
+      </HBox>
    </children>
 </AnchorPane>

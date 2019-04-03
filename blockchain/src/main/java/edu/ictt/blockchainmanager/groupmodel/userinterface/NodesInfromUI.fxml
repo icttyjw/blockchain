@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.*?>
@@ -17,35 +18,44 @@
                     <content>
                         <Pane prefHeight="223.0" prefWidth="450.0">
                             <children>
-                                <AnchorPane layoutX="-4.0" layoutY="-1.0" prefHeight="200.0" prefWidth="473.0" style="-fx-border-color: gray; -fx-background-color: white;">
-                                    <children>
-                                        <Group>
-                                            <children>
-                                                <Label fx:id="State" layoutX="105.0" layoutY="82.0" text="运行状态:" />
-                                                <Label fx:id="Name" layoutX="105.0" layoutY="38.0" text="高校:" />
-                                                <Label fx:id="LastCon" layoutX="107.0" layoutY="131.0" text="最后一次通信时间:" />
-                                                <Label fx:id="Ip" layoutX="105.0" layoutY="59.0" text="Ip地址:" />
-                                                <Label fx:id="ConState" layoutX="105.0" layoutY="105.0" text="通信状态:" />
-                                                <Label fx:id="pubKey" layoutX="106.0" layoutY="154.0" text="公钥:" />
-                                                <Label fx:id="Id" layoutX="105.0" layoutY="15.0" text="ID:" />
-                                            </children>
-                                        </Group>
-                              <Group>
+                        <StackPane layoutY="222.0" prefHeight="100.0" prefWidth="600.0">
+                           <children>
+                              <Button fx:id="start" mnemonicParsing="false" onAction="#statr" text="start server" />
+                           </children>
+                        </StackPane>
+                        <HBox prefHeight="250.0" prefWidth="600.0">
+                           <children>
+                              <VBox alignment="CENTER_RIGHT" prefHeight="250.0" prefWidth="235.0" spacing="5.0">
                                  <children>
-                                              <Label fx:id="ip" layoutX="214.0" layoutY="60.0" prefHeight="15.0" prefWidth="163.0" />
-                                              <Label fx:id="name" layoutX="214.0" layoutY="38.0" prefHeight="15.0" prefWidth="163.0" />
-                                              <Label fx:id="state" layoutX="214.0" layoutY="81.0" prefHeight="15.0" prefWidth="163.0" />
-                                              <Label fx:id="lasocon" layoutX="214.0" layoutY="130.0" prefHeight="15.0" prefWidth="163.0" />
-                                              <Label fx:id="constate" layoutX="214.0" layoutY="105.0" prefHeight="15.0" prefWidth="163.0" />
-                                              <Label fx:id="pubkey" layoutX="214.0" layoutY="152.0" prefHeight="15.0" prefWidth="163.0" />
-                                              <Label fx:id="id" layoutX="214.0" layoutY="15.0" prefHeight="15.0" prefWidth="163.0" />
+                                    <Label fx:id="State" alignment="CENTER" text="运行状态:" textAlignment="CENTER" />
+                                    <Label fx:id="LastCon" alignment="CENTER" text="最后一次通信时间:" textAlignment="CENTER" />
+                                    <Label fx:id="Name" alignment="CENTER" text="高校:" textAlignment="CENTER" />
+                                    <Label fx:id="Id" alignment="CENTER" text="ID:" textAlignment="CENTER" />
+                                    <Label fx:id="Ip" alignment="CENTER" text="Ip地址:" textAlignment="CENTER" />
+                                    <Label fx:id="ConState" alignment="CENTER" text="通信状态:" textAlignment="CENTER" />
+                                    <Label fx:id="pubKey" alignment="CENTER" text="公钥:" textAlignment="CENTER" />
                                  </children>
-                              </Group>
-                                        <Button fx:id="refresh" layoutX="403.0" layoutY="157.0" mnemonicParsing="false" onAction="#jumpToSchool" text="刷新" />
-                                        <Button fx:id="save" layoutX="22.0" layoutY="157.0" mnemonicParsing="false" onAction="#save" text="save" />
-                                    </children>
-                                </AnchorPane>
-                        <Button fx:id="start" layoutX="245.0" layoutY="225.0" mnemonicParsing="false" onAction="#statr" text="start server" />
+                              </VBox>
+                              <VBox alignment="CENTER_LEFT" prefHeight="250.0" prefWidth="365.0" spacing="5.0">
+                                 <children>
+                                    <Label fx:id="pubkey" alignment="CENTER" prefHeight="15.0" prefWidth="163.0" />
+                                    <Label fx:id="state" alignment="CENTER" prefHeight="15.0" prefWidth="163.0" />
+                                    <Label fx:id="lasocon" alignment="CENTER" prefHeight="15.0" prefWidth="163.0" />
+                                    <Label fx:id="ip" alignment="CENTER" prefHeight="15.0" prefWidth="163.0" />
+                                    <Label fx:id="constate" alignment="CENTER" prefHeight="15.0" prefWidth="163.0" />
+                                    <Label fx:id="name" alignment="CENTER" prefHeight="15.0" prefWidth="163.0" />
+                                    <Label fx:id="id" alignment="CENTER" prefHeight="15.0" prefWidth="163.0" />
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="118.0" spacing="20.0" />
+                                    <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                                       <children>
+                                          <Button fx:id="save" mnemonicParsing="false" onAction="#save" text="save" />
+                                          <Button fx:id="refresh" mnemonicParsing="false" onAction="#jumpToSchool" text="刷新" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
                             </children>
                         </Pane>
                     </content>
@@ -62,9 +72,14 @@
                 </Tab>
                 <Tab text="所有节点">
                     <content>
-                        <fx:include source="AllNodes.fxml" />
+                        <fx:include source="AllNodesInfrom.fxml" />
                     </content>
                 </Tab>
+            <Tab text="区块信息查询">
+              <content>
+              	  <fx:include source="QueryInfrom.fxml" />
+              </content>
+            </Tab>
             <Tab text="运行日志">
                <content>
                   <fx:include source="Textareasample.fxml" />

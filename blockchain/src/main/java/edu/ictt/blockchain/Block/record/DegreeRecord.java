@@ -7,33 +7,52 @@ import java.io.Serializable;
  * @Author:zoe
  * @Description:
  * @Date:
- *
- *
  */
 public class DegreeRecord extends Record implements Serializable {
 
-    //学校信息
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1700734513656530453L;
+
+	/**
+     * 学校信息
+     */
     private SchoolInfo schoolInfo;
 
-    //学位
+    /**
+     * 学位属性
+     */
     private String degree;
 
-    //学生信息
+    /**
+     * 学生信息
+     */
     private StudentInfo studentInfo;
 
-    //开题情况
+    /**
+     * 开题情况
+     */
     private String gradDesignStartState;
 
-    //中期情况
+    /**
+     * 中期情况
+     */
     private String gradDesignMidState;
 
-    //最终论文答辩情况
+    /**
+     * 最终论文答辩情况
+     */
     private String gradDesignFinState;
 
-    //学位证书编号
+    /**
+     * 学位证书编号
+     */
     private long degreeId;
 
-    //学校签名
+    /**
+     * 学校签名
+     */
     private String schoolSign;
 
     public DegreeRecord(){}
@@ -110,15 +129,10 @@ public class DegreeRecord extends Record implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "DegreeInfo{" +
-                "degree='" + degree + '\'' +
-                ", studentInfo=" + studentInfo +
-                ", gradDesignStartState='" + gradDesignStartState + '\'' +
-                ", gradDesignMidState='" + gradDesignMidState + '\'' +
-                ", gradDesignFinState='" + gradDesignFinState + '\'' +
-                ", degreeId=" + degreeId +
-                ", schoolSign='" + schoolSign + '\'' +
-                '}';
-    }
+	public String toString() {
+		return "DegreeRecord [schoolInfo=" + schoolInfo + ", degree=" + degree + ", studentInfo=" + studentInfo
+				+ ", gradDesignStartState=" + gradDesignStartState + ", gradDesignMidState=" + gradDesignMidState
+				+ ", gradDesignFinState=" + gradDesignFinState + ", degreeId=" + degreeId + ", schoolSign=" + schoolSign
+				+ "]";
+	}
 }

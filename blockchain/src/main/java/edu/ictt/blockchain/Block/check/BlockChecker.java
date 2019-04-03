@@ -3,7 +3,7 @@ package edu.ictt.blockchain.Block.check;
 import edu.ictt.blockchain.Block.block.Block;
 
 /**
- * @Author:zoe
+ * @Author:
  * @Description: 区块校验，暂时未考虑权限
  * @Date:
  */

@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.alibaba.fastjson.JSON;
+import edu.ictt.blockchain.Block.generatorUtil.GenerateBlock;
+import edu.ictt.blockchain.common.SHA256;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -44,8 +47,16 @@ public class DbBlockManager {
 	    	logger.info("get lastblock");
 	        String lastBlockHash = dbStore.get(Constants.KEY_LAST_BLOCK);
 	        if (StrUtil.isEmpty(lastBlockHash)) {
-	            return null;
-	        }
+				Block block = GenerateBlock.generateBlock(1);
+				block.setBlockHash(SHA256.sha256(block.getBlockHeader().toString()));
+				dbStore.put(block.getBlockHash(), JSON.toJSONString(block));
+				dbStore.put("key_last_block",block.getBlockHash());
+				logger.info("hash of the last block:" + block.getBlockHash());
+	            return block;
+	        }else{
+	        	logger.info("lastblock读取成功");
+	        	logger.info("lastblcok is: " + dbStore.get(lastBlockHash));
+			}
 	        return getBlockByHash(lastBlockHash);
 	    }
 
@@ -116,7 +127,8 @@ public class DbBlockManager {
 	    	String listjaso=dbStore.get(hash);
 	    	return FastJsonUtil.toList(listjaso, Record.class);
 	    }
-	    
+	 
+	//getter和setter供测试方便，可删除
 	public DbStore getDbStore() {
 		return dbStore;
 	}

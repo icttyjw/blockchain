@@ -41,7 +41,7 @@ public class RecoverLocalBlock extends DbBlockChecker {
             Block block = JSON.parseObject(rocksDB.getRocksDbStore().get("i"), new TypeReference<Block>(){});
             System.out.println("read block: " + block);
 
-            if(blockChecker.checkAll(block)){
+            if(blockChecker.checkAll(block) == 0){
                 blockList.add(block);
             }
         }

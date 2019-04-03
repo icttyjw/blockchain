@@ -22,7 +22,11 @@ public interface Const {
      */
     int TIMEOUT = 5000;
 
+    /**
+     * 编码方式
+     */
     String CHARSET = "utf-8";
+    
     
     String GROUP_SCHOOL="school_group";
 }

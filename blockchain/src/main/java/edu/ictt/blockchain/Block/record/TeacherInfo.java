@@ -8,25 +8,40 @@ import edu.ictt.blockchain.common.PairKey;
 
 public class TeacherInfo{
 
-    //任课教师工号
+    /**
+     * 任课教师工号
+     */
     private int teacherId;
 
-    //任课教师姓名
+    /**
+     * 任课教师姓名
+     */
     private String teacherName;
 
-    //任课教师职称
-    private String teacherTitle;
+    /**
+     * 任课教师属性
+     */
+    private String teacherPro;
+    
+    /**
+     *任课教师公钥
+     */
 
-    //任课教师密钥对
-    private PairKey teacherPairKey;
+    private String teacherPubKey;
+    
+    /*
+     * 任课教师密钥对
+     */
+    //private PairKey teacherPairKey;
+    
 
     public TeacherInfo(){}
 
-    public TeacherInfo(int teacherId, String teacherName, String teacherTitle, PairKey teacherPairKey){
+    public TeacherInfo(int teacherId, String teacherName, String teacherPro, String teacherPubKey){
         this.teacherId = teacherId;
         this.teacherName = teacherName;
-        this.teacherTitle = teacherTitle;
-        this.teacherPairKey = teacherPairKey;
+        this.teacherPro = teacherPro;
+        this.teacherPubKey = teacherPubKey;
     }
 
 
@@ -43,37 +58,41 @@ public class TeacherInfo{
 
     public String getTeacherTitle() {
 
-        return teacherTitle;
+        return teacherPro;
     }
 
-    public PairKey getTeacherPairKey() {
-        return teacherPairKey;
-    }
+    /*public PairKey getTeacherPairKey() {
+        return teacherPubKey;
+    }*/
+    
+    public String getTeacherPubKey() {
+		return teacherPubKey;
+	}
 
     public void setTeacherId(int teacherId) {
         this.teacherId = teacherId;
     }
 
-    public void setTeacherName(String teacherName) {
+	public void setTeacherPubKey(String teacherPubKey) {
+		this.teacherPubKey = teacherPubKey;
+	}
+
+	public void setTeacherName(String teacherName) {
         this.teacherName = teacherName;
     }
 
     public void setTeacherTitle(String teacherTitle) {
-        this.teacherTitle = teacherTitle;
+        this.teacherPro = teacherTitle;
     }
 
-    public void setTeacherPairKey(PairKey teacherPairKey) {
-        this.teacherPairKey = teacherPairKey;
-    }
+    /*public void setTeacherPairKey(PairKey teacherPairKey) {
+        this.teacherPubKey = teacherPairKey;
+    }*/
 
 
     @Override
-    public String toString() {
-        return "TeacherInfo{" +
-                "teacherId=" + teacherId +
-                ", teacherName='" + teacherName + '\'' +
-                ", teacherTitle='" + teacherTitle + '\'' +
-                ", teacherPairKey=" + teacherPairKey +
-                '}';
-    }
+	public String toString() {
+		return "TeacherInfo [teacherId=" + teacherId + ", teacherName=" + teacherName + ", teacherPro=" + teacherPro
+				+ ", teacherPubKey=" + teacherPubKey + "]";
+	}
 }

@@ -11,24 +11,32 @@ import java.util.List;
 
 public class SchoolInfo{
 
-    //学校编号
+    /**
+     * 学校编号
+     */
     private int schoolId;
 
-    //学校名
+    /**
+     * 学校名
+     */
     private String schoolName;
 
-    //学校密钥对
-    private PairKey schoolPairKey;
+    /**
+     * 学校公钥
+     */
+    private String schoolPubKey;
 
-    //学校特殊属性:比如一本，二本那些，这个属性可能包含多个内容
-    private List<String> schoolPro = new ArrayList<>();
+    /**
+     * 学校特殊属性:比如一本，二本,981,211等
+     */
+    private String schoolPro;
 
     public SchoolInfo(){}
 
-    public SchoolInfo(int schoolId, String schoolName, PairKey schoolPairKey, List<String> schoolPro){
+    public SchoolInfo(int schoolId, String schoolName, String schoolPubKey, String schoolPro){
         this.schoolId = schoolId;
         this.schoolName = schoolName;
-        this.schoolPairKey = schoolPairKey;
+        this.schoolPubKey = schoolPubKey;
         this.schoolPro = schoolPro;
     }
 
@@ -42,21 +50,33 @@ public class SchoolInfo{
         return schoolName;
     }
 
-    public PairKey getSchoolPairKey() {
-        return schoolPairKey;
+    
+   /* public PairKey getSchoolPairKey() {
+        return schoolPubKey;
     }
+    
+    public void setSchoolPairKey(PairKey schoolPairKey) {
+        this.schoolPubKey = schoolPairKey;
+    }*/
 
-    public List<String> getSchoolPro() {
 
-        return schoolPro;
-    }
+    public String getSchoolPubKey() {
+		return schoolPubKey;
+	}
 
-    public void setSchoolPro(ArrayList<String> schoolPro) {
+	public void setSchoolPubKey(String schoolPubKey) {
+		this.schoolPubKey = schoolPubKey;
+	}
 
-        this.schoolPro = schoolPro;
-    }
+	public String getSchoolPro() {
+		return schoolPro;
+	}
 
-    public void setSchoolId(int schoolId) {
+	public void setSchoolPro(String schoolPro) {
+		this.schoolPro = schoolPro;
+	}
+
+	public void setSchoolId(int schoolId) {
         this.schoolId = schoolId;
     }
 
@@ -64,21 +84,10 @@ public class SchoolInfo{
         this.schoolName = schoolName;
     }
 
-    public void setSchoolPairKey(PairKey schoolPairKey) {
-        this.schoolPairKey = schoolPairKey;
-    }
+	@Override
+	public String toString() {
+		return "SchoolInfo [schoolId=" + schoolId + ", schoolName=" + schoolName + ", schoolPubKey=" + schoolPubKey
+				+ ", schoolPro=" + schoolPro + "]";
+	}
 
-    public void setSchoolPro(List<String> schoolPro) {
-        this.schoolPro = schoolPro;
-    }
-
-    @Override
-    public String toString() {
-        return "SchoolInfo{" +
-                "schoolId=" + schoolId +
-                ", schoolName='" + schoolName + '\'' +
-                ", schoolPairKey=" + schoolPairKey +
-                ", schoolPro=" + schoolPro +
-                '}';
-    }
 }
