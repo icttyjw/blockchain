@@ -1,4 +1,4 @@
-package edu.ictt.blockchain.common.util;
+ package edu.ictt.blockchain.common.util;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
