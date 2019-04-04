@@ -11,7 +11,8 @@ public interface PacketType {
     /**
      * 已生成新的区块
      */
-    byte Connect_Request = 1;
+    byte Connect_Request = 8;
+    byte GENERATE_COMPLETE_REQUEST=1;
     /**
      * 已生成新的区块回应
      */
