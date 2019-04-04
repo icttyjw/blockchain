@@ -14,6 +14,7 @@ public class MerkleTree {
         this.nodes = new ArrayList<>();
         this.leaves = new ArrayList<>();
     }
+    
 
     /**
      * 获取叶子节点列表

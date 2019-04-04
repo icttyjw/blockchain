@@ -48,6 +48,19 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PartTest {
 
+	
+	@Test
+	public void stringtest(){
+		Record r=GenerateRecord.geneGRecord();
+		String rstring=r.toString();
+		String rjson=FastJsonUtil.toJSONString(r);
+		String rsha=SHA256.sha256(rstring);
+		r.setHash(rsha);
+		String newrstring=r.toString();
+		String newrsha=SHA256.sha256(newrstring);
+		System.out.println(rjson);
+	}
+	
 	/*
 	 RecordQueue写记录测试
 	 */
