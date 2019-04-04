@@ -76,7 +76,7 @@ public class BlockHeader {
         this.blockNumber = blockNumber;
         this.recordCount = recordCount;
         this.blockHeaderSign = blockHeaderSign;
-        this.hashList = hashList;
+        //this.hashList = hashList;
     }
 
     public String getHashPreviousBlock() {
@@ -139,9 +139,9 @@ public class BlockHeader {
 
     public void setBlockNumber(long blockNumber) { this.blockNumber = blockNumber; }
 
-    public List<String> getHashList() { return hashList; }
+    //public List<String> getHashList() { return hashList; }
 
-    public void setHashList(List<String> hashList) { this.hashList = hashList; }
+   // public void setHashList(List<String> hashList) { this.hashList = hashList; }
 
     public String getPublicKey() {
         return publicKey;
@@ -163,7 +163,7 @@ public class BlockHeader {
                 ", recordCount=" + recordCount +
                 ", publicKey='" + publicKey + '\'' +
                 ", blockHeaderSign='" + blockHeaderSign + '\'' +
-                ", hashList=" + hashList +
+                //", hashList=" + hashList +
                 '}';
     }
 }

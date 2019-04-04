@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 public class GenerateRecord {
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
+
 	//学校公私钥
 	static String sPriKey = generatePrivateKey();
 	static String sPubKey = generatePublicKey(sPriKey, true);

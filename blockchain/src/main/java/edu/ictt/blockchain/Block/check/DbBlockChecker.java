@@ -106,17 +106,30 @@ public class DbBlockChecker implements BlockChecker {
         List<Record> records = new ArrayList<>();
         //获取记录列表重新生成记录的哈希列表
         records.addAll(block.getBlockBody().getRecordsList());
+       // List<String> recordsHash = block.getBlockHeader().getHashList();
+       // System.out.println(recordsHash);
 
         //重新建树
         MerkleTree merkleTree = new MerkleTree();
         List<MerkleNode> merkleNodes = new ArrayList<>();
+        int i = 1;
         for (Record record:records){
-            merkleNodes.add(new MerkleNode(MerkleHash.create(record.toString())));
+        	
+        	MerkleNode merkleNode = new MerkleNode(MerkleHash.create(record.toString()));
+        	//if(merkleNode.getHash().equals(recordsHash.get(i))) {
+        	//	System.out.println("当前记录的hash无误");
+        	//}
+        	//i++;
+            merkleNodes.add(merkleNode);
+            System.out.println("hash of merklenode: " + merkleNodes);
         }
 
         merkleTree.buildTree(merkleNodes);
+        
+        System.out.println("校验时重新生成的MerkleRoot: " + merkleTree.getRoot().getHash().toString());
+        System.out.println("该区块的MerkleRoot: " + block.getBlockHeader().getHashMerkleRoot()  );
 
-        if(merkleTree.getRoot().getHash().toString() == block.getBlockHeader().getHashMerkleRoot()){
+        if(merkleTree.getRoot().getHash().toString().equals(block.getBlockHeader().getHashMerkleRoot()) ){
             return 0;
         }
 
@@ -131,14 +144,17 @@ public class DbBlockChecker implements BlockChecker {
 
     private int checkBlockHashSign(Block block) {
 
-        logger.info("block header:" + block.getBlockHeader().toString());   
+        logger.info("block header:" + block.getBlockHeader().toString()); 
+        String hash;
       //需要对body判空,否则verify会出现空指针错误
-        //if(block.getBlockBody()==null){
-        	//logger.info("block body 为空 ");
-            String hash = SHA256.sha256(block.getBlockHeader().toString());
-        //}
-        //暂时注释掉了这块,因为blockbody为空,nullpoint影响后续校验
-		//String hash = SHA256.sha256(block.getBlockHeader().toString() + block.getBlockBody().toString());
+        if(block.getBlockBody()==null){
+        	logger.info("block body 为空 ,为测试方便只校验blockhearder");
+            hash = SHA256.sha256(block.getBlockHeader().toString());
+        }else {
+        	//暂时注释掉了这块,因为blockbody为空,nullpoint影响后续校验
+    		hash = SHA256.sha256(block.getBlockHeader().toString() + block.getBlockBody().toString());
+        }
+        
 		if(!StrUtil.equals(block.getBlockHash(),hash)) 
 			return -1;
 		
