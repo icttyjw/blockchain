@@ -2,12 +2,15 @@ package edu.ictt.blockchain.common;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.JSONLibDataFormatSerializer;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
 import java.util.List;
 import java.util.Map;
+
+import org.tio.utils.hutool.StrUtil;
 
 /**
  * @author wuweifeng wrote on 2018/3/2.
@@ -16,6 +19,7 @@ public class FastJsonUtil {
     private static final SerializeConfig CONFIG;
 
     static {
+    	//ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
         CONFIG = new SerializeConfig();
         CONFIG.put(java.util.Date.class, new JSONLibDataFormatSerializer()); // 使用和json-lib兼容的日期输出格式
         CONFIG.put(java.sql.Date.class, new JSONLibDataFormatSerializer()); // 使用和json-lib兼容的日期输出格式
@@ -25,7 +29,8 @@ public class FastJsonUtil {
             SerializerFeature.WriteNullListAsEmpty, // list字段如果为null，输出为[]，而不是null
             SerializerFeature.WriteNullNumberAsZero, // 数值字段如果为null，输出为0，而不是null
             SerializerFeature.WriteNullBooleanAsFalse, // Boolean字段如果为null，输出为false，而不是null
-            SerializerFeature.WriteNullStringAsEmpty // 字符类型字段如果为null，输出为""，而不是null
+            SerializerFeature.WriteNullStringAsEmpty, // 字符类型字段如果为null，输出为""，而不是null
+            SerializerFeature.WriteClassName
     };
 
 
@@ -42,6 +47,14 @@ public class FastJsonUtil {
         return JSON.parse(text);
     }
 
+    public static <T> T toTBean(String jsonString,Class<T> tt){
+    	if (StrUtil.isBlank(jsonString)) {
+			return null;
+		}
+		T t = JSON.parseObject(jsonString, tt);
+		return t;
+    }
+    
     public static <T> T toBean(String text, Class<T> clazz) {
         return JSON.parseObject(text, clazz);
     }

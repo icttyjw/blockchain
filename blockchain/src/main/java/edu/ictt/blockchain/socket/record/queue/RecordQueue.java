@@ -28,12 +28,12 @@ import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.requestbody.BlockRequesbody;
 import edu.ictt.blockchain.core.service.BlockService;
-import edu.ictt.blockchain.socket.body.GRecordBody;
+import edu.ictt.blockchain.socket.body.RecordBody;
 /*
  * 接收记录的队列，目前只考虑成绩记录
  */
 @Component
-public class GRecordQueue {
+public class RecordQueue {
 
 	@Resource
 	DbBlockManager dbBlockManager;
@@ -61,7 +61,7 @@ public class GRecordQueue {
 	
 	private Logger logger=LoggerFactory.getLogger(getClass());
 	
-	public void receive(GRecordBody recordBody){
+	public void receive(RecordBody recordBody){
 		String hash=recordBody.getIndexhash();
 		//count这块需要做处理，否则每条记录都会有
 		int count=recordBody.getCount();

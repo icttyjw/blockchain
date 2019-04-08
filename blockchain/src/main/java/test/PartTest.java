@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import edu.ictt.blockchain.Block.block.Block;
+import edu.ictt.blockchain.Block.block.BlockBody;
 import edu.ictt.blockchain.Block.block.BlockHeader;
 import edu.ictt.blockchain.Block.check.DbBlockChecker;
 import edu.ictt.blockchain.Block.check.GRecordChecker;
@@ -17,6 +18,7 @@ import edu.ictt.blockchain.Block.merkle.MerkleHash;
 import edu.ictt.blockchain.Block.merkle.MerkleNode;
 import edu.ictt.blockchain.Block.record.*;
 import edu.ictt.blockchain.common.CommonUtil;
+import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.PairKey;
 import edu.ictt.blockchain.common.SHA256;
@@ -25,16 +27,20 @@ import edu.ictt.blockchain.common.util.DerbyDBUtil;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.manager.ManageMessage;
 import edu.ictt.blockchain.socket.body.BaseBody;
-import edu.ictt.blockchain.socket.body.GRecordBody;
+import edu.ictt.blockchain.socket.body.RecordBody;
 import edu.ictt.blockchain.socket.body.RpcBlockBody;
 import edu.ictt.blockchain.socket.body.StateBody;
+import edu.ictt.blockchain.socket.packet.BlockPacket;
+import edu.ictt.blockchain.socket.packet.PacketBuilder;
+import edu.ictt.blockchain.socket.packet.PacketType;
 import edu.ictt.blockchain.socket.pbft.VoteType;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 import edu.ictt.blockchain.socket.pbft.msg.VotePreMsg;
 import edu.ictt.blockchain.socket.pbft.queue.BaseMsgQueue;
 import edu.ictt.blockchain.socket.pbft.queue.CommitMsgQueue;
-import edu.ictt.blockchain.socket.record.queue.GRecordQueue;
+import edu.ictt.blockchain.socket.record.queue.RecordQueue;
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
+
 import org.junit.Test;
 import org.rocksdb.Options;
 import org.rocksdb.RocksDB;
@@ -52,23 +58,30 @@ public class PartTest {
 
 	
 	@Test
-	public void json(){
+	public void rjson(){
+		String s="";
+	}
+	
+	@Test
+	public void json() throws UnsupportedEncodingException{
 		Block block=GenerateBlock.generateBlock(2);
-		String b=JSON.toJSONString(block);
-		Block nb=FastJsonUtil.toBean(b, Block.class);
+		String b=FastJsonUtil.toJSONString(block);
+		byte[] bb=b.getBytes(Const.CHARSET);
+		String bbb=new String(bb,Const.CHARSET);
+		Block nb=FastJsonUtil.toTBean(bbb, Block.class);
 		System.out.println(nb);
 	}
 	
 	@Test
-	public void stringtest(){
+	public void stringtest() throws UnsupportedEncodingException{
 		Record r=GenerateRecord.geneGRecord();
-		String rstring=r.toString();
-		String rjson=FastJsonUtil.toJSONString(r);
-		String rsha=SHA256.sha256(rstring);
-		r.setHash(rsha);
-		String newrstring=r.toString();
-		String newrsha=SHA256.sha256(newrstring);
-		System.out.println(rjson);
+		RecordBody  rb=new RecordBody(r, null);
+		String rjson=FastJsonUtil.toJSONString(rb);
+		
+		BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.HEART_BEAT).setBody(rb).build();
+		String rbjs=new String(blockPacket.getBody(),Const.CHARSET);
+		RecordBody nrb=FastJsonUtil.toBean(rbjs, RecordBody.class);
+		System.out.println(nrb);
 	}
 	
 	/*
@@ -77,14 +90,14 @@ public class PartTest {
 	@Test
 	public void recordQueueTest(){
 
-		GRecordQueue recordQueue = new GRecordQueue();
+		RecordQueue recordQueue = new RecordQueue();
 		DbBlockManager dbBlockManager = new DbBlockManager();
-		List<GRecordBody> recordBodyList = new ArrayList<>();
+		List<RecordBody> recordBodyList = new ArrayList<>();
 
 		for(int i=0; i<2; i++){
 			GradeRecord record = GenerateRecord.geneGRecord();
 			System.out.println("记录" + i + record);
-			GRecordBody recordBody = new GRecordBody(record,
+			RecordBody recordBody = new RecordBody(record,
 					SHA256.sha256(String.valueOf(record.getGradeInfo().getCourseInfo().getCourseId())));
 			recordBody.setCount(2);
 			recordBodyList.add(recordBody);
@@ -99,7 +112,7 @@ public class PartTest {
 			e.printStackTrace();
 		}
 
-		for(GRecordBody recordBody:recordBodyList){
+		for(RecordBody recordBody:recordBodyList){
 			recordQueue.receive(recordBody);
 		}
 
