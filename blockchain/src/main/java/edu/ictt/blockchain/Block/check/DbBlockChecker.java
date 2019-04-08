@@ -103,6 +103,8 @@ public class DbBlockChecker implements BlockChecker {
     @Override
     public int checkBlock(Block block) {
 
+    	logger.info("block: "+block);
+    	
         List<Record> records = new ArrayList<>();
         //获取记录列表重新生成记录的哈希列表
         records.addAll(block.getBlockBody().getRecordsList());

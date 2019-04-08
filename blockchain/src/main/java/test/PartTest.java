@@ -11,6 +11,7 @@ import edu.ictt.blockchain.Block.db.ConnectRocksDB;
 import edu.ictt.blockchain.Block.db.DbInitConfig;
 import edu.ictt.blockchain.Block.db.RecoverLocalRecord;
 import edu.ictt.blockchain.Block.db.RocksDbStoreImpl;
+import edu.ictt.blockchain.Block.generatorUtil.GenerateBlock;
 import edu.ictt.blockchain.Block.generatorUtil.GenerateRecord;
 import edu.ictt.blockchain.Block.merkle.MerkleHash;
 import edu.ictt.blockchain.Block.merkle.MerkleNode;
@@ -24,7 +25,7 @@ import edu.ictt.blockchain.common.util.DerbyDBUtil;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.manager.ManageMessage;
 import edu.ictt.blockchain.socket.body.BaseBody;
-import edu.ictt.blockchain.socket.body.RecordBody;
+import edu.ictt.blockchain.socket.body.GRecordBody;
 import edu.ictt.blockchain.socket.body.RpcBlockBody;
 import edu.ictt.blockchain.socket.body.StateBody;
 import edu.ictt.blockchain.socket.pbft.VoteType;
@@ -32,12 +33,13 @@ import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 import edu.ictt.blockchain.socket.pbft.msg.VotePreMsg;
 import edu.ictt.blockchain.socket.pbft.queue.BaseMsgQueue;
 import edu.ictt.blockchain.socket.pbft.queue.CommitMsgQueue;
-import edu.ictt.blockchain.socket.record.queue.RecordQueue;
+import edu.ictt.blockchain.socket.record.queue.GRecordQueue;
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
 import org.junit.Test;
 import org.rocksdb.Options;
 import org.rocksdb.RocksDB;
 import org.rocksdb.RocksDBException;
+import org.tio.utils.json.Json;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -48,6 +50,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PartTest {
 
+	
+	@Test
+	public void json(){
+		Block block=GenerateBlock.generateBlock(2);
+		String b=JSON.toJSONString(block);
+		Block nb=FastJsonUtil.toBean(b, Block.class);
+		System.out.println(nb);
+	}
 	
 	@Test
 	public void stringtest(){
@@ -67,14 +77,14 @@ public class PartTest {
 	@Test
 	public void recordQueueTest(){
 
-		RecordQueue recordQueue = new RecordQueue();
+		GRecordQueue recordQueue = new GRecordQueue();
 		DbBlockManager dbBlockManager = new DbBlockManager();
-		List<RecordBody> recordBodyList = new ArrayList<>();
+		List<GRecordBody> recordBodyList = new ArrayList<>();
 
 		for(int i=0; i<2; i++){
 			GradeRecord record = GenerateRecord.geneGRecord();
 			System.out.println("记录" + i + record);
-			RecordBody recordBody = new RecordBody(record,
+			GRecordBody recordBody = new GRecordBody(record,
 					SHA256.sha256(String.valueOf(record.getGradeInfo().getCourseInfo().getCourseId())));
 			recordBody.setCount(2);
 			recordBodyList.add(recordBody);
@@ -89,7 +99,7 @@ public class PartTest {
 			e.printStackTrace();
 		}
 
-		for(RecordBody recordBody:recordBodyList){
+		for(GRecordBody recordBody:recordBodyList){
 			recordQueue.receive(recordBody);
 		}
 

@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import edu.ictt.blockchain.Block.block.Block;
+import edu.ictt.blockchain.Block.check.DbBlockChecker;
 import edu.ictt.blockchain.Block.generatorUtil.GenerateBlock;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 
@@ -23,7 +24,8 @@ public class RocksTest {
 
 	@Resource
 	private DbBlockManager dbBlockManager;
-	
+	@Resource
+	private DbBlockChecker dbBlockChecker;
 	
 	@Test
 	public void saveblock(){
@@ -42,6 +44,12 @@ public class RocksTest {
 		Block block=dbBlockManager.getBlockByHash(hash);
 		System.out.println("区块hash：" + hash);
 		System.out.println("区块" + block);
+	}
+	
+	@Test
+	public void checkertest(){
+		Block block=GenerateBlock.generateBlock(3);
+		dbBlockChecker.checkBlock(block);
 	}
 	
 }
