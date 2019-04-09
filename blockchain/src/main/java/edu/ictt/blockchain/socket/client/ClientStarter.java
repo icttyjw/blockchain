@@ -109,7 +109,7 @@ public class ClientStarter {
     /**
      * 每30秒群发一次消息，和别人对比最新的Block
      */
-    @Scheduled(initialDelay=5000,fixedDelay = 60000)
+    //@Scheduled(initialDelay=5000,fixedDelay = 60000)
     public void heartBeat() {
     	if(!isNodesReady)return;
         logger.info("---------开始心跳包--------");

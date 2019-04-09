@@ -26,6 +26,7 @@ import edu.ictt.blockchain.Block.block.BlockBody;
 import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
+import edu.ictt.blockchain.core.requestbody.BlockRequesbody;
 import edu.ictt.blockchain.core.service.BlockService;
 import edu.ictt.blockchain.socket.body.RecordBody;
 /*
@@ -80,6 +81,7 @@ public class RecordQueue {
 			System.out.println("新增一门课程：" + cstring);
 		}
 		//System.out.println("要存储的记录：" + recordBody.getRecord());
+		logger.info("要存储的记录：" + recordBody.getRecord());
 		ls.add(recordBody.getRecord());
 
 		if(count!=-1){
@@ -93,8 +95,9 @@ public class RecordQueue {
 			//List<String> hashlist=ls.stream().map(Record::getHash).collect(Collectors.toList());
 			//BlockBody blockbody=new BlockBody(ls, hashlist);
 			BlockBody blockbody=new BlockBody(ls);
+			BlockRequesbody blockRequesbody=new BlockRequesbody(blockbody);
 			//测试queue先把这句注释了
-			blockService.addBlock(blockbody);
+			blockService.addBlock(blockRequesbody);
 		}else
 		{//备份记录
 			String recordlist=FastJsonUtil.toJSONString(ls);

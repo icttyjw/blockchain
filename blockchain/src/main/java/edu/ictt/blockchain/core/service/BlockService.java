@@ -1,5 +1,8 @@
 package edu.ictt.blockchain.core.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -9,6 +12,8 @@ import org.springframework.stereotype.Service;
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.block.BlockBody;
 import edu.ictt.blockchain.Block.block.BlockHeader;
+import edu.ictt.blockchain.Block.me.MerkleTree;
+import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchain.common.CommonUtil;
 import edu.ictt.blockchain.common.SHA256;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
@@ -47,13 +52,22 @@ public class BlockService {
 	}
 	public Block addBlock(BlockRequesbody blockrequesbody){
 		BlockBody blockBody=blockrequesbody.getBlockBody();
+		List<Record> lr=blockBody.getRecordsList();
+		List<String> hashlist=new ArrayList<>();
+		for(Record r:lr){
+			String hash=SHA256.sha256(r.toString());
+			hashlist.add(hash);
+		}
+		
 		BlockHeader blockHeader=new BlockHeader();
+		blockHeader.setHashMerkleRoot(new MerkleTree(hashlist).build().getRoot());
 		blockHeader.setBlockTimeStamp(CommonUtil.getNow());		
 		blockHeader.setBlockNumber(dbBlockManager.getLastBlockNumber()+1);
 		blockHeader.setHashPreviousBlock(dbBlockManager.getLastBlockHash());
 		Block block=new Block();
+		block.setBlockBody(blockBody);
 		block.setBlockHeader(blockHeader);
-		block.setBlockHash(SHA256.sha256(blockHeader.toString()));
+		block.setBlockHash(SHA256.sha256(blockHeader.toString()+blockBody.toString()));
 		logger.info("block"+block);
 		RpcBlockBody rpcBlockBody=new RpcBlockBody(block);
 		BlockPacket blockPacket=new PacketBuilder<>().setType(PacketType.GENERATE_BLOCK_REQUEST).setBody(

@@ -1,5 +1,6 @@
 package edu.ictt.blockchain.socket.body;
 
+import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.Block.record.Record;
 
 public class RecordBody extends BaseBody{
@@ -15,7 +16,9 @@ public class RecordBody extends BaseBody{
 	}
 	public RecordBody(Record record,String indexhash,int count){
 		super();
-		
+		this.record=record;
+		this.indexhash=indexhash;
+		this.count=count;
 	}
 	public RecordBody(Record record,String indexhash){
 		super();
@@ -48,6 +51,10 @@ public class RecordBody extends BaseBody{
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+	@Override
+	public String toString() {
+		return "RecordBody [record=" + record + ", indexhash=" + indexhash + ", count=" + count + "]";
 	}
 
 

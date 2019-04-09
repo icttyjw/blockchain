@@ -24,6 +24,7 @@ public class RecieveRecordHandler extends AbstractBlockHandler<RecordBody>{
 	@Override
 	public Object handler(BlockPacket packet, RecordBody bsBody, ChannelContext channelContext) throws Exception {
 		Record record=bsBody.getRecord();
+		logger.info("body:"+bsBody);
 		logger.info("收到来自于<" + bsBody.getAppId() + "><成绩记录>消息，block信息为[" + record + "]");
 		/*
 		 * 校验记录判断是否接收

@@ -84,8 +84,8 @@ public class CourseInfo{
     public void setCoursePro(String coursePro) {
         this.coursePro = coursePro;
     }
-
-    @Override
+    
+	@Override
 	public String toString() {
 		return "CourseInfo [courseId=" + courseId + ", courseName=" + courseName + ", courseCredit=" + courseCredit
 				+ ", courseDate=" + courseDate + ", coursePro=" + coursePro + "]";

@@ -1,6 +1,7 @@
 package edu.ictt.blockchain.socket.common.intf;
 
 import edu.ictt.blockchain.common.Const;
+import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.socket.body.BaseBody;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 
@@ -28,7 +29,7 @@ public abstract class AbstractBlockHandler<T extends BaseBody> implements Handle
 		T bsBody = null;
 		if (packet.getBody() != null) {
 			jsonStr = new String(packet.getBody(), Const.CHARSET);
-			bsBody = Json.toBean(jsonStr, bodyClass());
+			bsBody = FastJsonUtil.toBean(jsonStr, bodyClass());
 			logger.info(jsonStr+bsBody.getClass());
 		}
 		return handler(packet, bsBody, channelContext);

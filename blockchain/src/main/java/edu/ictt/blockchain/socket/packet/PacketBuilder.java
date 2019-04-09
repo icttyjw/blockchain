@@ -2,6 +2,7 @@ package edu.ictt.blockchain.socket.packet;
 
 import org.tio.utils.json.Json;
 
+import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.socket.body.BaseBody;
 
 public class PacketBuilder<T extends BaseBody> {
@@ -23,6 +24,6 @@ public class PacketBuilder<T extends BaseBody> {
     }
 
     public BlockPacket build() {
-        return new BlockPacket(type, Json.toJson(body));
+        return new BlockPacket(type, FastJsonUtil.toJSONString(body));
     }
 }

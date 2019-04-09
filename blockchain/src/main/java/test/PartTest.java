@@ -12,25 +12,27 @@ import edu.ictt.blockchain.Block.db.ConnectRocksDB;
 import edu.ictt.blockchain.Block.db.DbInitConfig;
 import edu.ictt.blockchain.Block.db.RecoverLocalRecord;
 import edu.ictt.blockchain.Block.db.RocksDbStoreImpl;
-import edu.ictt.blockchain.Block.db.query.BlockInfo;
-import edu.ictt.blockchain.Block.db.query.simple.ManageBlockMessage;
+import edu.ictt.blockchain.Block.generatorUtil.GenerateBlock;
 import edu.ictt.blockchain.Block.generatorUtil.GenerateRecord;
 import edu.ictt.blockchain.Block.merkle.MerkleHash;
 import edu.ictt.blockchain.Block.merkle.MerkleNode;
 import edu.ictt.blockchain.Block.record.*;
 import edu.ictt.blockchain.common.CommonUtil;
+import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.PairKey;
 import edu.ictt.blockchain.common.SHA256;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
 import edu.ictt.blockchain.common.util.DerbyDBUtil;
-import edu.ictt.blockchain.common.util.SqlDBUtil;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.manager.ManageMessage;
 import edu.ictt.blockchain.socket.body.BaseBody;
 import edu.ictt.blockchain.socket.body.RecordBody;
 import edu.ictt.blockchain.socket.body.RpcBlockBody;
 import edu.ictt.blockchain.socket.body.StateBody;
+import edu.ictt.blockchain.socket.packet.BlockPacket;
+import edu.ictt.blockchain.socket.packet.PacketBuilder;
+import edu.ictt.blockchain.socket.packet.PacketType;
 import edu.ictt.blockchain.socket.pbft.VoteType;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 import edu.ictt.blockchain.socket.pbft.msg.VotePreMsg;
@@ -38,14 +40,14 @@ import edu.ictt.blockchain.socket.pbft.queue.BaseMsgQueue;
 import edu.ictt.blockchain.socket.pbft.queue.CommitMsgQueue;
 import edu.ictt.blockchain.socket.record.queue.RecordQueue;
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
+
 import org.junit.Test;
 import org.rocksdb.Options;
 import org.rocksdb.RocksDB;
 import org.rocksdb.RocksDBException;
+import org.tio.utils.json.Json;
 
 import java.io.UnsupportedEncodingException;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -54,6 +56,34 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PartTest {
 
+	
+	@Test
+	public void rjson(){
+		String s="";
+	}
+	
+	@Test
+	public void json() throws UnsupportedEncodingException{
+		Block block=GenerateBlock.generateBlock(2);
+		String b=FastJsonUtil.toJSONString(block);
+		byte[] bb=b.getBytes(Const.CHARSET);
+		String bbb=new String(bb,Const.CHARSET);
+		Block nb=FastJsonUtil.toTBean(bbb, Block.class);
+		System.out.println(nb);
+	}
+	
+	@Test
+	public void stringtest() throws UnsupportedEncodingException{
+		Record r=GenerateRecord.geneGRecord();
+		RecordBody  rb=new RecordBody(r, null);
+		String rjson=FastJsonUtil.toJSONString(rb);
+		
+		BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.HEART_BEAT).setBody(rb).build();
+		String rbjs=new String(blockPacket.getBody(),Const.CHARSET);
+		RecordBody nrb=FastJsonUtil.toBean(rbjs, RecordBody.class);
+		System.out.println(nrb);
+	}
+	
 	/*
 	 RecordQueue写记录测试
 	 */
@@ -118,63 +148,31 @@ public class PartTest {
 	}
 
 	/**
-	 * 将区块写入rocksDB测试+ 区块某些信息写入sql(无注解方式)
-	 * @throws SQLException 
+	 * 将区块写入rocksDB测试
 	 */
 	@Test
-	public void saveblocktorockstest() throws RocksDBException, SQLException {
+	public void saveblocktorockstest() throws RocksDBException {
 
 		//创建一个数据库操作对象，并与数据库建立连接
 
         ConnectRocksDB rocksDB = new ConnectRocksDB(1);
 
-		//写入1个区块
-		for(int i=0; i<1; i++){
+		//写入10个区块
+		for(int i=0; i<100; i++){
 			BlockHeader blockHeader = new BlockHeader();
 			blockHeader.setBlockTimeStamp(CommonUtil.getNow());
 			blockHeader.setBlockNumber(i);
-			
-			List<Record> records = new ArrayList<>();
-			GradeRecord record = GenerateRecord.geneGRecord();
-			records.add(record);
-			BlockBody blockBody = new BlockBody(records);
 
 			Block block = new Block();
 			block.setBlockHeader(blockHeader);
-			block.setBlockBody(blockBody);
-			block.setBlockHash(SHA256.sha256(blockHeader.toString()+blockBody.toString()));
-			
+			block.setBlockHash(SHA256.sha256(blockHeader.toString()));
 
 			//将区块转换为json格式存到rocksdb
 			String jsonStr = JSON.toJSONString(block);
 			rocksDB.getRocksDbStore().put("i", jsonStr);
 			System.out.println(jsonStr);
 			System.out.println("save this block success");
-			
-			//将区块某些信息写入sql..这块太耦合了
-			ManageBlockMessage mBlockMessage = new ManageBlockMessage();
-			
-			BlockInfo blockInfo = new BlockInfo();
-			blockInfo.setBlockHash(SHA256.sha256(blockHeader.toString()));
-			blockInfo.setSchoolId(record.getSchoolInfo().getSchoolId());
-			blockInfo.setSchoolName(record.getSchoolInfo().getSchoolName());
-			blockInfo.setFacultyId(record.getFacultyInfo().getFacultyId());
-			blockInfo.setFacultyName(record.getFacultyInfo().getFacultyName());
-			blockInfo.setCourseId(record.getGradeInfo().getCourseInfo().getCourseId());
-			blockInfo.setCourseName(record.getGradeInfo().getCourseInfo().getCourseName());
-			System.out.println("blockinfo:" + blockInfo);
-			
-			mBlockMessage.saveBlockInfo(blockInfo);
 		}
-	}
-	
-	/**
-	 * sql读取区块相关信息
-	 */
-	@Test
-	public void readBlockInfo () {
-		ManageBlockMessage mBlockMessage = new ManageBlockMessage();
-		System.out.println(mBlockMessage.queryBySchoolName("清华"));
 	}
 
 	/**
