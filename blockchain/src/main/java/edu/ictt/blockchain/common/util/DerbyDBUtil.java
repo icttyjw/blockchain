@@ -163,9 +163,9 @@ public class DerbyDBUtil {
     		 conn.setAutoCommit(false);
 			Statement statement =conn.createStatement();
 			statement.executeUpdate(sql);
-			//statement.executeUpdate("create table block (block_index int generated always as identity ,lastHash varchar(60),Merkle varchar(60),time int,difficulty int,"
-					//+ "nonce int,cumulativeDifficulty int ,blocknum int ,recordCount int,data varchar(2048))");
-			//statement.executeUpdate("create table record (orderStamp int,mac varchar(10),time int,lockScript varchar(60),unlockScript varchar(120),blocknum int)");
+			statement.executeUpdate("create table block (block_index int generated always as identity ,lastHash varchar(60),Merkle varchar(60),time int,difficulty int,"
+				+ "nonce int,cumulativeDifficulty int ,blocknum int ,recordCount int,data varchar(2048))");
+			statement.executeUpdate("create table record (orderStamp int,mac varchar(10),time int,lockScript varchar(60),unlockScript varchar(120),blocknum int)");
 			 conn.setAutoCommit(true);
 			statement.close();
     		conn.close();

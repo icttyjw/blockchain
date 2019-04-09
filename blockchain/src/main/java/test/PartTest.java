@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import edu.ictt.blockchain.Block.block.Block;
+import edu.ictt.blockchain.Block.block.BlockBody;
 import edu.ictt.blockchain.Block.block.BlockHeader;
 import edu.ictt.blockchain.Block.check.DbBlockChecker;
 import edu.ictt.blockchain.Block.check.GRecordChecker;
@@ -11,6 +12,8 @@ import edu.ictt.blockchain.Block.db.ConnectRocksDB;
 import edu.ictt.blockchain.Block.db.DbInitConfig;
 import edu.ictt.blockchain.Block.db.RecoverLocalRecord;
 import edu.ictt.blockchain.Block.db.RocksDbStoreImpl;
+import edu.ictt.blockchain.Block.db.query.BlockInfo;
+import edu.ictt.blockchain.Block.db.query.simple.ManageBlockMessage;
 import edu.ictt.blockchain.Block.generatorUtil.GenerateRecord;
 import edu.ictt.blockchain.Block.merkle.MerkleHash;
 import edu.ictt.blockchain.Block.merkle.MerkleNode;
@@ -21,6 +24,7 @@ import edu.ictt.blockchain.common.PairKey;
 import edu.ictt.blockchain.common.SHA256;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
 import edu.ictt.blockchain.common.util.DerbyDBUtil;
+import edu.ictt.blockchain.common.util.SqlDBUtil;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.manager.ManageMessage;
 import edu.ictt.blockchain.socket.body.BaseBody;
@@ -40,6 +44,8 @@ import org.rocksdb.RocksDB;
 import org.rocksdb.RocksDBException;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -112,31 +118,63 @@ public class PartTest {
 	}
 
 	/**
-	 * 将区块写入rocksDB测试
+	 * 将区块写入rocksDB测试+ 区块某些信息写入sql(无注解方式)
+	 * @throws SQLException 
 	 */
 	@Test
-	public void saveblocktorockstest() throws RocksDBException {
+	public void saveblocktorockstest() throws RocksDBException, SQLException {
 
 		//创建一个数据库操作对象，并与数据库建立连接
 
         ConnectRocksDB rocksDB = new ConnectRocksDB(1);
 
-		//写入10个区块
-		for(int i=0; i<100; i++){
+		//写入1个区块
+		for(int i=0; i<1; i++){
 			BlockHeader blockHeader = new BlockHeader();
 			blockHeader.setBlockTimeStamp(CommonUtil.getNow());
 			blockHeader.setBlockNumber(i);
+			
+			List<Record> records = new ArrayList<>();
+			GradeRecord record = GenerateRecord.geneGRecord();
+			records.add(record);
+			BlockBody blockBody = new BlockBody(records);
 
 			Block block = new Block();
 			block.setBlockHeader(blockHeader);
-			block.setBlockHash(SHA256.sha256(blockHeader.toString()));
+			block.setBlockBody(blockBody);
+			block.setBlockHash(SHA256.sha256(blockHeader.toString()+blockBody.toString()));
+			
 
 			//将区块转换为json格式存到rocksdb
 			String jsonStr = JSON.toJSONString(block);
 			rocksDB.getRocksDbStore().put("i", jsonStr);
 			System.out.println(jsonStr);
 			System.out.println("save this block success");
+			
+			//将区块某些信息写入sql..这块太耦合了
+			ManageBlockMessage mBlockMessage = new ManageBlockMessage();
+			
+			BlockInfo blockInfo = new BlockInfo();
+			blockInfo.setBlockHash(SHA256.sha256(blockHeader.toString()));
+			blockInfo.setSchoolId(record.getSchoolInfo().getSchoolId());
+			blockInfo.setSchoolName(record.getSchoolInfo().getSchoolName());
+			blockInfo.setFacultyId(record.getFacultyInfo().getFacultyId());
+			blockInfo.setFacultyName(record.getFacultyInfo().getFacultyName());
+			blockInfo.setCourseId(record.getGradeInfo().getCourseInfo().getCourseId());
+			blockInfo.setCourseName(record.getGradeInfo().getCourseInfo().getCourseName());
+			System.out.println("blockinfo:" + blockInfo);
+			
+			mBlockMessage.saveBlockInfo(blockInfo);
 		}
+	}
+	
+	/**
+	 * sql读取区块相关信息
+	 */
+	@Test
+	public void readBlockInfo () {
+		ManageBlockMessage mBlockMessage = new ManageBlockMessage();
+		System.out.println(mBlockMessage.queryBySchoolName("清华"));
 	}
 
 	/**

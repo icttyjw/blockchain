@@ -2,6 +2,7 @@ package edu.ictt.blockchainmanager;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
@@ -17,6 +18,8 @@ import javafx.stage.WindowEvent;
 @SpringBootApplication
 @EntityScan(value="edu.ictt.blockchainmanager.groupmodel")
 @EnableJpaRepositories(value="edu.ictt.blockchainmanager.sql.repository")
+//@ComponentScan(basePackages = {"edu.ictt.blockchainmanager.sql.repository","edu.ictt.blockchainmanager.groupmodel",
+//		"edu.ictt.blockchainmanager.sql.service"})
 public class Application  extends AbstractJavaFxApplicationSupport {
 	private final TextArea loggingView = new TextArea(); 
 	
