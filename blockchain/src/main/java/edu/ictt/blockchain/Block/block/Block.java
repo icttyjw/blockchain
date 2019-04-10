@@ -5,6 +5,8 @@ import cn.hutool.crypto.digest.DigestUtil;
 import java.io.Serializable;
 
 import com.alibaba.fastjson.annotation.JSONField;
+
+import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchain.common.SHA256;
 
 public class Block {

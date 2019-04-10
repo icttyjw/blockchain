@@ -14,6 +14,9 @@ public abstract class Record {
 	protected long recordTimeStamp;
 	protected String Sign;
 
+	public Record(){
+		
+	}
 
 	public String getHash() {
 		return hash;

@@ -1,6 +1,5 @@
 package edu.ictt.blockchain.socket.body;
 
-import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.Block.record.Record;
 
 public class RecordBody extends BaseBody{

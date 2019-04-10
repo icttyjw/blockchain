@@ -35,6 +35,7 @@ import edu.ictt.blockchain.core.event.NodesConnectedEvent;
 import edu.ictt.blockchain.core.requestbody.BlockRequesbody;
 import edu.ictt.blockchain.core.service.BlockService;
 import edu.ictt.blockchain.socket.body.BaseBody;
+import edu.ictt.blockchain.socket.body.RecordBody;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.NextBlockPacketBuilder;
 import edu.ictt.blockchain.socket.packet.PacketBuilder;
@@ -116,16 +117,19 @@ public class ClientStarter {
         //logger.info(""+clientGroupContext.getName());
         //BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.HEART_BEAT).setBody(new BaseBody()).build();//NextBlockPacketBuilder.build();
         //packetSender.sendGroup(blockPacket);
-        List<Record> records = new ArrayList<>();
+        //List<Record> records = new ArrayList<>();
         Record record = GenerateRecord.geneGRecord();
-        records.add(record);
+        //records.add(record);
         //List<String> recordsHash = new ArrayList<>();
         //recordsHash.add(MerkleHash.create(record.toString()).toString());
         //BlockBody blockBody = new BlockBody(records,recordsHash);
-        BlockBody blockBody = new BlockBody(records);
-        BlockRequesbody blockRequesbody=new BlockRequesbody(blockBody);
-        System.out.println("本地生成的新区块体为：" + blockRequesbody);
-        blockService.addBlock(blockRequesbody);
+        //BlockBody blockBody = new BlockBody(records);
+        //BlockRequesbody blockRequesbody=new BlockRequesbody(blockBody);
+        //System.out.println("本地生成的新区块体为：" + blockRequesbody);
+        //blockService.addBlock(blockRequesbody);
+        RecordBody recordBody=new RecordBody(record, "test");
+        BlockPacket blockPacket=new PacketBuilder<>().setType(PacketType.RECEIVE_RECORD).setBody(recordBody).build();
+        packetSender.sendGroup(blockPacket);
         //Tio.sendToGroup(clientGroupContext, GROUP_NAME, blockPacket);
     }
 

@@ -7,6 +7,7 @@ import edu.ictt.blockchain.Block.check.DbBlockChecker;
 import edu.ictt.blockchain.Block.merkle.MerkleHash;
 import edu.ictt.blockchain.Block.merkle.MerkleNode;
 import edu.ictt.blockchain.Block.merkle.MerkleTree;
+import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchain.common.SHA256;
 
@@ -27,11 +28,11 @@ public class GenerateBlock {
     public static Block generateBlock(int i){
 
         //生成记录
-        List<Record> records = new ArrayList<>();
+        List<GradeRecord> records = new ArrayList<>();
         //List<String> recordHash = new ArrayList<>();
         List<MerkleNode> merkleNodes = new ArrayList<>();
         for(int j=0; j<10; j++){
-            Record record = GenerateRecord.geneGRecord();
+            GradeRecord record = GenerateRecord.geneGRecord();
             records.add(record);
 
             //注意MerkleHash不是用SHA256生成的
@@ -51,7 +52,7 @@ public class GenerateBlock {
 
         //用记录生成blockbody
         BlockBody blockBody = new BlockBody();
-        blockBody.setRecordsList(records);
+        blockBody.setGrecordsList(records);
 
         //生成BlockHeader
         BlockHeader blockHeader = new BlockHeader();

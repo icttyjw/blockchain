@@ -1,5 +1,7 @@
 package edu.ictt.blockchain.Block.block;
 
+import edu.ictt.blockchain.Block.record.DegreeRecord;
+import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.Block.record.Record;
 
 import java.util.List;
@@ -13,41 +15,47 @@ import java.util.List;
 public class BlockBody {
 
     //记录集合，其中第一条记录为特殊记录
-    private List<Record> recordsList;
+    private List<GradeRecord> grecordsList;
 
     //这个不需要放在区块中。记录哈希值集合
-    //private List<String> recordHashList;
+    private List<DegreeRecord> drecordsList;
 
     public BlockBody(){};
 
     
-    public BlockBody(List<Record> recordsList) {
+    public BlockBody(List<GradeRecord> grecordsList,List<DegreeRecord> drecordsList) {
 		super();
-		this.recordsList = recordsList;
+		this.grecordsList = grecordsList;
+		this.drecordsList = drecordsList;
 	}
 
 
-    public List<Record> getRecordsList() {
-        return recordsList;
-    }
+	public List<GradeRecord> getGrecordsList() {
+		return grecordsList;
+	}
 
-    public void setRecordsList(List<Record> recordsList) {
-        this.recordsList = recordsList;
-    }
 
-    /*public List<String> getRecordHashList() {
-        return recordHashList;
-    }
+	public List<DegreeRecord> getDrecordsList() {
+		return drecordsList;
+	}
 
-    public void setRecordHashList(List<String> recordHashList) {
-        this.recordHashList = recordHashList;
-    }*/
 
-    @Override
-    public String toString() {
-        return "BlockBody{" +
-                "records：" + recordsList +
-                '}';
-    }
+	public void setGrecordsList(List<GradeRecord> grecordsList) {
+		this.grecordsList = grecordsList;
+	}
+
+
+	public void setDrecordsList(List<DegreeRecord> drecordsList) {
+		this.drecordsList = drecordsList;
+	}
+
+
+	@Override
+	public String toString() {
+		return "BlockBody [grecordsList=" + grecordsList + ", drecordsList=" + drecordsList + "]";
+	}
+
+
+   
 
 }

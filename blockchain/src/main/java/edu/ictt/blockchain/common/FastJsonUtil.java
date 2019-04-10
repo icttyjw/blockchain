@@ -2,6 +2,7 @@ package edu.ictt.blockchain.common;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.JSONLibDataFormatSerializer;
 import com.alibaba.fastjson.serializer.SerializeConfig;
@@ -29,8 +30,7 @@ public class FastJsonUtil {
             SerializerFeature.WriteNullListAsEmpty, // list字段如果为null，输出为[]，而不是null
             SerializerFeature.WriteNullNumberAsZero, // 数值字段如果为null，输出为0，而不是null
             SerializerFeature.WriteNullBooleanAsFalse, // Boolean字段如果为null，输出为false，而不是null
-            SerializerFeature.WriteNullStringAsEmpty, // 字符类型字段如果为null，输出为""，而不是null
-            SerializerFeature.WriteClassName
+            SerializerFeature.WriteNullStringAsEmpty // 字符类型字段如果为null，输出为""，而不是null
     };
 
 
@@ -47,12 +47,9 @@ public class FastJsonUtil {
         return JSON.parse(text);
     }
 
-    public static <T> T toTBean(String jsonString,Class<T> tt){
-    	if (StrUtil.isBlank(jsonString)) {
-			return null;
-		}
-		T t = JSON.parseObject(jsonString, tt);
-		return t;
+ public static <T> T toBean(String jsonString,TypeReference<T> tt){
+    	
+		return JSON.parseObject(jsonString, tt);
     }
     
     public static <T> T toBean(String text, Class<T> clazz) {

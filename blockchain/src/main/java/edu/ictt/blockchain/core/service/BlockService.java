@@ -13,6 +13,7 @@ import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.block.BlockBody;
 import edu.ictt.blockchain.Block.block.BlockHeader;
 import edu.ictt.blockchain.Block.me.MerkleTree;
+import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchain.common.CommonUtil;
 import edu.ictt.blockchain.common.SHA256;
@@ -52,7 +53,7 @@ public class BlockService {
 	}
 	public Block addBlock(BlockRequesbody blockrequesbody){
 		BlockBody blockBody=blockrequesbody.getBlockBody();
-		List<Record> lr=blockBody.getRecordsList();
+		List<GradeRecord> lr=blockBody.getGrecordsList();
 		List<String> hashlist=new ArrayList<>();
 		for(Record r:lr){
 			String hash=SHA256.sha256(r.toString());

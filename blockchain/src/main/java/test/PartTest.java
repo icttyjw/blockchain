@@ -68,7 +68,8 @@ public class PartTest {
 		String b=FastJsonUtil.toJSONString(block);
 		byte[] bb=b.getBytes(Const.CHARSET);
 		String bbb=new String(bb,Const.CHARSET);
-		Block nb=FastJsonUtil.toTBean(bbb, Block.class);
+		Block nb=FastJsonUtil.toBean(bbb, new TypeReference<Block>(){});
+		System.out.println(bbb);
 		System.out.println(nb);
 	}
 	
@@ -81,6 +82,7 @@ public class PartTest {
 		BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.HEART_BEAT).setBody(rb).build();
 		String rbjs=new String(blockPacket.getBody(),Const.CHARSET);
 		RecordBody nrb=FastJsonUtil.toBean(rbjs, RecordBody.class);
+		System.out.println(rbjs);
 		System.out.println(nrb);
 	}
 	

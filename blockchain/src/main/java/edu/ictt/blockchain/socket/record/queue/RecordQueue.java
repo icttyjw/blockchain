@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import cn.hutool.core.collection.CollectionUtil;
 import edu.ictt.blockchain.Block.block.BlockBody;
+import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
@@ -42,7 +43,7 @@ public class RecordQueue {
 	 * 接收的记录按课程分类  下列三个都需要进行初始化，如果db中存在对应元素，应当填入，如果不存在则为空
 	 *
 	 */
-	protected ConcurrentHashMap<String, List<Record>> recordConcurrentHashMap=new ConcurrentHashMap<String, List<Record>>();
+	protected ConcurrentHashMap<String, List<GradeRecord>> recordConcurrentHashMap=new ConcurrentHashMap<String, List<GradeRecord>>();
 	/*
 	 * 记录每类记录需要的数量
 	 */
@@ -65,7 +66,7 @@ public class RecordQueue {
 		String hash=recordBody.getIndexhash();
 		//count这块需要做处理，否则每条记录都会有
 		int count=recordBody.getCount();
-		List<Record> ls=recordConcurrentHashMap.get(hash);
+		List<GradeRecord> ls=recordConcurrentHashMap.get(hash);
 		/*
 		 * 第一次收到某课程记录需要新建一个课程列表准备接收后续成绩
 		 * 在课程类列表中更新一个新课程，并存入数据库
@@ -73,7 +74,7 @@ public class RecordQueue {
 		 */
 		if(CollectionUtil.isEmpty(ls))
 		{
-			ls=new ArrayList<Record>();
+			ls=new ArrayList<GradeRecord>();
 			course.add(hash);//对课程名进行记录
 			//recordCount = count;//课程的记录数量
 			String cstring=FastJsonUtil.toJSONString(course);
@@ -82,7 +83,7 @@ public class RecordQueue {
 		}
 		//System.out.println("要存储的记录：" + recordBody.getRecord());
 		logger.info("要存储的记录：" + recordBody.getRecord());
-		ls.add(recordBody.getRecord());
+		ls.add((GradeRecord)recordBody.getRecord());
 
 		if(count!=-1){
 			recordcountConcurrentHashMap.put(hash, count);
@@ -94,7 +95,7 @@ public class RecordQueue {
 		{
 			//List<String> hashlist=ls.stream().map(Record::getHash).collect(Collectors.toList());
 			//BlockBody blockbody=new BlockBody(ls, hashlist);
-			BlockBody blockbody=new BlockBody(ls);
+			BlockBody blockbody=new BlockBody(ls,null);
 			BlockRequesbody blockRequesbody=new BlockRequesbody(blockbody);
 			//测试queue先把这句注释了
 			blockService.addBlock(blockRequesbody);
