@@ -82,8 +82,8 @@ public class RecordQueue {
 			System.out.println("新增一门课程：" + cstring);
 		}
 		//System.out.println("要存储的记录：" + recordBody.getRecord());
-		logger.info("要存储的记录：" + recordBody.getRecord());
-		ls.add((GradeRecord)recordBody.getRecord());
+		logger.info("要存储的记录：" + recordBody.getGradeRecord());
+		ls.add((GradeRecord)recordBody.getGradeRecord());
 
 		if(count!=-1){
 			recordcountConcurrentHashMap.put(hash, count);
@@ -103,7 +103,7 @@ public class RecordQueue {
 		{//备份记录
 			String recordlist=FastJsonUtil.toJSONString(ls);
 			//String recordlist= JSON.toJSON(ls).toString();
-
+			logger.info("将要被存储的记录" + hash + ":" + "记录" + recordlist);
 			//System.out.println("将要被存储的记录" + hash + ":" + "记录" + recordlist);
 			recordConcurrentHashMap.put(hash, ls);//说明当前课程的记录还没全部收到，需要暂时放到MAP
 

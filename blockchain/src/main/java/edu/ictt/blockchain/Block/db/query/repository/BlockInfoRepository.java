@@ -18,16 +18,16 @@ public interface BlockInfoRepository extends JpaRepository<BlockInfo, String> {
 	/*
 	 * 根据学校姓名查询
 	 */
-	@Query(value = "SELECT top 10 * FROM block WHERE school_name = ?1",nativeQuery=true)
+	//@Query(value = "SELECT top 10 * FROM block WHERE school_name = ?1",nativeQuery=true)
 	public List<BlockInfo> queryFirst10BySchoolName(@Param("school_name")String schoolname);
 	/*
 	 * 根据学校姓名及学院查询
 	 */
-	@Query(value = "SELECT top 10 * FROM block WHERE school_name = ?1 AND faculty_name = ?1",nativeQuery=true)
+	//@Query(value = "SELECT top 10 * FROM block WHERE school_name = ?1 AND faculty_name = ?1",nativeQuery=true)
 	public List<BlockInfo> queryFirst10BySchoolNameAndFacultyName(@Param("school_name")String schoolname,@Param("faculty_name")String facultyname);
 	/*
 	 * 根据学校姓名及学院及课程查询
 	 */
-	@Query(value = "SELECT * FROM block WHERE school_name = ?1 AND faculty_name = ?1 AND course_name = ?1",nativeQuery=true)
+	//@Query(value = "SELECT * FROM block WHERE school_name = ?1 AND faculty_name = ?1 AND course_name = ?1",nativeQuery=true)
 	public BlockInfo queryBySchoolNameAndFacultyNameAndCourseName(@Param("school_name")String schoolname,@Param("faculty_name")String facultyname,@Param("course_name")String coursename);
 }

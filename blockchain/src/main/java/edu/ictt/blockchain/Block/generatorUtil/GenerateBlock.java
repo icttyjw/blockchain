@@ -4,9 +4,7 @@ import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.block.BlockBody;
 import edu.ictt.blockchain.Block.block.BlockHeader;
 import edu.ictt.blockchain.Block.check.DbBlockChecker;
-import edu.ictt.blockchain.Block.merkle.MerkleHash;
-import edu.ictt.blockchain.Block.merkle.MerkleNode;
-import edu.ictt.blockchain.Block.merkle.MerkleTree;
+import edu.ictt.blockchain.Block.me.MerkleTree;
 import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchain.common.SHA256;
@@ -30,23 +28,24 @@ public class GenerateBlock {
         //生成记录
         List<GradeRecord> records = new ArrayList<>();
         //List<String> recordHash = new ArrayList<>();
-        List<MerkleNode> merkleNodes = new ArrayList<>();
+        //List<MerkleNode> merkleNodes = new ArrayList<>();
+        List<String> hashlist=new ArrayList<String>();
         for(int j=0; j<10; j++){
             GradeRecord record = GenerateRecord.geneGRecord();
             records.add(record);
-
+            hashlist.add(record.toString());
             //注意MerkleHash不是用SHA256生成的
-            MerkleNode merkleNode = new MerkleNode(MerkleHash.create(record.toString()));
-            System.out.println("hash of the merklenode: " + merkleNode.getHash());
-            merkleNodes.add(merkleNode);
+            //MerkleNode merkleNode = new MerkleNode(MerkleHash.create(record.toString()));
+           // System.out.println("hash of the merklenode: " + merkleNode.getHash());
+           // merkleNodes.add(merkleNode);
             //recordHash.add(merkleNode.getHash().toString());
            // System.out.println("hash of the record: "+ recordHash);
         }
 
         //生成MerkleRoot
-        MerkleTree merkleTree = new MerkleTree();
+       // MerkleTree merkleTree = new MerkleTree();
         //merkleTree.appendLeaves(merkleNodes);
-        merkleTree.buildTree(merkleNodes);
+       // merkleTree.buildTree(merkleNodes);
         
         
 
@@ -63,8 +62,10 @@ public class GenerateBlock {
         blockHeader.setHashPreviousBlock("0");
         blockHeader.setDifficultGoal(1);
         //blockHeader.setHashList(recordHash);
-        blockHeader.setHashMerkleRoot(merkleTree.getRoot().getHash().toString());
-
+        System.out.println(1);
+        String merkle=new MerkleTree(hashlist).build().getRoot();
+        blockHeader.setHashMerkleRoot(merkle);
+        System.out.println(2);
         //生成区块
         Block block = new Block();
         block.setBlockHeader(blockHeader);

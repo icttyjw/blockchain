@@ -14,6 +14,7 @@ import edu.ictt.blockchain.Block.db.RecoverLocalRecord;
 import edu.ictt.blockchain.Block.db.RocksDbStoreImpl;
 import edu.ictt.blockchain.Block.generatorUtil.GenerateBlock;
 import edu.ictt.blockchain.Block.generatorUtil.GenerateRecord;
+import edu.ictt.blockchain.Block.me.MerkleTree;
 import edu.ictt.blockchain.Block.merkle.MerkleHash;
 import edu.ictt.blockchain.Block.merkle.MerkleNode;
 import edu.ictt.blockchain.Block.record.*;
@@ -56,6 +57,32 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PartTest {
 
+	@Test
+	public void newmerkle(){
+		Block block=GenerateBlock.generateBlock(1);
+		DbBlockChecker blockChecker=new DbBlockChecker();
+		System.out.println(blockChecker.checkBlock(block));
+	}
+	
+	@Test
+	public void merkle(){
+		GradeRecord r1=GenerateRecord.geneGRecord();
+		GradeRecord r2=GenerateRecord.geneGRecord();
+		List<String> lgr=new ArrayList<String>();
+		lgr.add(r1.toString());
+		lgr.add(r2.toString());
+		String root1=new MerkleTree(lgr).build().getRoot();
+		List<MerkleNode> merkleNodes = new ArrayList<>();
+		for(String str:lgr){
+			MerkleNode merkleNode = new MerkleNode(MerkleHash.create(str));
+			merkleNodes.add(merkleNode);
+		}
+		 edu.ictt.blockchain.Block.merkle.MerkleTree merkleTree = new edu.ictt.blockchain.Block.merkle.MerkleTree();
+		merkleTree.buildTree(merkleNodes);
+        System.out.println(root1);
+        System.out.println("校验时重新生成的MerkleRoot: " + merkleTree.getRoot().getHash().toString());
+	}
+	
 	
 	@Test
 	public void rjson(){
@@ -75,7 +102,7 @@ public class PartTest {
 	
 	@Test
 	public void stringtest() throws UnsupportedEncodingException{
-		Record r=GenerateRecord.geneGRecord();
+		GradeRecord r=GenerateRecord.geneGRecord();
 		RecordBody  rb=new RecordBody(r, null);
 		String rjson=FastJsonUtil.toJSONString(rb);
 		

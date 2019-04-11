@@ -101,15 +101,11 @@ public class GradeRecord extends Record implements Serializable {
 
 	@Override
 	public String toString() {
-		return "GradeRecord{" +
-				"schoolInfo=" + schoolInfo +
-				", facultyInfo=" + facultyInfo +
-				", gradeInfo=" + gradeInfo +
-				", teacherSign='" + teacherSign + '\'' +
-				", falSign='" + facultySign + '\'' +
-				", recordTimeStamp=" + recordTimeStamp +
-				'}';
+		return "GradeRecord [schoolInfo=" + schoolInfo + ", facultyInfo=" + facultyInfo + ", gradeInfo=" + gradeInfo
+				+ ", teacherSign=" + teacherSign + ", facultySign=" + facultySign + "]";
 	}
+
+	
 
 	
 

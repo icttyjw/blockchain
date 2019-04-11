@@ -1,10 +1,9 @@
 package edu.ictt.blockchain.Block.check;
 
 import edu.ictt.blockchain.Block.block.Block;
-import edu.ictt.blockchain.Block.merkle.MerkleHash;
-import edu.ictt.blockchain.Block.merkle.MerkleNode;
-import edu.ictt.blockchain.Block.merkle.MerkleTree;
+import edu.ictt.blockchain.Block.me.MerkleTree;
 import edu.ictt.blockchain.Block.record.Record;
+import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.SHA256;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.service.BlockService;
@@ -103,7 +102,7 @@ public class DbBlockChecker implements BlockChecker {
     @Override
     public int checkBlock(Block block) {
 
-    	logger.info("block: "+block);
+    	//logger.info("block: "+block);
     	
         List<Record> records = new ArrayList<>();
         //获取记录列表重新生成记录的哈希列表
@@ -112,26 +111,31 @@ public class DbBlockChecker implements BlockChecker {
        // System.out.println(recordsHash);
 
         //重新建树
-        MerkleTree merkleTree = new MerkleTree();
-        List<MerkleNode> merkleNodes = new ArrayList<>();
+        //MerkleTree merkleTree = new MerkleTree();
+        //List<MerkleNode> merkleNodes = new ArrayList<>();
+        List<String> recordstring=new ArrayList<String>();
         int i = 1;
         for (Record record:records){
         	
-        	MerkleNode merkleNode = new MerkleNode(MerkleHash.create(record.toString()));
+        	//MerkleNode merkleNode = new MerkleNode(MerkleHash.create(record.toString()));
         	//if(merkleNode.getHash().equals(recordsHash.get(i))) {
         	//	System.out.println("当前记录的hash无误");
         	//}
         	//i++;
-            merkleNodes.add(merkleNode);
-            System.out.println("hash of merklenode: " + merkleNodes);
+            //merkleNodes.add(merkleNode);
+        	String str=FastJsonUtil.toJSONString(record);
+        	logger.info("record hash:"+str);
+        	recordstring.add(SHA256.sha256(str));
+            //System.out.println("hash of merklenode: " + merkleNodes);
         }
 
-        merkleTree.buildTree(merkleNodes);
+        //merkleTree.buildTree(merkleNodes);
+        String merkle=new MerkleTree(recordstring).build().getRoot();
         
-        System.out.println("校验时重新生成的MerkleRoot: " + merkleTree.getRoot().getHash().toString());
+        System.out.println("校验时重新生成的MerkleRoot: " + merkle);
         System.out.println("该区块的MerkleRoot: " + block.getBlockHeader().getHashMerkleRoot()  );
 
-        if(merkleTree.getRoot().getHash().toString().equals(block.getBlockHeader().getHashMerkleRoot()) ){
+        if(merkle.equals(block.getBlockHeader().getHashMerkleRoot()) ){
             return 0;
         }
 
@@ -154,7 +158,7 @@ public class DbBlockChecker implements BlockChecker {
             hash = SHA256.sha256(block.getBlockHeader().toString());
         }else {
         	//暂时注释掉了这块,因为blockbody为空,nullpoint影响后续校验
-    		hash = SHA256.sha256(block.getBlockHeader().toString() + block.getBlockBody().toString());
+    		hash = SHA256.sha256(FastJsonUtil.toJSONString(block.getBlockHeader()) +FastJsonUtil.toJSONString(block.getBlockBody()));
         }
         
 		if(!StrUtil.equals(block.getBlockHash(),hash)) 
