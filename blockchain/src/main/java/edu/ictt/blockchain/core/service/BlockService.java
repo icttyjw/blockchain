@@ -16,6 +16,7 @@ import edu.ictt.blockchain.Block.me.MerkleTree;
 import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchain.common.CommonUtil;
+import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.SHA256;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.requestbody.BlockRequesbody;
@@ -56,7 +57,7 @@ public class BlockService {
 		List<GradeRecord> lr=blockBody.getGrecordsList();
 		List<String> hashlist=new ArrayList<>();
 		for(Record r:lr){
-			String hash=SHA256.sha256(r.toString());
+			String hash=SHA256.sha256(FastJsonUtil.toJSONString(r));
 			hashlist.add(hash);
 		}
 		
@@ -68,7 +69,7 @@ public class BlockService {
 		Block block=new Block();
 		block.setBlockBody(blockBody);
 		block.setBlockHeader(blockHeader);
-		block.setBlockHash(SHA256.sha256(blockHeader.toString()+blockBody.toString()));
+		block.setBlockHash(SHA256.sha256(FastJsonUtil.toJSONString(blockHeader)+FastJsonUtil.toJSONString(blockBody)));
 		logger.info("block"+block);
 		RpcBlockBody rpcBlockBody=new RpcBlockBody(block);
 		BlockPacket blockPacket=new PacketBuilder<>().setType(PacketType.GENERATE_BLOCK_REQUEST).setBody(

@@ -3,6 +3,7 @@ package edu.ictt.blockchain.Block.check;
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.me.MerkleTree;
 import edu.ictt.blockchain.Block.record.Record;
+import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.SHA256;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.service.BlockService;
@@ -122,7 +123,9 @@ public class DbBlockChecker implements BlockChecker {
         	//}
         	//i++;
             //merkleNodes.add(merkleNode);
-        	recordstring.add(record.toString());
+        	String str=FastJsonUtil.toJSONString(record);
+        	logger.info("record hash:"+str);
+        	recordstring.add(SHA256.sha256(str));
             //System.out.println("hash of merklenode: " + merkleNodes);
         }
 
@@ -155,7 +158,7 @@ public class DbBlockChecker implements BlockChecker {
             hash = SHA256.sha256(block.getBlockHeader().toString());
         }else {
         	//暂时注释掉了这块,因为blockbody为空,nullpoint影响后续校验
-    		hash = SHA256.sha256(block.getBlockHeader().toString() + block.getBlockBody().toString());
+    		hash = SHA256.sha256(FastJsonUtil.toJSONString(block.getBlockHeader()) +FastJsonUtil.toJSONString(block.getBlockBody()));
         }
         
 		if(!StrUtil.equals(block.getBlockHash(),hash)) 

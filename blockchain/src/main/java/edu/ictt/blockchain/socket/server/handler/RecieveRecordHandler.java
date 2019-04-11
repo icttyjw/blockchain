@@ -33,7 +33,7 @@ public class RecieveRecordHandler extends AbstractBlockHandler<RecordBody>{
 		/*
 		 * 校验记录判断是否接收
 		 */
-		//ApplicationContextProvider.getBean(RecordQueue.class).receive(bsBody);
+		ApplicationContextProvider.getBean(RecordQueue.class).receive(bsBody);
 		return null;
 	}
 
