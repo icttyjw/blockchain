@@ -1,9 +1,7 @@
 package edu.ictt.blockchain.Block.check;
 
 import edu.ictt.blockchain.Block.block.Block;
-import edu.ictt.blockchain.Block.merkle.MerkleHash;
-import edu.ictt.blockchain.Block.merkle.MerkleNode;
-import edu.ictt.blockchain.Block.merkle.MerkleTree;
+import edu.ictt.blockchain.Block.me.MerkleTree;
 import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchain.common.SHA256;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
@@ -103,7 +101,7 @@ public class DbBlockChecker implements BlockChecker {
     @Override
     public int checkBlock(Block block) {
 
-    	logger.info("block: "+block);
+    	//logger.info("block: "+block);
     	
         List<Record> records = new ArrayList<>();
         //获取记录列表重新生成记录的哈希列表
@@ -112,26 +110,29 @@ public class DbBlockChecker implements BlockChecker {
        // System.out.println(recordsHash);
 
         //重新建树
-        MerkleTree merkleTree = new MerkleTree();
-        List<MerkleNode> merkleNodes = new ArrayList<>();
+        //MerkleTree merkleTree = new MerkleTree();
+        //List<MerkleNode> merkleNodes = new ArrayList<>();
+        List<String> recordstring=new ArrayList<String>();
         int i = 1;
         for (Record record:records){
         	
-        	MerkleNode merkleNode = new MerkleNode(MerkleHash.create(record.toString()));
+        	//MerkleNode merkleNode = new MerkleNode(MerkleHash.create(record.toString()));
         	//if(merkleNode.getHash().equals(recordsHash.get(i))) {
         	//	System.out.println("当前记录的hash无误");
         	//}
         	//i++;
-            merkleNodes.add(merkleNode);
-            System.out.println("hash of merklenode: " + merkleNodes);
+            //merkleNodes.add(merkleNode);
+        	recordstring.add(record.toString());
+            //System.out.println("hash of merklenode: " + merkleNodes);
         }
 
-        merkleTree.buildTree(merkleNodes);
+        //merkleTree.buildTree(merkleNodes);
+        String merkle=new MerkleTree(recordstring).build().getRoot();
         
-        System.out.println("校验时重新生成的MerkleRoot: " + merkleTree.getRoot().getHash().toString());
+        System.out.println("校验时重新生成的MerkleRoot: " + merkle);
         System.out.println("该区块的MerkleRoot: " + block.getBlockHeader().getHashMerkleRoot()  );
 
-        if(merkleTree.getRoot().getHash().toString().equals(block.getBlockHeader().getHashMerkleRoot()) ){
+        if(merkle.equals(block.getBlockHeader().getHashMerkleRoot()) ){
             return 0;
         }
 

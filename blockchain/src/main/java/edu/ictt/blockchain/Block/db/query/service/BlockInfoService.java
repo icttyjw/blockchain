@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import edu.ictt.blockchain.Block.db.query.BlockInfo;
 import edu.ictt.blockchain.Block.db.query.repository.BlockInfoRepository;
 
-@Service
+//@Service
 public class BlockInfoService {
-	@Autowired
+	//@Autowired
 	private BlockInfoRepository blockInfoRepository;
 	
 	/*

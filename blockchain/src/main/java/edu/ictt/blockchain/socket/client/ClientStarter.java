@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import edu.ictt.blockchain.Block.block.BlockBody;
 import edu.ictt.blockchain.Block.generatorUtil.GenerateRecord;
 import edu.ictt.blockchain.Block.merkle.MerkleHash;
+import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.Block.record.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,7 +119,7 @@ public class ClientStarter {
         //BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.HEART_BEAT).setBody(new BaseBody()).build();//NextBlockPacketBuilder.build();
         //packetSender.sendGroup(blockPacket);
         //List<Record> records = new ArrayList<>();
-        Record record = GenerateRecord.geneGRecord();
+        GradeRecord record = GenerateRecord.geneGRecord();
         //records.add(record);
         //List<String> recordsHash = new ArrayList<>();
         //recordsHash.add(MerkleHash.create(record.toString()).toString());
