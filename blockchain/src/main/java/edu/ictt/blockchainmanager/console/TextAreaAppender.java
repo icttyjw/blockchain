@@ -12,7 +12,7 @@ import ch.qos.logback.core.LogbackException;
 import ch.qos.logback.core.filter.Filter;
 import ch.qos.logback.core.spi.FilterReply;
 import ch.qos.logback.core.status.Status;
-import edu.ictt.blockchainmanager.groupmodel.userinterface.TextAreaSample;
+import edu.ictt.blockchainmanager.groupmodel.userinterface.controller.TextAreaSample;
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 import ch.qos.logback.core.UnsynchronizedAppenderBase;

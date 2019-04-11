@@ -85,6 +85,13 @@ public class BlockInfo implements Serializable{
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
+
+	@Override
+	public String toString() {
+		return "BlockInfo [blockHash=" + blockHash + ", schoolId=" + schoolId + ", schoolName=" + schoolName
+				+ ", facultyId=" + facultyId + ", facultyName=" + facultyName + ", courseId=" + courseId
+				+ ", courseName=" + courseName + "]";
+	}
 	
 	
 }

@@ -4,7 +4,7 @@ import de.felixroske.jfxsupport.AbstractFxmlView;
 import de.felixroske.jfxsupport.FXMLView;
 import javafx.scene.control.Alert;
 
-@FXMLView(value="/edu/ictt/blockchainmanager/groupmodel/userinterface/Alert.fxml")
+@FXMLView(value="/edu/ictt/blockchainmanager/groupmodel/userinterface/fxml/Alert.fxml")
 public class AlertView extends AbstractFxmlView{
 
 	public void AlertLogin(){

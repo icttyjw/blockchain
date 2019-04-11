@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.ictt.blockchain.Block.db.query.BlockInfo;
-import edu.ictt.blockchain.Block.db.query.repository.BlockInfoRepository;
+import edu.ictt.blockchainmanager.groupmodel.*;
+import edu.ictt.blockchainmanager.sql.repository.BlockInfoRepository;
 
 @Service
 public class BlockInfoService {
@@ -22,6 +22,11 @@ public class BlockInfoService {
 	/*
 	 * 根据学校姓名查询
 	 */
+	//public List<BlockInfo> queryBySchoolName(String schoolname) {
+		
+	//	return blockInfoRepository.queryBySchoolName(schoolname);
+		
+	//}
 	public List<BlockInfo> queryFirst10BySchoolName(String schoolname) {
 		
 		return blockInfoRepository.queryFirst10BySchoolName(schoolname);

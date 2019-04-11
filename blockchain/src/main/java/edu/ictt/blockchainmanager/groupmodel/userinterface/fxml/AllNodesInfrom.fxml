@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.*?>
@@ -9,11 +10,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="351.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ictt.blockchainmanager.groupmodel.userinterface.NodesInSchoolController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ictt.blockchainmanager.groupmodel.userinterface.controller.AllNodesController">
    <children>
-      <HBox prefHeight="351.0" prefWidth="600.0">
+      <HBox layoutX="-7.0" layoutY="-1.0" prefHeight="362.0" prefWidth="617.0">
          <children>
-            <VBox prefHeight="351.0" prefWidth="525.0">
+            <VBox prefHeight="341.0" prefWidth="439.0">
                <children>
                   <Pane prefHeight="181.0" prefWidth="463.0">
                      <children>
@@ -45,20 +46,20 @@
                                     <Label id="nodeLabel" alignment="CENTER" layoutX="133.0" layoutY="63.0" prefHeight="15.0" prefWidth="88.0" text="正常运行" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  </children>
                               </HBox>
+                              <StackPane prefHeight="90.0" prefWidth="433.0">
+                                 <children>
+                                    <Button id="refreshButton" fx:id="refresh" alignment="CENTER" mnemonicParsing="false" text="刷新" textAlignment="CENTER" />
+                                 </children>
+                              </StackPane>
                            </children>
                         </VBox>
                      </children>
                   </StackPane>
-                  <StackPane prefHeight="87.0" prefWidth="463.0">
-                     <children>
-                        <Button id="refreshButton" fx:id="refresh" alignment="CENTER" mnemonicParsing="false" text="刷新" textAlignment="CENTER" />
-                     </children>
-                  </StackPane>
                </children>
             </VBox>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
+            <StackPane prefHeight="350.0" prefWidth="190.0">
                <children>
-                  <ListView fx:id="nodesList" prefHeight="351.0" prefWidth="229.0" />
+                  <ListView fx:id="nodesList" prefHeight="213.0" prefWidth="184.0" />
                </children>
             </StackPane>
          </children>

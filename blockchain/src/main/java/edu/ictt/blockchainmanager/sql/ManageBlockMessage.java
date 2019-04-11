@@ -5,7 +5,8 @@ import java.sql.ResultSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.ictt.blockchain.Block.db.query.BlockInfo;
+//这个头文件的路径先不管了，用不到
+import edu.ictt.blockchainmanager.groupmodel.BlockInfo;
 import edu.ictt.blockchain.common.util.DerbyDBUtil;
 import edu.ictt.blockchain.common.util.SqlDBUtil;
 

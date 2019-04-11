@@ -1,4 +1,4 @@
-package edu.ictt.blockchainmanager.groupmodel.userinterface;
+package edu.ictt.blockchainmanager.groupmodel.userinterface.controller;
 
 import java.util.ResourceBundle;
 
@@ -46,9 +46,6 @@ public class NodesInfromUIController  implements Initializable{
     private Label constate;
 
     @FXML
-    private Button refresh;
-
-    @FXML
     private Label Name;
 
     @FXML
@@ -80,6 +77,9 @@ public class NodesInfromUIController  implements Initializable{
     
     @FXML
     private Button save;
+    
+    @FXML
+    private Button refresh;
     
     @Resource
     private NodeService nodeService;

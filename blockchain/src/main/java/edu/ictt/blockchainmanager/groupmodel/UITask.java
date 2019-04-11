@@ -2,7 +2,7 @@ package edu.ictt.blockchainmanager.groupmodel;
 
 import java.io.IOException;
 
-import edu.ictt.blockchainmanager.groupmodel.userinterface.AlertController;
+import edu.ictt.blockchainmanager.groupmodel.userinterface.controller.AlertController;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 

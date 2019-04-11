@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ictt.blockchainmanager.groupmodel.userinterface.TextAreaSample">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ictt.blockchainmanager.groupmodel.userinterface.controller.TextAreaSample">
    <children>
       <TextArea fx:id="textarea" layoutX="-1.0" prefHeight="315.0" prefWidth="600.0" />
       <Button fx:id="button" layoutX="273.0" layoutY="343.0" mnemonicParsing="false" onAction="#setupLogginView" text="Button" />

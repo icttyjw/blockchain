@@ -16,7 +16,7 @@ import edu.ictt.blockchain.socket.server.handler.PbftVoteHandler;
 import edu.ictt.blockchainmanager.Application;
 import edu.ictt.blockchainmanager.groupmodel.UITask;
 import edu.ictt.blockchainmanager.groupmodel.UiBaseService;
-import edu.ictt.blockchainmanager.groupmodel.userinterface.AlertController;
+import edu.ictt.blockchainmanager.groupmodel.userinterface.controller.AlertController;
 import edu.ictt.blockchainmanager.view.AlertView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
