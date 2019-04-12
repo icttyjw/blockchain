@@ -23,10 +23,11 @@ import javafx.stage.WindowEvent;
 public class Application  extends AbstractJavaFxApplicationSupport {
 	private final TextArea loggingView = new TextArea(); 
 	
+	
 	@Override
 	    public void start(Stage primaryStage) throws Exception {
 		 //primaryStage.setTitle("SignUp");
-			//primaryStage.setResizable(false);
+		   primaryStage.setResizable(false);
 		//TextAreaAppender.setTextArea(loggingView);
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override

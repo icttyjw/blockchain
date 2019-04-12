@@ -1,4 +1,4 @@
-package edu.ictt.blockchainmanager.groupmodel.userinterface;
+package edu.ictt.blockchainmanager.groupmodel.userinterface.controller;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
