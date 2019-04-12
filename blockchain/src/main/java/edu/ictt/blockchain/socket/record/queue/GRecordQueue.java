@@ -34,7 +34,7 @@ import edu.ictt.blockchain.socket.body.RecordBody;
  * 接收记录的队列，目前只考虑成绩记录
  */
 @Component
-public class RecordQueue {
+public class GRecordQueue {
 
 	@Resource
 	DbBlockManager dbBlockManager;
@@ -91,16 +91,8 @@ public class RecordQueue {
 		else{
 			count=recordcountConcurrentHashMap.get(hash);
 		}
-		if(ls.size()==count)
-		{
-			//List<String> hashlist=ls.stream().map(Record::getHash).collect(Collectors.toList());
-			//BlockBody blockbody=new BlockBody(ls, hashlist);
-			BlockBody blockbody=new BlockBody(ls,null);
-			BlockRequesbody blockRequesbody=new BlockRequesbody(blockbody);
-			//测试queue先把这句注释了
-			blockService.addBlock(blockRequesbody);
-		}else
-		{//备份记录
+		
+		//备份记录
 			String recordlist=FastJsonUtil.toJSONString(ls);
 			//String recordlist= JSON.toJSON(ls).toString();
 			logger.info("将要被存储的记录" + hash + ":" + "记录" + recordlist);
@@ -113,7 +105,15 @@ public class RecordQueue {
 			//备份每个课程的记录数量
 			//dbBlockManager.put(FastJsonUtil.toJSONString(course),FastJsonUtil.toJSONNoFeatures(recordCount));
 			//System.out.println("备份课程的记录数量" + hash + ":" + "记录数量" + recordCount);
-		}
+			if(ls.size()==count)
+			{
+				//List<String> hashlist=ls.stream().map(Record::getHash).collect(Collectors.toList());
+				//BlockBody blockbody=new BlockBody(ls, hashlist);
+				BlockBody blockbody=new BlockBody(ls,null);
+				BlockRequesbody blockRequesbody=new BlockRequesbody(blockbody);
+				//测试queue先把这句注释了
+				blockService.addBlock(blockRequesbody);
+			}
 	}
 
 	//判断是否有
