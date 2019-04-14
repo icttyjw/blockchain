@@ -49,7 +49,7 @@ public class RocksTest {
 	@Test
 	public void checkertest(){
 		Block block=GenerateBlock.generateBlock(3);
-		dbBlockChecker.checkBlock(block);
+		dbBlockChecker.checkMerkleRoot(block);
 	}
 	
 }

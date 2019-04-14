@@ -61,7 +61,7 @@ public class PartTest {
 	public void newmerkle(){
 		Block block=GenerateBlock.generateBlock(1);
 		DbBlockChecker blockChecker=new DbBlockChecker();
-		System.out.println(blockChecker.checkBlock(block));
+		System.out.println(blockChecker.checkMerkleRoot(block));
 	}
 	
 	@Test

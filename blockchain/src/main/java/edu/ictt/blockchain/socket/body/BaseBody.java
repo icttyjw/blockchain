@@ -24,7 +24,7 @@ public class BaseBody {
     /**
      * 自己是谁
      */
-	private String appId = "ddd";
+	private String appId = "ttt";
 
     public BaseBody() {
     }

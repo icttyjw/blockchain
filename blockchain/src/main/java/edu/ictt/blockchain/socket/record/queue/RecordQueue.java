@@ -16,6 +16,8 @@ import com.alibaba.fastjson.JSONObject;
 import edu.ictt.blockchain.Block.record.RecordParse;
 import edu.ictt.blockchain.common.timer.TimerManager;
 import edu.ictt.blockchain.core.event.DelRecordEvent;
+
+import org.hibernate.boot.jaxb.hbm.spi.JaxbHbmCacheInclusionEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.event.EventListener;
@@ -79,7 +81,7 @@ public class RecordQueue {
 			//recordCount = count;//课程的记录数量
 			String cstring=FastJsonUtil.toJSONString(course);
 			dbBlockManager.put("course", cstring);
-			System.out.println("新增一门课程：" + cstring);
+			logger.info("新增一门课程：" + cstring);
 		}
 		//System.out.println("要存储的记录：" + recordBody.getRecord());
 		logger.info("要存储的记录：" + recordBody.getGradeRecord());
@@ -89,6 +91,7 @@ public class RecordQueue {
 			recordcountConcurrentHashMap.put(hash, count);
 		}
 		else{
+			//这块有问题
 			count=recordcountConcurrentHashMap.get(hash);
 		}
 		if(ls.size()==count)
@@ -97,18 +100,19 @@ public class RecordQueue {
 			//BlockBody blockbody=new BlockBody(ls, hashlist);
 			BlockBody blockbody=new BlockBody(ls,null);
 			BlockRequesbody blockRequesbody=new BlockRequesbody(blockbody);
-			//测试queue先把这句注释了
+			//单独测试queue先把这句注释了
 			blockService.addBlock(blockRequesbody);
 		}else
 		{//备份记录
 			String recordlist=FastJsonUtil.toJSONString(ls);
 			//String recordlist= JSON.toJSON(ls).toString();
-			logger.info("将要被存储的记录" + hash + ":" + "记录" + recordlist);
+			//logger.info("将要被存储的记录" + hash + ":" + "记录" + recordlist);
 			//System.out.println("将要被存储的记录" + hash + ":" + "记录" + recordlist);
 			recordConcurrentHashMap.put(hash, ls);//说明当前课程的记录还没全部收到，需要暂时放到MAP
 
 			//System.out.println("已存储的记录" + hash + ":" + "记录" + recordlist);
 			dbBlockManager.put(hash, recordlist);
+			logger.info("记录存储完毕");
 
 			//备份每个课程的记录数量
 			//dbBlockManager.put(FastJsonUtil.toJSONString(course),FastJsonUtil.toJSONNoFeatures(recordCount));

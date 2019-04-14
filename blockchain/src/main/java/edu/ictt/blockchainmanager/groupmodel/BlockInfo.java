@@ -30,6 +30,20 @@ public class BlockInfo implements Serializable{
 	
 	private String courseName;
 
+	public BlockInfo() {}
+	
+	public BlockInfo(String blockHash, int schoolId, String schoolName, int facultyId, String facultyName, int courseId,
+			String courseName) {
+		super();
+		this.blockHash = blockHash;
+		this.schoolId = schoolId;
+		this.schoolName = schoolName;
+		this.facultyId = facultyId;
+		this.facultyName = facultyName;
+		this.courseId = courseId;
+		this.courseName = courseName;
+	}
+
 	public String getBlockHash() {
 		return blockHash;
 	}

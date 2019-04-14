@@ -26,10 +26,25 @@ public class BlockInfo implements Serializable{
 	
 	private String facultyName;
 	
+	//成绩记录中，该字段表示课程id；学位记录中，该字段表示证书的编号
 	private int courseId;
-	
+	//成绩记录中，该字段表示课程名称；学位记录中，该字段表示证书的名称。
 	private String courseName;
 
+	public BlockInfo() {}
+	
+	public BlockInfo(String blockHash, int schoolId, String schoolName, int facultyId, String facultyName, int courseId,
+			String courseName) {
+		super();
+		this.blockHash = blockHash;
+		this.schoolId = schoolId;
+		this.schoolName = schoolName;
+		this.facultyId = facultyId;
+		this.facultyName = facultyName;
+		this.courseId = courseId;
+		this.courseName = courseName;
+	}
+	
 	public String getBlockHash() {
 		return blockHash;
 	}

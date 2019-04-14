@@ -14,10 +14,10 @@ import java.util.List;
  */
 public class BlockBody {
 
-    //记录集合，其中第一条记录为特殊记录
+    //成绩记录集合
     private List<GradeRecord> grecordsList;
 
-    //这个不需要放在区块中。记录哈希值集合
+    //学位记录集合
     private List<DegreeRecord> drecordsList;
 
     public BlockBody(){};

@@ -7,8 +7,11 @@ import edu.ictt.blockchain.Block.check.DbBlockChecker;
 import edu.ictt.blockchain.Block.me.MerkleTree;
 import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.Block.record.Record;
+import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.SHA256;
+import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +28,7 @@ public class GenerateBlock {
 	
     public static Block generateBlock(int i){
 
+    	
         //生成记录
         List<GradeRecord> records = new ArrayList<>();
         //List<String> recordHash = new ArrayList<>();
@@ -52,15 +56,29 @@ public class GenerateBlock {
         //用记录生成blockbody
         BlockBody blockBody = new BlockBody();
         blockBody.setGrecordsList(records);
+        
+        String publicKey = GenerateRecord.sPubKey;
+        String privateKey = GenerateRecord.sPriKey;
 
         //生成BlockHeader
         BlockHeader blockHeader = new BlockHeader();
         blockHeader.setBlockNumber(i);
         blockHeader.setBlockTimeStamp(System.currentTimeMillis());
         blockHeader.setRecordCount(records.size());
-        blockHeader.setNounce(1);
+        blockHeader.setNonce(1);
         blockHeader.setHashPreviousBlock("0");
         blockHeader.setDifficultGoal(1);
+        blockHeader.setPublicKey(publicKey);
+        //增加了对区块头的签名
+        try {
+        String blockStr = blockHeader.getHashPreviousBlock()+blockHeader.getHashMerkleRoot()+
+				 blockHeader.getNonce()+blockHeader.getDifficultGoal()+blockHeader.getBlockTimeStamp()
+				 +blockHeader.getRecordCount()+blockHeader.getPublicKey();
+			blockHeader.setBlockHeaderSign(ECDSAAlgorithm.sign(privateKey, blockStr));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         //blockHeader.setHashList(recordHash);
         System.out.println(1);
         String merkle=new MerkleTree(hashlist).build().getRoot();

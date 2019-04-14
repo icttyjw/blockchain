@@ -26,7 +26,7 @@ public class BlockHeader {
     /**Nounce值
      *
      */
-    private long nounce;
+    private long nonce;
 
     /**难度值
      *
@@ -61,7 +61,7 @@ public class BlockHeader {
     /**
      * 这个不需要放在区块头。该区块里每条交易信息的hash集合，按顺序来的，通过该hash集合能算出根节点hash
      */
-    private List<String> hashList;
+    //private List<String> hashList;
 
     public BlockHeader(){};
 
@@ -70,7 +70,7 @@ public class BlockHeader {
                        String blockHeaderSign, List<String> hashList) {
         this.hashPreviousBlock = hashPreviousBlock;
         this.hashMerkleRoot = hashMerkleRoot;
-        this.nounce = nounce;
+        this.nonce = nounce;
         this.difficultGoal = difficultGoal;
         this.blockTimeStamp = blockTimeStamp;
         this.blockNumber = blockNumber;
@@ -95,12 +95,12 @@ public class BlockHeader {
         this.hashMerkleRoot = hashMerkleRoot;
     }
 
-    public long getNounce() {
-        return nounce;
+    public long getNonce() {
+        return nonce;
     }
 
-    public void setNounce(long nounce) {
-        this.nounce = nounce;
+    public void setNonce(long nonce) {
+        this.nonce = nonce;
     }
 
     public long getDifficultGoal() {
@@ -156,7 +156,7 @@ public class BlockHeader {
         return "BlockHeader{" +
                 "hashPreviousBlock='" + hashPreviousBlock + '\'' +
                 ", hashMerkleRoot='" + hashMerkleRoot + '\'' +
-                ", nounce=" + nounce +
+                ", nounce=" + nonce +
                 ", difficultGoal=" + difficultGoal +
                 ", blockTimeStamp=" + blockTimeStamp +
                 ", blockNumber=" + blockNumber +

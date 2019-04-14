@@ -18,7 +18,7 @@ public interface BlockChecker {
     int checkNum(Block block);
 
     /**
-     * 校验hash，包括prevHash、内部hash（merkle tree root hash）
+     * 校验prevHash
      * @param block
      * block
      * @return
@@ -34,7 +34,7 @@ public interface BlockChecker {
     int checkTime(Block block);
 
     /**
-     * 校验摘要签名
+     * 校验摘要头签名
      * @param block  block
      * @return block
      */
@@ -45,7 +45,7 @@ public interface BlockChecker {
      * @param  block
      * @return
      */
-    int checkBlock(Block block);
+    int checkMerkleRoot(Block block);
 
 
     /**

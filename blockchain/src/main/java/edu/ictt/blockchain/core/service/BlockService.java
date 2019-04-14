@@ -34,7 +34,7 @@ public class BlockService {
 	private DbBlockManager dbBlockManager;
 	
 	Logger logger=LoggerFactory.getLogger(getClass());
-	
+	//从本地生成新区块并发送到群组
 	public Block addBlock(BlockBody blockbody){
 		BlockHeader blockHeader=new BlockHeader();
 		blockHeader.setBlockTimeStamp(CommonUtil.getNow());		
@@ -52,6 +52,7 @@ public class BlockService {
 		packetSender.sendGroup(blockPacket);
 		return block;
 	}
+	//收到远程blockrequesbody生成区块并发送到群组
 	public Block addBlock(BlockRequesbody blockrequesbody){
 		BlockBody blockBody=blockrequesbody.getBlockBody();
 		List<GradeRecord> lr=blockBody.getGrecordsList();

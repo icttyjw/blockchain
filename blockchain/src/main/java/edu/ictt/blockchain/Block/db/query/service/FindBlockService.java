@@ -15,11 +15,11 @@ import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.db.RocksDbStoreImpl;
 import edu.ictt.blockchain.Block.db.query.BlockInfo;
 
-//@Service
+@Service
 public class FindBlockService {
-	//@Autowired
+	@Autowired
 	BlockInfoService blockInfoService;
-	//@Autowired
+	@Autowired
 	RocksDbStoreImpl rocksDbStoreImpl;
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
