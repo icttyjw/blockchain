@@ -4,8 +4,12 @@ package edu.ictt.blockchain.core.manager;
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.check.CheckerManager;
 import edu.ictt.blockchain.Block.db.DbStore;
+import edu.ictt.blockchain.Block.record.DegreeRecord;
+import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.common.Constants;
 import edu.ictt.blockchain.core.event.AddBlockEvent;
+import edu.ictt.blockchainmanager.groupmodel.BlockInfo;
+import edu.ictt.blockchainmanager.sql.service.BlockInfoService;
 import edu.ictt.blockchain.ApplicationContextProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +18,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.tio.utils.json.Json;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -28,6 +35,8 @@ public class DbBlockGenerator {
     @Resource
     private CheckerManager checkerManager;
     private Logger logger = LoggerFactory.getLogger(getClass());
+    @Resource
+    private BlockInfoService blockInfoService;
 
     /**
      * 数据库里添加一个新的区块
@@ -64,7 +73,22 @@ public class DbBlockGenerator {
         dbStore.put(Constants.KEY_LAST_BLOCK, hash);
 
         logger.info("本地已生成新的Block");
-
+        List<GradeRecord> lg=new ArrayList<GradeRecord>();
+        List<DegreeRecord> ld=new ArrayList<DegreeRecord>();
+        lg=block.getBlockBody().getGrecordsList();
+        ld=block.getBlockBody().getDrecordsList();
+        if(lg!=null){
+        	GradeRecord gradeRecord=lg.get(0);
+        BlockInfo blockInfo=new BlockInfo(hash, gradeRecord.getSchoolInfo().getSchoolId(), gradeRecord.getSchoolInfo().getSchoolName()
+        		, gradeRecord.getFacultyInfo().getFacultyId(), gradeRecord.getFacultyInfo().getFacultyName(), gradeRecord.getGradeInfo().getCourseInfo().getCourseId(), gradeRecord.getGradeInfo().getCourseInfo().getCourseName());
+        blockInfoService.saveBlockInfo(blockInfo);
+        }
+       /* if(ld!=null){
+        	DegreeRecord degreeRecord=ld.get(0);
+        BlockInfo blockInfo=new BlockInfo(hash, degreeRecord.getSchoolInfo().getSchoolId(), degreeRecord.getSchoolInfo().getSchoolName()
+        		, 0,null,degreeRecord.getDegreeId(),degreeRecord.getDegree())//gradeRecord.getFacultyInfo().getFacultyId(), gradeRecord.getFacultyInfo().getFacultyName(), gradeRecord.getGradeInfo().getCourseInfo().getCourseId(), gradeRecord.getGradeInfo().getCourseInfo().getCourseName());
+        blockInfoService.saveBlockInfo(blockInfo);
+        }*/
         //同步到sqlite
        // sqliteSync();
     }
