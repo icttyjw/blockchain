@@ -15,7 +15,7 @@
                   <FlowPane alignment="CENTER" hgap="6.0" prefHeight="80.0" prefWidth="600.0">
                      <children>
                         <Label alignment="CENTER" prefHeight="24.0" prefWidth="36.0" text="学校：" />
-                        <TextField fx:id="schoolName" prefHeight="25.0" prefWidth="90.0" text="清华" />
+                        <TextField fx:id="schoolName" prefHeight="25.0" prefWidth="90.0" text="西电" />
                         <Label text="学院：" />
                         <TextField fx:id="facultyName" prefHeight="25.0" prefWidth="90.0" text="计算机" />
                         <Label prefHeight="25.0" prefWidth="48.0" text="课程名：" />
@@ -25,9 +25,9 @@
                   </FlowPane>
                </children>
             </StackPane>
-            <ScrollPane prefHeight="240.0" prefWidth="600.0">
+            <ScrollPane prefHeight="200.0" prefWidth="600.0">
                <content>
-                  <TableView fx:id="recordTable" prefHeight="259.0" prefWidth="600.0">
+                  <TableView fx:id="recordTable" prefHeight="200.0" prefWidth="600.0">
                     <columns>
                       <TableColumn maxWidth="1.7976931348623157E308" prefWidth="75.0" text="学校" />
                       <TableColumn prefWidth="75.0" text="学院" />
@@ -41,11 +41,11 @@
                   </TableView>
                </content>
             </ScrollPane>
-            <StackPane prefHeight="50.0" prefWidth="600.0">
+            <StackPane prefHeight="90.0" prefWidth="600.0">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox prefHeight="90.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="simpleResult" prefHeight="53.0" prefWidth="599.0" />
+                        <TextField fx:id="simpleResult" prefHeight="90.0" prefWidth="599.0" />
                      </children>
                   </HBox>
                </children>

@@ -16,6 +16,8 @@ public class BlockInfo implements Serializable{
 	private static final long serialVersionUID = 2835146221652592168L;
 
 	@Id
+	private long blockNumber;
+	
 	private String blockHash;
 	
 	private int schoolId;
@@ -32,9 +34,10 @@ public class BlockInfo implements Serializable{
 
 	public BlockInfo() {}
 	
-	public BlockInfo(String blockHash, int schoolId, String schoolName, int facultyId, String facultyName, int courseId,
+	public BlockInfo(long blockNumber,String blockHash, int schoolId, String schoolName, int facultyId, String facultyName, int courseId,
 			String courseName) {
 		super();
+		this.blockNumber = blockNumber;
 		this.blockHash = blockHash;
 		this.schoolId = schoolId;
 		this.schoolName = schoolName;
@@ -42,6 +45,15 @@ public class BlockInfo implements Serializable{
 		this.facultyName = facultyName;
 		this.courseId = courseId;
 		this.courseName = courseName;
+	}
+
+
+	public long getBlockNumber() {
+		return blockNumber;
+	}
+
+	public void setBlockNumber(long blockNumber) {
+		this.blockNumber = blockNumber;
 	}
 
 	public String getBlockHash() {
@@ -102,9 +114,9 @@ public class BlockInfo implements Serializable{
 
 	@Override
 	public String toString() {
-		return "BlockInfo [blockHash=" + blockHash + ", schoolId=" + schoolId + ", schoolName=" + schoolName
-				+ ", facultyId=" + facultyId + ", facultyName=" + facultyName + ", courseId=" + courseId
-				+ ", courseName=" + courseName + "]";
+		return "BlockInfo [blockNumber=" + blockNumber + ", blockHash=" + blockHash + ", schoolId=" + schoolId
+				+ ", schoolName=" + schoolName + ", facultyId=" + facultyId + ", facultyName=" + facultyName
+				+ ", courseId=" + courseId + ", courseName=" + courseName + "]";
 	}
 	
 	

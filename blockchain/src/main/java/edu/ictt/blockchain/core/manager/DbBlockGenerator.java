@@ -35,8 +35,8 @@ public class DbBlockGenerator {
     @Resource
     private CheckerManager checkerManager;
     private Logger logger = LoggerFactory.getLogger(getClass());
-    //@Resource
-    //private BlockInfoService blockInfoService;
+    @Resource
+    private BlockInfoService blockInfoService;
 
     /**
      * 数据库里添加一个新的区块
@@ -72,21 +72,23 @@ public class DbBlockGenerator {
         //设置最后一个block的key value
         dbStore.put(Constants.KEY_LAST_BLOCK, hash);
 
-        logger.info("本地已生成新的Block");
+        logger.info("[本地生成区块]：本地已生成新的Block");
         List<GradeRecord> lg=new ArrayList<GradeRecord>();
         List<DegreeRecord> ld=new ArrayList<DegreeRecord>();
         lg=block.getBlockBody().getGrecordsList();
         ld=block.getBlockBody().getDrecordsList();
-      /*  if(lg!=null){
+        if(lg!=null){
         	GradeRecord gradeRecord=lg.get(0);
-        BlockInfo blockInfo=new BlockInfo(hash, gradeRecord.getSchoolInfo().getSchoolId(), gradeRecord.getSchoolInfo().getSchoolName()
+        BlockInfo blockInfo=new BlockInfo(block.getBlockHeader().getBlockNumber(),hash, gradeRecord.getSchoolInfo().getSchoolId(), gradeRecord.getSchoolInfo().getSchoolName()
         		, gradeRecord.getFacultyInfo().getFacultyId(), gradeRecord.getFacultyInfo().getFacultyName(), gradeRecord.getGradeInfo().getCourseInfo().getCourseId(), gradeRecord.getGradeInfo().getCourseInfo().getCourseName());
         blockInfoService.saveBlockInfo(blockInfo);
-        }*/
-       /* if(ld!=null){
+        logger.info("[本地生成区块]:已存入本地数据库");
+        }
+        /*if(ld!=null){
         	DegreeRecord degreeRecord=ld.get(0);
+        	//TODO 此处学位证书编号强行int了。
         BlockInfo blockInfo=new BlockInfo(hash, degreeRecord.getSchoolInfo().getSchoolId(), degreeRecord.getSchoolInfo().getSchoolName()
-        		, 0,null,degreeRecord.getDegreeId(),degreeRecord.getDegree())//gradeRecord.getFacultyInfo().getFacultyId(), gradeRecord.getFacultyInfo().getFacultyName(), gradeRecord.getGradeInfo().getCourseInfo().getCourseId(), gradeRecord.getGradeInfo().getCourseInfo().getCourseName());
+        		, 0,null,(int)degreeRecord.getDegreeId(),degreeRecord.getDegree());//gradeRecord.getFacultyInfo().getFacultyId(), gradeRecord.getFacultyInfo().getFacultyName(), gradeRecord.getGradeInfo().getCourseInfo().getCourseId(), gradeRecord.getGradeInfo().getCourseInfo().getCourseName());
         blockInfoService.saveBlockInfo(blockInfo);
         }*/
         //同步到sqlite
