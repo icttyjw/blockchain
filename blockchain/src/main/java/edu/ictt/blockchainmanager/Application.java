@@ -15,9 +15,9 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-@SpringBootApplication
-@EntityScan(value="edu.ictt.blockchainmanager.groupmodel")
-@EnableJpaRepositories(value="edu.ictt.blockchainmanager.sql.repository")
+//@SpringBootApplication
+//@EntityScan(value="edu.ictt.blockchainmanager.groupmodel")
+//@EnableJpaRepositories(value="edu.ictt.blockchainmanager.sql.repository")
 //@ComponentScan(basePackages = {"edu.ictt.blockchainmanager.sql.repository","edu.ictt.blockchainmanager.groupmodel",
 //		"edu.ictt.blockchainmanager.sql.service"})
 public class Application  extends AbstractJavaFxApplicationSupport {

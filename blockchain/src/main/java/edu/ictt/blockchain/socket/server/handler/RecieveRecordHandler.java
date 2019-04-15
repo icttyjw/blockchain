@@ -28,15 +28,16 @@ public class RecieveRecordHandler extends AbstractBlockHandler<RecordBody>{
 
 	@Override
 	public Object handler(BlockPacket packet, RecordBody bsBody, ChannelContext channelContext) throws Exception {
-		GradeRecord record=bsBody.getGradeRecord();
+		GradeRecord grecord=bsBody.getGradeRecord();
 		DegreeRecord drecord=bsBody.getDegreeRecord();
-		logger.info("[通信]：收到的记录body:"+bsBody);
-		logger.info("[通信]：收到的记录hash:"+ SHA256.sha256(FastJsonUtil.toJSONString(record)));
-		logger.info("[通信]：收到来自于<" + bsBody.getAppId() + "><成绩记录>消息，block信息为[" + record + "]");
+
+		logger.info("body:"+bsBody);
+		logger.info("收到来自于<" + bsBody.getAppId() + "><成绩记录>消息，grade信息为[" + grecord + "]"+"，degree信息为["+drecord+"]");
+
 		/*
 		 * 校验记录判断是否接收
 		 */
-		if(record!=null)
+		if(grecord!=null)
 		{
 		ApplicationContextProvider.getBean(GRecordQueue.class).receive(bsBody);
 		}

@@ -62,8 +62,8 @@ public class ClientStarter {
     private PacketSender packetSender;
     @Resource
     private RestTemplate restTemplate;
-    //@Resource
-    //private NodeService nodeService;
+    @Resource
+    private NodeService nodeService;
     @Resource
     private BlockService blockService;
     
@@ -80,7 +80,7 @@ public class ClientStarter {
     //@Value("${name}")
     //private String name;
     //@Value("${singeNode:true}")
-    private Boolean singeNode=true;
+    private Boolean singeNode=false;
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -107,7 +107,7 @@ public class ClientStarter {
         String localIp = CommonUtil.getLocalIp();
         logger.info("[启动]：本机IP：{}",localIp);
         //校内和组内信息为长连，组间在投票时连接
-        /*List<NodeState> nodelist=nodeService.queryAllNodes();
+        List<NodeState> nodelist=nodeService.queryAllNodes();
         if(nodelist.isEmpty())
         {
         	logger.info("请先初始化");
@@ -118,10 +118,14 @@ public class ClientStarter {
         for(NodeState nodestate:nodelist){
         	 Node node = new Node(nodestate.getIp(), Const.PORT);
              nodes.add(node);
-        }*/
-        Node node=new Node(localIp,Const.PORT);
+        }
+        //Node node=new Node(localIp,Const.PORT);
+        //Node node2=new Node("10.170.72.102",Const.PORT);
+        //nodes.add(node);
+        
+        //Node node=new Node(localIp,Const.PORT);
         //Node node2=new  Node("192.168.137.1", Const.PORT);
-        nodes.add(node);
+        //nodes.add(node);
         //nodes.add(node2);
         bindServerGroup(nodes);
     }
@@ -252,6 +256,6 @@ public class ClientStarter {
     }
 
     public int pbftAgreeCount() {
-        return pbftSize() * 2 + 1;
+        return pbftSize() * 2;// + 1;
     }
 }
