@@ -62,7 +62,7 @@ public class DbBlockManager {
 	        if (block != null) {
 	            return block.getBlockHash();
 	        }
-	        return SHA256.sha256("first block");
+	        return null;
 	    }
 
 	    /**
