@@ -47,7 +47,7 @@ import org.tio.server.intf.ServerAioHandler;
  * server端处理所有client请求的入口
  * @author wuweifeng wrote on 2018/3/12.
  */
-@Component
+//@Component
 public  class BlockServerAioHandler extends AbstractAioHandler  implements ServerAioHandler{
 
     /**

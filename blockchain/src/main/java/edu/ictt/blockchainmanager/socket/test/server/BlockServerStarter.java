@@ -21,7 +21,7 @@ import javax.annotation.PostConstruct;
  *
  * @author wuweifeng wrote on 2018/3/12.
  */
-@Component
+//@Component
 public class BlockServerStarter {
 
 	private static Logger logger = LoggerFactory.getLogger(BlockServerStarter.class);

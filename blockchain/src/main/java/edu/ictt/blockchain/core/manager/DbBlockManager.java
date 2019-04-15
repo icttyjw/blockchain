@@ -43,20 +43,12 @@ public class DbBlockManager {
 	     *
 	     * @return 最后一个区块
 	     */
+
 	    public Block getLastBlock() {
-	    	logger.info("[共识准备]：get lastblock");
 	        String lastBlockHash = dbStore.get(Constants.KEY_LAST_BLOCK);
 	        if (StrUtil.isEmpty(lastBlockHash)) {
-				Block block = GenerateBlock.generateBlock(1);
-				block.setBlockHash(SHA256.sha256(block.getBlockHeader().toString()));
-				dbStore.put(block.getBlockHash(), JSON.toJSONString(block));
-				dbStore.put("key_last_block",block.getBlockHash());
-				logger.info("hash of the last block:" + block.getBlockHash());
-	            return block;
-	        }else{
-	        	logger.info("[共识准备]：lastblock读取成功");
-	        	logger.info("[共识准备]：lastblcok is: " + dbStore.get(lastBlockHash));
-			}
+	            return null;
+	        }
 	        return getBlockByHash(lastBlockHash);
 	    }
 
@@ -70,7 +62,7 @@ public class DbBlockManager {
 	        if (block != null) {
 	            return block.getBlockHash();
 	        }
-	        return null;
+	        return SHA256.sha256("first block");
 	    }
 
 	    /**
