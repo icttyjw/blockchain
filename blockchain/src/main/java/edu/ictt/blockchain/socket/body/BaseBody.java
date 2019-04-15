@@ -24,7 +24,7 @@ public class BaseBody {
     /**
      * 自己是谁
      */
-	private String appId = "ttt";
+	private String appId = "001节点";
 
     public BaseBody() {
     }

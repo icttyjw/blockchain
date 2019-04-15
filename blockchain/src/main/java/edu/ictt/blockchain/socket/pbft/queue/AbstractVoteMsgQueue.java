@@ -36,7 +36,7 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
 	@Override
 	protected void push(VoteMsg voteMsg) {
 		String hash=voteMsg.getHash();
-		logger.info("votemsg hash "+voteMsg);
+		logger.info("[共识投票]：votemsg hash "+voteMsg);
 		List<VoteMsg> voteMsgs=voteMsgConcurrentHashMap.get(hash);
 		if(CollectionUtil.isEmpty(voteMsgs)){
 			voteMsgs=new ArrayList<VoteMsg>();
@@ -45,7 +45,7 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
 			//如果不空的情况下，判断本地集合是否已经存在完全相同的voteMsg了
             for (VoteMsg temp : voteMsgs) {
             	//System.out.println("当前voteMsgs中的Number" + temp.getNumber());
-            	logger.info("votemsg hash "+temp);
+            	logger.info("[共识投票]：votemsg hash "+temp);
                 if (temp.getAppId().equals(voteMsg.getAppId())&&(temp.getVoteType()==voteMsg.getVoteType())) {
                     return;
                 }
@@ -55,7 +55,7 @@ public abstract class AbstractVoteMsgQueue extends BaseMsgQueue {
         voteMsgs.add(voteMsg);
         for (VoteMsg temp : voteMsgs) {
         	//System.out.println("当前voteMsgs中的Number" + temp.getNumber());
-        	logger.info("votemsg hash "+temp);
+        	logger.info("[共识投票]：votemsg hash "+temp);
         }
         //如果已经对该hash投过票了，就不再继续
         if (voteStateConcurrentHashMap.get(hash) != null) {

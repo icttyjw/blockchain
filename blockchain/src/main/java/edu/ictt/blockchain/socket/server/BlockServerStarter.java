@@ -27,7 +27,8 @@ public class BlockServerStarter {
 	private Logger logger = LoggerFactory.getLogger(getClass());
     @PostConstruct
     public void serverStart() throws IOException {
-    	logger.info("[启动]：启动本地server");
+    	//logger.info("[启动]：启动本地server");
+    	logger.info("[启动]：启动本地服务器");
         ServerAioHandler serverAioHandler = new BlockServerAioHandler();
         ServerAioListener serverAioListener = new BlockServerAioListener();
         ServerGroupContext serverGroupContext = new ServerGroupContext(serverAioHandler, serverAioListener);

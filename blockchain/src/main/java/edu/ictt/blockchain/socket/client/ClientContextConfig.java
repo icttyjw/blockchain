@@ -32,7 +32,8 @@ public class ClientContextConfig {
      */
     @Bean
     public ClientGroupContext clientGroupContext() {
-    	logger.info("初始化clientgroupcontext");
+    	logger.info("------------------[启动阶段]：启动本地客户端并连接其组内节点------------------" );
+    	//logger.info("[启动]初始化clientgroupcontext");
         //handler, 包括编码、解码、消息处理
         ClientAioHandler clientAioHandler = new BlockClientAioHandler();
         //事件监听器，可以为null，但建议自己实现该接口
@@ -42,6 +43,7 @@ public class ClientContextConfig {
         ClientGroupContext clientGroupContext = new ClientGroupContext(clientAioHandler, clientAioListener,
                 reconnConf);
         clientGroupContext.setName("blockgroup");
+        logger.info("[启动阶段]：小组名称为blockgroup" );
         //clientGroupContext.setHeartbeatTimeout(0);
         return clientGroupContext;
     }

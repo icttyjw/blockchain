@@ -30,7 +30,7 @@ public class PbftVoteHandler extends AbstractBlockHandler<VoteBody>{
 	public Object handler(BlockPacket packet, VoteBody bsBody, ChannelContext channelContext) throws Exception {
 		// TODO Auto-generated method stub
 		VoteMsg votemsg=bsBody.getVoteMsg();
-		logger.info("收到投票信息"+votemsg);
+		logger.info("[共识投票]：收到投票信息"+votemsg);
 		//进入投票阶段
 		ApplicationContextProvider.getBean(MsgQueueManager.class).push(votemsg);
 		return null;

@@ -148,7 +148,7 @@ public class NextBlockQueue {
 
         //判断数量是否过线
         if (maxCount >= agreeCount - 1) {
-            logger.info("共有<" + maxCount + ">个节点返回next block hash为" + wantHash);
+            logger.info("[通信]：共有<" + maxCount + ">个节点返回next block hash为" + wantHash);
             wantHashs.add(wantHash);
             //请求拉取该hash的Block
             BlockPacket blockPacket = new PacketBuilder<RpcSimpleBlockBody>().setType(PacketType

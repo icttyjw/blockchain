@@ -35,7 +35,7 @@ public class CommitMsgQueue extends AbstractVoteMsgQueue{
 		 String hash = voteMsg.getHash();
 	        //通过校验agree数量，来决定是否在本地生成Block
 	        long count = voteMsgs.stream().filter(VoteMsg::isAgree).count();
-	        logger.info("已经commit为true的数量为:"+count);
+	        logger.info("[共识投票]：已经commit为true的数量为:"+count);
 	        if (count >= pbftAgreesize()) {
 	            Block block = preMsgQueue.findByHash(hash);
 	            if (block == null) {
@@ -43,7 +43,7 @@ public class CommitMsgQueue extends AbstractVoteMsgQueue{
 	            }
 	            //本地落地
 	            voteStateConcurrentHashMap.put(hash, true);
-	            logger.info("成功落地");
+	            logger.info("[共识投票]：区块成功落地");
 	            //发布生成区块的事件
 	        }
 	}

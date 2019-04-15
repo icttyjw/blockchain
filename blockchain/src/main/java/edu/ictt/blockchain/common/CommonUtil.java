@@ -15,8 +15,7 @@ public class CommonUtil {
 
     public static void main(String[] args) {
         InetAddress inetAddress = getLocalHostLANAddress();
-        System.out.println("当前hostname："+inetAddress.getHostName());
-        System.out.println("当前hostaddress" + inetAddress.getHostAddress());
+        System.out.println(inetAddress.getHostAddress());
     }
 
     public static String getLocalIp() {

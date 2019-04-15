@@ -28,7 +28,7 @@ public class GenerateCompleteRequestHandler extends AbstractBlockHandler<RpcSimp
 
     @Override
     public Object handler(BlockPacket packet, RpcSimpleBlockBody rpcBlockBody, ChannelContext channelContext) {
-        logger.info("收到来自于<" + rpcBlockBody.getAppId() + "><生成了新的Block>消息，block hash为[" + rpcBlockBody.getHash() +
+        logger.info("[通信]：收到来自于<" + rpcBlockBody.getAppId() + "><生成了新的Block>消息，block hash为[" + rpcBlockBody.getHash() +
                 "]");
 
         //延迟2秒校验一下本地是否有该区块，如果没有，则发请求去获取新Block
@@ -38,7 +38,7 @@ public class GenerateCompleteRequestHandler extends AbstractBlockHandler<RpcSimp
                     .getHash());
             //本地有了
             if (block == null) {
-                logger.info("开始去获取别人的新区块");
+                logger.info("[通信]：开始去获取别人的新区块");
                 //在这里发请求，去获取group别人的新区块
                 BlockPacket nextBlockPacket = NextBlockPacketBuilder.build();
                 ApplicationContextProvider.getBean(PacketSender.class).sendGroup(nextBlockPacket);

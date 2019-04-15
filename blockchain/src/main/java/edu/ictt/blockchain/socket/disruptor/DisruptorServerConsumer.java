@@ -35,9 +35,10 @@ public class DisruptorServerConsumer implements MessageConsumer{
 
 	    @Override
 	    public void receive(BaseEvent baseEvent) throws Exception {
-	    	logger.info("收到消息");
+	    	;
 	        BlockPacket blockPacket = baseEvent.getBlockPacket();
-	        logger.info(blockPacket.getBody().toString());
+	        byte[] blockPacketBody = blockPacket.getBody();
+	        logger.info("[通信]:收到消息:"+ new String (blockPacketBody));
 	        Byte type = blockPacket.getType();
 	        AbstractBlockHandler<?> handler = handlerMap.get(type);
 	        if (handler == null) {

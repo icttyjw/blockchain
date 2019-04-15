@@ -40,12 +40,12 @@ public class FetchBlockResponseHandler extends AbstractBlockHandler<RpcBlockBody
 
     @Override
     public Object handler(BlockPacket packet, RpcBlockBody rpcBlockBody, ChannelContext channelContext) {
-        logger.info("收到来自于<" + rpcBlockBody.getAppId() + ">的回复，Block为：" + Json.toJson(rpcBlockBody));
+        logger.info("[通信]：收到来自于<" + rpcBlockBody.getAppId() + ">的回复，Block为：" + Json.toJson(rpcBlockBody));
 
         Block block = rpcBlockBody.getBlock();
         //如果为null，说明对方也没有该Block
         if (block == null) {
-            logger.info("对方也没有该Block");
+            logger.info("[通信]：对方也没有该Block");
         } else {
             //此处校验传过来的block的合法性，如果合法，则更新到本地，作为next区块
         	if(ApplicationContextProvider.getBean(NextBlockQueue.class).pop(block.getBlockHash()) == null) return null;

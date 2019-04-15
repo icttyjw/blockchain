@@ -2,6 +2,8 @@ package edu.ictt.blockchain.socket.server.handler;
 
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
 import org.tio.core.Tio;
@@ -17,6 +19,7 @@ import edu.ictt.blockchain.socket.packet.PacketType;
 
 public class LoginReqHandler extends AbstractBlockHandler<StateBody>{
 
+	private Logger logger = LoggerFactory.getLogger(HeartbeatReqHandler.class);
 	@Override
 	public Class<StateBody> bodyClass() {
 		// TODO Auto-generated method stub
@@ -26,12 +29,13 @@ public class LoginReqHandler extends AbstractBlockHandler<StateBody>{
 	@Override
 	public Object handler(BlockPacket packet, StateBody bsBody, ChannelContext channelContext) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println(FastJsonUtil.toJSONString(bsBody));
+		//System.out.println(FastJsonUtil.toJSONString(bsBody));
+		logger.info(FastJsonUtil.toJSONString(bsBody));
 		//Scanner sc=new Scanner(System.in);
 		//String t=sc.nextLine();
 		//if(t.equals("s"))
 		//System.out.println("true");
-		System.out.println(channelContext.getClientNode().getIp());
+		logger.info(channelContext.getClientNode().getIp());
 		BlockPacket pack=new BlockPacket();
  		pack.setType(PacketType.Connect_Request);
 		//Tio.sendToGroup(clientGroupContext, Const.GROUP_SCHOOL, pack);

@@ -44,7 +44,7 @@ public class DbBlockManager {
 	     * @return 最后一个区块
 	     */
 	    public Block getLastBlock() {
-	    	logger.info("get lastblock");
+	    	logger.info("[共识准备]：get lastblock");
 	        String lastBlockHash = dbStore.get(Constants.KEY_LAST_BLOCK);
 	        if (StrUtil.isEmpty(lastBlockHash)) {
 				Block block = GenerateBlock.generateBlock(1);
@@ -54,8 +54,8 @@ public class DbBlockManager {
 				logger.info("hash of the last block:" + block.getBlockHash());
 	            return block;
 	        }else{
-	        	logger.info("lastblock读取成功");
-	        	logger.info("lastblcok is: " + dbStore.get(lastBlockHash));
+	        	logger.info("[共识准备]：lastblock读取成功");
+	        	logger.info("[共识准备]：lastblcok is: " + dbStore.get(lastBlockHash));
 			}
 	        return getBlockByHash(lastBlockHash);
 	    }

@@ -19,7 +19,7 @@ public class TotalBlockInfoResponseHandler extends AbstractBlockHandler<RpcBlock
 
 	    @Override
 	    public Object handler(BlockPacket packet, RpcBlockBody rpcBlockBody, ChannelContext channelContext) throws Exception {
-	        logger.info("收到<请求生成Block的回应>消息", Json.toJson(rpcBlockBody));
+	        logger.info("[通信]：收到<请求生成Block的回应>消息", Json.toJson(rpcBlockBody));
 
 	        //TODO check合法性
 	        //TODO response

@@ -26,17 +26,17 @@ public class BlockClientAioListener implements ClientAioListener {
     @Override
     public void onAfterConnected(ChannelContext channelContext, boolean isConnected, boolean isReconnect) throws Exception {
         if (isConnected) {
-            logger.info("连接成功：server地址为-" + channelContext.getServerNode());
+            logger.info("[启动]：连接成功：server地址为-" + channelContext.getServerNode());
            // Tio.bindGroup(channelContext, Const.GROUP_NAME);
         } else {
-            logger.info("连接失败：server地址为-" + channelContext.getServerNode());
+            logger.info("[启动]：连接失败：server地址为-" + channelContext.getServerNode());
         }
         ApplicationContextProvider.publishEvent(new NodesConnectedEvent(channelContext));
     }
 
     @Override
     public void onBeforeClose(ChannelContext channelContext, Throwable throwable, String s, boolean b) {
-        logger.info("连接关闭：server地址为-" + channelContext.getServerNode());
+        logger.info("[启动]：连接关闭：server地址为-" + channelContext.getServerNode());
         Tio.unbindGroup(channelContext);
     }
 
@@ -52,7 +52,7 @@ public class BlockClientAioListener implements ClientAioListener {
 
     @Override
     public void onAfterSent(ChannelContext channelContext, Packet packet, boolean b) throws Exception {
-    	logger.info("onAfterSent channelContext:{}, packet:{}, packetSize:{}",channelContext,Json.toJson(packet),b);
+    	logger.info("[通信状态]：onAfterSent channelContext:{}, packet:{}, packetSize:{}",channelContext,Json.toJson(packet),b);
     }
 
     @Override

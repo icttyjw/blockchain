@@ -21,7 +21,7 @@ public class BlockServerAioListener implements ServerAioListener {
 
 	@Override
 	public void onAfterConnected(ChannelContext channelContext, boolean isConnected, boolean isReconnect) {
-		log.info("onAfterConnected channelContext:{}, isConnected:{}, isReconnect:{}", channelContext, isConnected, isReconnect);
+		log.info("[通信状态]：onAfterConnected channelContext:{}, isConnected:{}, isReconnect:{}", channelContext, isConnected, isReconnect);
 		/*System.out.println(channelContext.getId());
 		Scanner sc=new Scanner(System.in);
 		String t=sc.nextLine();
@@ -35,7 +35,7 @@ public class BlockServerAioListener implements ServerAioListener {
 
 	@Override
 	public void onAfterDecoded(ChannelContext channelContext, Packet packet, int i) throws Exception {
-		log.info("onAfterReceived channelContext:{}, packet:{}, packetSize:{}",channelContext,Json.toJson(packet),i);
+		log.info("[通信状态]：onAfterReceived channelContext:{}, packet:{}, packetSize:{}",channelContext,Json.toJson(packet),i);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class BlockServerAioListener implements ServerAioListener {
 
 	@Override
 	public void onAfterSent(ChannelContext channelContext, Packet packet, boolean isSentSuccess) {
-		log.info("onAfterSent channelContext:{}, packet:{}, isSentSuccess:{}", channelContext, Json.toJson(packet), isSentSuccess);
+		log.info("[通信状态]：onAfterSent channelContext:{}, packet:{}, isSentSuccess:{}", channelContext, Json.toJson(packet), isSentSuccess);
 	}
 
 	@Override

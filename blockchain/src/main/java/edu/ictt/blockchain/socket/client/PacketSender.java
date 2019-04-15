@@ -28,7 +28,7 @@ public class PacketSender {
     
     public void sendGroup(BlockPacket blockPacket) {
         //对外发出client请求事件
-    	logger.info("send group");
+    	logger.info("[通信]：send group");
     	
         //ApplicationContextProvider.publishEvent(new ClientRequestEvent(blockPacket));
         //发送到一个group

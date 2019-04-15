@@ -50,9 +50,9 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
         } else {
             //开始校验拜占庭数量，如果agree的超过2f + 1，就commit
             long agreeCount = voteMsgs.stream().filter(VoteMsg::isAgree).count();
-            logger.info("agreecount:"+agreeCount);
+            logger.info("[共识投票]：agreecount:"+agreeCount);
             long unAgreeCount = voteMsgs.size() - agreeCount;
-            logger.info("disagreecount:"+unAgreeCount);
+            logger.info("[共识投票]：disagreecount:"+unAgreeCount);
             //开始发出commit的同意or拒绝的消息
             if (agreeCount >= pbftAgreesize()) {
                 agree(commitMsg, true);
@@ -65,7 +65,7 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
 
 	
 	public void log(){
-		logger.info("启用prepare");
+		logger.info("[共识投票]：启用prepare");
 	}
 	
 	/**
@@ -89,10 +89,10 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
     }
     
     private void agree(VoteMsg commitMsg, boolean flag) {
-        logger.info("Prepare阶段完毕，是否进入commit的标志是：" + flag);
+        logger.info("[共识投票]：Prepare阶段完毕，是否进入commit的标志是：" + flag);
         //发出拒绝commit的消息
         commitMsg.setAgree(flag);
-        logger.info("com: "+commitMsg);
+        logger.info("[共识投票]：com: "+commitMsg);
         voteStateConcurrentHashMap.put(commitMsg.getHash(), flag);
         eventPublisher.publishEvent(new MsgCommitEvent(commitMsg));
     }

@@ -28,12 +28,12 @@ public class GenerateBlockRequestHandler extends AbstractBlockHandler<RpcBlockBo
     @Override
     public Object handler(BlockPacket packet, RpcBlockBody rpcBlockBody, ChannelContext channelContext) {
         Block block = rpcBlockBody.getBlock();
-        logger.info("收到来自于<" + rpcBlockBody.getAppId() + "><请求生成Block>消息，block信息为[" + block + "]");
+        logger.info("[通信]:收到来自于<" + rpcBlockBody.getAppId() + "><请求生成Block>消息，block信息为[" + block + "]");
 
         CheckerManager checkerManager = ApplicationContextProvider.getBean(CheckerManager.class);
         //对区块的基本信息进行校验，校验通过后进入pbft的Pre队列
         RpcCheckBlockBody rpcCheckBlockBody = checkerManager.check(block);
-        logger.info("校验结果:" + rpcCheckBlockBody.toString());
+        logger.info("[通信]block校验结果:" + rpcCheckBlockBody.toString());
         if (rpcCheckBlockBody.getCode() == 0) {
         	
             VotePreMsg votePreMsg = new VotePreMsg();
@@ -44,7 +44,7 @@ public class GenerateBlockRequestHandler extends AbstractBlockHandler<RpcBlockBo
             votePreMsg.setHash(block.getBlockHash());
             votePreMsg.setAgree(true);
             //将消息推入PrePrepare队列
-            logger.info("votepremsg:"+votePreMsg);
+            logger.info("[通信-进入共识]votepremsg:"+votePreMsg);
             ApplicationContextProvider.getBean(MsgQueueManager.class).push(votePreMsg);
         }
 

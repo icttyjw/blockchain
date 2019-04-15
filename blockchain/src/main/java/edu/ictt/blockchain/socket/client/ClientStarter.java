@@ -10,10 +10,13 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import edu.ictt.blockchain.Block.block.BlockBody;
+import edu.ictt.blockchain.Block.db.RecoverLocalBlock;
 import edu.ictt.blockchain.Block.generatorUtil.GenerateRecord;
 import edu.ictt.blockchain.Block.merkle.MerkleHash;
 import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.Block.record.Record;
+
+import org.rocksdb.RocksDBException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,6 +66,11 @@ public class ClientStarter {
     //private NodeService nodeService;
     @Resource
     private BlockService blockService;
+    
+    //从本地恢复区块
+    //@Resource
+    //private RecoverLocalBlock recoverLocalBlock;
+    
     //@Resource
     //private PermissionManager permissionManager;
     //@Value("${managerUrl}")
@@ -77,6 +85,14 @@ public class ClientStarter {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     private Set<Node> nodes = new HashSet<>();
+    
+    //尝试从本地恢复
+    //{try {
+	//	recoverLocalBlock.recoverFromDisk();
+	//} catch (RocksDBException e) {
+		// TODO Auto-generated catch block
+	//	e.printStackTrace();
+	//}}
 	
     // 节点连接状态
     private Map<String,Integer> nodesStatus = Maps.newConcurrentMap();
@@ -89,7 +105,7 @@ public class ClientStarter {
     @Scheduled(fixedRate = 300000)
     public void fetchOtherServer() {
         String localIp = CommonUtil.getLocalIp();
-        logger.info("本机IP：{}",localIp);
+        logger.info("[启动]：本机IP：{}",localIp);
         //校内和组内信息为长连，组间在投票时连接
         /*List<NodeState> nodelist=nodeService.queryAllNodes();
         if(nodelist.isEmpty())
@@ -137,7 +153,7 @@ public class ClientStarter {
     }
 
     public void onNodesReady() {
-        logger.info("开始群发信息获取next Block");
+        logger.info("[]开始群发信息获取next Block");
         //在这里发请求，去获取group别人的新区块
         BlockPacket nextBlockPacket = NextBlockPacketBuilder.build();
         packetSender.sendGroup(nextBlockPacket);
@@ -180,10 +196,10 @@ public class ClientStarter {
     private void connect(Node serverNode) {
         try {
             TioClient tioClient = new TioClient(clientGroupContext);
-            logger.info("开始绑定" + ":" + serverNode.toString());
+            logger.info("[启动]：开始绑定" + ":" + serverNode.toString());
             tioClient.asynConnect(serverNode);
         } catch (Exception e) {
-            logger.info("异常");
+            logger.info("[启动]：异常");
         }
     }
     
@@ -192,11 +208,11 @@ public class ClientStarter {
     	ChannelContext channelContext = connectedEvent.getSource();
     	Node node = channelContext.getServerNode();
     	if (channelContext.isClosed) {
-            logger.info("连接" + node.toString() + "失败");
+            logger.info("[启动]：连接" + node.toString() + "失败");
             nodesStatus.put(node.getIp(), -1);
             return;
         }else{
-        	logger.info("连接" + node.toString() + "成功");
+        	logger.info("[启动]：连接" + node.toString() + "成功");
         	nodesStatus.put(node.getIp(), 1);
         	//绑group是将要连接的各个服务器节点做为一个group
         	Tio.bindGroup(channelContext, Const.GROUP_NAME);

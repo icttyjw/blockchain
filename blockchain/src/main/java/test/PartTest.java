@@ -39,7 +39,7 @@ import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
 import edu.ictt.blockchain.socket.pbft.msg.VotePreMsg;
 import edu.ictt.blockchain.socket.pbft.queue.BaseMsgQueue;
 import edu.ictt.blockchain.socket.pbft.queue.CommitMsgQueue;
-import edu.ictt.blockchain.socket.record.queue.RecordQueue;
+import edu.ictt.blockchain.socket.record.queue.GRecordQueue;
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
 
 import org.junit.Test;
@@ -119,7 +119,7 @@ public class PartTest {
 	@Test
 	public void recordQueueTest(){
 
-		RecordQueue recordQueue = new RecordQueue();
+		GRecordQueue recordQueue = new GRecordQueue();
 		DbBlockManager dbBlockManager = new DbBlockManager();
 		List<RecordBody> recordBodyList = new ArrayList<>();
 
