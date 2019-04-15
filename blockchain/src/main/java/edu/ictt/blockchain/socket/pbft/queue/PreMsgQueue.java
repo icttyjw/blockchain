@@ -79,8 +79,8 @@ public class PreMsgQueue extends BaseMsgQueue{
         }
         return null;
     }
-    //@Order(3)
-    //@EventListener(AddBlockEvent.class)
+    @Order(3)
+    @EventListener(AddBlockEvent.class)
     public void blockGenerated(AddBlockEvent addBlockEvent) {
         Block block = (Block) addBlockEvent.getSource();
         long number = block.getBlockHeader().getBlockNumber();

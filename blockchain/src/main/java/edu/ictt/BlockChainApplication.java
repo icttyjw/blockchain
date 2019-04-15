@@ -3,6 +3,7 @@ package edu.ictt;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport;
 import edu.ictt.blockchainmanager.view.MainView;
@@ -24,6 +25,7 @@ public class BlockChainApplication {
 @SpringBootApplication
 @EntityScan(value="edu.ictt.blockchainmanager.groupmodel")
 @EnableJpaRepositories(value="edu.ictt.blockchainmanager.sql.repository")
+@EnableScheduling
 //@ComponentScan(basePackages = {"edu.ictt.blockchainmanager.sql.repository","edu.ictt.blockchainmanager.groupmodel",
 //		"edu.ictt.blockchainmanager.sql.service"})
 public class BlockChainApplication  extends AbstractJavaFxApplicationSupport {

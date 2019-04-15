@@ -21,9 +21,7 @@ public class NodeState implements Serializable{
 	 * ID,String类型ID使用uuid由程序自动生成
 	 */
 	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid")
-	private String id;
+	private int id;
 	/**
 	 * 自命名节点名
 	 */
@@ -64,7 +62,7 @@ public class NodeState implements Serializable{
 	 */
 	private String priKey;
 	
-	public NodeState(String id,String name,String Ip,String state,String connectstate,String main,
+	public NodeState(int id,String name,String Ip,String state,String connectstate,String main,
 					String nodeType,String lastConnect,String pubKey,String priKey){
 		this.id=id;
 		this.name=name;
@@ -98,7 +96,7 @@ public class NodeState implements Serializable{
 		this.main = main;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 	public String getName() {
@@ -116,7 +114,7 @@ public class NodeState implements Serializable{
 	public String getLastConnect() {
 		return lastConnect;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public void setName(String name) {

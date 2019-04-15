@@ -93,17 +93,17 @@ public class NodesInfromUIController  implements Initializable{
     }
     
     public void save(ActionEvent event){
-    	NodeState nodeState=new NodeState(null, "node", "127", "1", "0", "1","1", "0", "pubKey", "priKey");
+    	NodeState nodeState=new NodeState(1, "node", "127", "1", "0", "1","1", "0", "pubKey", "priKey");
     	nodeService.saveLocalNode(nodeState);
     }
 
 	@Override
 	public void initialize(java.net.URL location, ResourceBundle resources) {
-		logger.info("Node initial");
+		//logger.info("Node initial");
 		//Application.getScene().getWindow().setWidth(480);
 		//Application.getScene().getWindow().setHeight(250);
 		NodeState nodeState=nodeService.queryLocalNode("1");
-		id.setText(nodeState.getId());
+		id.setText(nodeState.getId()+"");
 		name.setText(nodeState.getName());
 		pubkey.setText(nodeState.getPubKey());
 		state.setText(nodeState.getState());

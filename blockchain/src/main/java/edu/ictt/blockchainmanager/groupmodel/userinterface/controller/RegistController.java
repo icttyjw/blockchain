@@ -39,7 +39,7 @@ public class RegistController {
 
     @FXML
     void regist(ActionEvent event) {
-    	NodeState ns=new NodeState(null, name.getText(), null, null, null, main.getText(), 
+    	NodeState ns=new NodeState(10, name.getText(), null, null, null, main.getText(), 
     					type.getText(), null, pubKey.getText(), priKey.getText());
     	//nodeService.saveLocalNode(ns);
     	Application.showView(MainView.class);

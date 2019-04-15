@@ -10,8 +10,8 @@ import org.tio.core.ChannelContext;
 
 import edu.ictt.blockchain.ApplicationContextProvider;
 import edu.ictt.blockchain.Block.check.CheckerManager;
-import edu.ictt.blockchain.Block.db.query.BlockInfo;
-import edu.ictt.blockchain.Block.db.query.service.BlockInfoService;
+//import edu.ictt.blockchain.Block.db.query.BlockInfo;
+//import edu.ictt.blockchain.Block.db.query.service.BlockInfoService;
 import edu.ictt.blockchain.Block.record.DegreeRecord;
 import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.Block.record.Record;
@@ -30,8 +30,8 @@ public class FetchBlockResponseHandler extends AbstractBlockHandler<RpcBlockBody
 
 	private Logger logger = LoggerFactory.getLogger(TotalBlockInfoResponseHandler.class);
 	
-	@Autowired
-	BlockInfoService blockInfoService;
+	//@Autowired
+	//BlockInfoService blockInfoService;
 
     @Override
     public Class<RpcBlockBody> bodyClass() {
@@ -55,7 +55,7 @@ public class FetchBlockResponseHandler extends AbstractBlockHandler<RpcBlockBody
             if (rpcCheckBlockBody.getCode() == 0) {
                 ApplicationContextProvider.publishEvent(new AddBlockEvent(block));
               //区块存入rocks的同时，区块哈希与相关查询关键字的映射关系需要保存到本地的sql数据库中
-            	saveBlockInfoSQL(block);
+            	//saveBlockInfoSQL(block);
                 //继续请求下一块
                 BlockPacket blockPacket = NextBlockPacketBuilder.build();
                 ApplicationContextProvider.getBean(PacketSender.class).sendGroup(blockPacket);
@@ -66,7 +66,7 @@ public class FetchBlockResponseHandler extends AbstractBlockHandler<RpcBlockBody
     }
 	
     //区块存入rocks的同时，区块哈希与相关查询关键字的映射关系需要保存到本地的sql数据库中
-    public void saveBlockInfoSQL(Block block) {
+   /* public void saveBlockInfoSQL(Block block) {
     	//从block中取出相关需要存放的信息，其中具体信息比如学校学院等信息取一条记录中的就ok
     	String blockHash = block.getBlockHash();
     	if(block.getBlockBody().getGrecordsList()!=null) {
@@ -90,10 +90,10 @@ public class FetchBlockResponseHandler extends AbstractBlockHandler<RpcBlockBody
     		int courseId = (int) dRecord.getDegreeId();
     		String courseName = dRecord.getDegree();
     		BlockInfo blockInfo = new BlockInfo(blockHash,schoolId,schoolName,facultyId,facultyName,courseId,courseName);*/
-    	}else {
+    /*	}else {
     		logger.info("[落地]：区块体为空，没有记录");
     	}
     	
     	
-    }
+    }*/
 }

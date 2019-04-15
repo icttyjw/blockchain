@@ -78,7 +78,7 @@ public class ManageMessage {
 		try {
 			if(rs.next())
 			{
-				String id=rs.getString("Id");
+				int id=rs.getInt("Id");
 				String Ip=rs.getString("Ip");
 				String s=rs.getString("state");
 				String cs=rs.getString("connectstate");

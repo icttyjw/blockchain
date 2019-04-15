@@ -50,7 +50,7 @@ public class HeartbeatReqHandler extends AbstractBlockHandler<StateBody>{
 	 */
 	public Object handler(BlockPacket packet, StateBody bsBody, ChannelContext channelContext) throws Exception {
 		//心跳交流信息，顺便测试了多线程
-		System.out.println(FastJsonUtil.toJSONString(bsBody));
+		//System.out.println(FastJsonUtil.toJSONString(bsBody));
 		StateBody sb=new StateBody();
 		sb.setId("1");
 		sb.setIp("123");
@@ -59,7 +59,7 @@ public class HeartbeatReqHandler extends AbstractBlockHandler<StateBody>{
 		BlockPacket bs=new BlockPacket();
 		bs.setType(PacketType.HEART_BEAT);
 		bs.setBody(FastJsonUtil.toJSONString(sb).getBytes(Const.CHARSET));
-		System.out.println(channelContext.getClientNode().getIp());
+		//System.out.println(channelContext.getClientNode().getIp());
 		//Tio.send(channelContext, bs);
 		return null;
 	}

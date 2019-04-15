@@ -1,7 +1,6 @@
 package edu.ictt.blockchainmanager.groupmodel.userinterface.controller;
 
 import de.felixroske.jfxsupport.FXMLController;
-import edu.ictt.blockchain.Block.db.query.service.FindBlockService;
 //import edu.ictt.blockchain.Block.block.Block;
 //import edu.ictt.blockchain.Block.db.DbStore;
 //import edu.ictt.blockchain.Block.db.query.service.BlockInfoService;

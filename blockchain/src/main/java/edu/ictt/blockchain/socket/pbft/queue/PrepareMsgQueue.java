@@ -102,8 +102,8 @@ public class PrepareMsgQueue extends AbstractVoteMsgQueue{
      *
      * @param addBlockEvent  addBlockEvent
      */
-    //@Order(3)
-    //@EventListener(AddBlockEvent.class)
+    @Order(3)
+    @EventListener(AddBlockEvent.class)
     public void blockGenerated(AddBlockEvent addBlockEvent){
     	Block block=(Block) addBlockEvent.getSource();
     	clearOldBlockHash(block.getBlockHeader().getBlockNumber());//block.getBlockHeader().getNumber());

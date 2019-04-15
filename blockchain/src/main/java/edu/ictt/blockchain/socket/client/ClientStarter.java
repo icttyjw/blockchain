@@ -138,10 +138,10 @@ public class ClientStarter {
     	if(!isNodesReady)return;
         logger.info("---------开始心跳包--------");
         //logger.info(""+clientGroupContext.getName());
-        //BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.HEART_BEAT).setBody(new BaseBody()).build();//NextBlockPacketBuilder.build();
+        BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.HEART_BEAT).setBody(new BaseBody()).build();//NextBlockPacketBuilder.build();
         //packetSender.sendGroup(blockPacket);
         //List<Record> records = new ArrayList<>();
-        GradeRecord record = GenerateRecord.geneGRecord();
+        //GradeRecord record = GenerateRecord.geneGRecord();
         //records.add(record);
         //List<String> recordsHash = new ArrayList<>();
         //recordsHash.add(MerkleHash.create(record.toString()).toString());
@@ -150,8 +150,8 @@ public class ClientStarter {
         //BlockRequesbody blockRequesbody=new BlockRequesbody(blockBody);
         //System.out.println("本地生成的新区块体为：" + blockRequesbody);
         //blockService.addBlock(blockRequesbody);
-        RecordBody recordBody=new RecordBody(record, "test");
-        BlockPacket blockPacket=new PacketBuilder<>().setType(PacketType.RECEIVE_RECORD).setBody(recordBody).build();
+        //RecordBody recordBody=new RecordBody(record, "test");
+        //BlockPacket blockPacket=new PacketBuilder<>().setType(PacketType.RECEIVE_RECORD).setBody(recordBody).build();
         packetSender.sendGroup(blockPacket);
         //Tio.sendToGroup(clientGroupContext, GROUP_NAME, blockPacket);
     }

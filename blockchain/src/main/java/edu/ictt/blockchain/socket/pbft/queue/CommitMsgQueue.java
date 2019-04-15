@@ -10,6 +10,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import edu.ictt.blockchain.ApplicationContextProvider;
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.core.event.AddBlockEvent;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
@@ -45,11 +46,12 @@ public class CommitMsgQueue extends AbstractVoteMsgQueue{
 	            voteStateConcurrentHashMap.put(hash, true);
 	            logger.info("[共识投票]：区块成功落地");
 	            //发布生成区块的事件
+	            ApplicationContextProvider.publishEvent(new AddBlockEvent(block));
 	        }
 	}
 	
-	//@Order(3)
-	//@EventListener(AddBlockEvent.class)
+	@Order(3)
+	@EventListener(AddBlockEvent.class)
 	 public void blockGenerated(AddBlockEvent addBlockEvent) {
 	        Block block = (Block) addBlockEvent.getSource();
 	        clearOldBlockHash(block.getBlockHeader().getBlockNumber());

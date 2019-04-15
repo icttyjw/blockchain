@@ -35,8 +35,8 @@ public class DbBlockGenerator {
     @Resource
     private CheckerManager checkerManager;
     private Logger logger = LoggerFactory.getLogger(getClass());
-    @Resource
-    private BlockInfoService blockInfoService;
+    //@Resource
+    //private BlockInfoService blockInfoService;
 
     /**
      * 数据库里添加一个新的区块
@@ -77,12 +77,12 @@ public class DbBlockGenerator {
         List<DegreeRecord> ld=new ArrayList<DegreeRecord>();
         lg=block.getBlockBody().getGrecordsList();
         ld=block.getBlockBody().getDrecordsList();
-        if(lg!=null){
+      /*  if(lg!=null){
         	GradeRecord gradeRecord=lg.get(0);
         BlockInfo blockInfo=new BlockInfo(hash, gradeRecord.getSchoolInfo().getSchoolId(), gradeRecord.getSchoolInfo().getSchoolName()
         		, gradeRecord.getFacultyInfo().getFacultyId(), gradeRecord.getFacultyInfo().getFacultyName(), gradeRecord.getGradeInfo().getCourseInfo().getCourseId(), gradeRecord.getGradeInfo().getCourseInfo().getCourseName());
         blockInfoService.saveBlockInfo(blockInfo);
-        }
+        }*/
        /* if(ld!=null){
         	DegreeRecord degreeRecord=ld.get(0);
         BlockInfo blockInfo=new BlockInfo(hash, degreeRecord.getSchoolInfo().getSchoolId(), degreeRecord.getSchoolInfo().getSchoolName()

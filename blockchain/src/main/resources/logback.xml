@@ -20,23 +20,24 @@
             <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
     </appender> 
-	<appender name="MyLogback"
+    
+<!--  	<appender name="MyLogback"
         class="edu.ictt.blockchainmanager.console.TextAreaAppender">
-       <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+       <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
             <!-- 日志收集最低日志级别 -->
-            <level>INFO</level>
+       <!--    <level>INFO</level>
         </filter>
         <layout
-            class="ch.qos.logback.classic.PatternLayout">
+            class="ch.qos.logback.classic.PatternLayout"> --> 
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
-        </layout>
+         <!--   <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </layout> --> 
        
-    </appender>
-    <logger name="edu" level="INFO">
+    <!-- </appender>
+    <logger name="edu" level="INFO"> --> 
         <!--  <appender-ref ref="CONSOLE"/>-->
-        <appender-ref ref="MyLogback"/>
-    </logger>
+     <!--   <appender-ref ref="MyLogback"/>
+    </logger> -->   
     <root level="INFO">
          <appender-ref ref="CONSOLE"/>
         <appender-ref ref="MY_FILE"/>

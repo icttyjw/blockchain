@@ -303,7 +303,7 @@ public class PartTest {
 	
 	@Test
 	public void jsontest() throws Exception{
-		NodeState rs=new NodeState("1","ss","123","1","1","main","localnode","12:00:00","fdf","fdf");
+		NodeState rs=new NodeState(1,"ss","123","1","1","main","localnode","12:00:00","fdf","fdf");
 		String text=FastJsonUtil.toJSONString(rs);
 		text.getBytes("utf-8");
 		System.out.println(text);
@@ -334,14 +334,14 @@ public class PartTest {
 	 */
 	@Test
 	public void inserttest(){
-		NodeState rs=new NodeState("1","ss","123","1","1","main","localnode","12:00:00","fdf","fdf");
+		NodeState rs=new NodeState(1,"ss","123","1","1","main","localnode","12:00:00","fdf","fdf");
 		ManageMessage mm=new ManageMessage();
 		System.out.println(rs.toString());
 		mm.Regist(rs);
 	}
 	@Test
 	public void updatetest(){
-		NodeState rs=new NodeState("1","ss","123","1","1","main","localnode","12:00:00","fdf","fdf");
+		NodeState rs=new NodeState(1,"ss","123","1","1","main","localnode","12:00:00","fdf","fdf");
 		ManageMessage mm=new ManageMessage();
 		System.out.println(rs.toString());
 		mm.Update(rs);

@@ -46,8 +46,8 @@ public class HeartbeatHandler extends AbstractBlockHandler<StateBody> {
 	 */
 	public Object handler(BlockPacket packet, StateBody bsBody, ChannelContext channelContext) throws Exception {
 		//心跳消息,啥也不用做
-		System.out.println("ff");
-		System.out.println(FastJsonUtil.toJSONString(bsBody));
+		//System.out.println("ff");
+		//System.out.println(FastJsonUtil.toJSONString(bsBody));
 		return null;
 	}
 
