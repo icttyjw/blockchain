@@ -33,9 +33,16 @@ public class NodeService {
 		return nodeRepositroy.queryNodebyType(nodetype);
 	}
 	/*
-	 * 查询所以节点信息
+	 * 查询所有节点信息
 	 */
 	public List<NodeState> queryAllNodes(){
 		return nodeRepositroy.findAll();
+	}
+	
+	/*
+	 * 根据姓名查询某个节点
+	 */
+	public NodeState queryByName(String name) {
+		return nodeRepositroy.queryByName(name);
 	}
 }

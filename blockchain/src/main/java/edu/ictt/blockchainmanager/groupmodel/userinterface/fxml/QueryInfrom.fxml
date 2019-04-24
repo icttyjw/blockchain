@@ -25,29 +25,25 @@
                   </FlowPane>
                </children>
             </StackPane>
-            <ScrollPane prefHeight="200.0" prefWidth="600.0">
+            <ScrollPane prefHeight="220.0" prefWidth="600.0">
                <content>
-                  <TableView fx:id="recordTable" prefHeight="200.0" prefWidth="600.0">
+                  <TableView fx:id="recordTable" prefHeight="220.0" prefWidth="600.0">
                     <columns>
-                      <TableColumn maxWidth="1.7976931348623157E308" prefWidth="75.0" text="学校" />
-                      <TableColumn prefWidth="75.0" text="学院" />
-                        <TableColumn prefWidth="75.0" text="课程" />
-                        <TableColumn prefWidth="75.0" text="任课教师" />
-                        <TableColumn prefWidth="75.0" text="学生" />
-                        <TableColumn prefWidth="50.0" text="成绩" />
-                        <TableColumn prefWidth="75.0" text="教师审核" />
-                        <TableColumn prefWidth="75.0" text="学院审核" />
+                      <TableColumn fx:id="schoolNameColumn" maxWidth="1.7976931348623157E308" prefWidth="75.0" text="学校" />
+                      <TableColumn fx:id="facultyNameColumn" prefWidth="75.0" text="学院" />
+                        <TableColumn fx:id="courseNameColumn" prefWidth="75.0" text="课程" />
+                        <TableColumn fx:id="teacherNameColumn" prefWidth="75.0" text="任课教师" />
+                        <TableColumn fx:id="studentColumn" prefWidth="75.0" text="学生" />
+                        <TableColumn fx:id="gradeColumn" prefWidth="50.0" text="成绩" />
+                        <TableColumn fx:id="teacherCheckColumn" prefWidth="75.0" text="教师审核" />
+                        <TableColumn fx:id="facultyCheckColumn" prefWidth="75.0" text="学院审核" />
                     </columns>
                   </TableView>
                </content>
             </ScrollPane>
-            <StackPane prefHeight="90.0" prefWidth="600.0">
+            <StackPane prefHeight="50.0" prefWidth="600.0">
                <children>
-                  <HBox prefHeight="90.0" prefWidth="200.0">
-                     <children>
-                        <TextField fx:id="simpleResult" prefHeight="90.0" prefWidth="599.0" />
-                     </children>
-                  </HBox>
+                  <Pagination fx:id="pagination" prefHeight="50.0" prefWidth="600.0" />
                </children>
             </StackPane>
          </children>

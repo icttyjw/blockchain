@@ -37,11 +37,11 @@
                                        <children>
                                           <Label fx:id="state" alignment="CENTER" prefHeight="15.0" prefWidth="161.0" />
                                           <Label fx:id="lasocon" alignment="CENTER" prefHeight="15.0" prefWidth="163.0" />
-                                          <Label fx:id="pubkey" alignment="CENTER" prefHeight="15.0" prefWidth="163.0" />
-                                          <Label fx:id="ip" alignment="CENTER" prefHeight="15.0" prefWidth="163.0" />
-                                          <Label fx:id="constate" alignment="CENTER" prefHeight="15.0" prefWidth="163.0" />
                                           <Label fx:id="name" alignment="CENTER" prefHeight="15.0" prefWidth="163.0" />
                                           <Label fx:id="id" alignment="CENTER" prefHeight="15.0" prefWidth="163.0" />
+                                          <Label fx:id="ip" alignment="CENTER" prefHeight="15.0" prefWidth="163.0" />
+                                          <Label fx:id="constate" alignment="CENTER" prefHeight="15.0" prefWidth="163.0" />
+                                          <Label fx:id="pubkey" alignment="CENTER" prefHeight="15.0" prefWidth="163.0" />
                                        </children>
                                     </VBox>
                                  </children>
