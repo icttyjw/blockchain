@@ -2,6 +2,7 @@ package edu.ictt.blockchain.Block.block;
 
 import edu.ictt.blockchain.Block.record.DegreeRecord;
 import edu.ictt.blockchain.Block.record.GradeRecord;
+import edu.ictt.blockchain.Block.record.NewRecord;
 import edu.ictt.blockchain.Block.record.Record;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public class BlockBody {
 
     //学位记录集合
     private List<DegreeRecord> drecordsList;
+    
+    private List<NewRecord> recordList;
 
     public BlockBody(){};
 
@@ -27,6 +30,19 @@ public class BlockBody {
 		super();
 		this.grecordsList = grecordsList;
 		this.drecordsList = drecordsList;
+	}
+    public BlockBody(List<NewRecord> recordList){
+    	this.recordList=recordList;
+    }
+
+
+	public List<NewRecord> getRecordList() {
+		return recordList;
+	}
+
+
+	public void setRecordList(List<NewRecord> recordList) {
+		this.recordList = recordList;
 	}
 
 

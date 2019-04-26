@@ -33,8 +33,4 @@ public class RpcBlockBody extends BaseBody{
                 '}';
     }
 
-	public String getAppId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
