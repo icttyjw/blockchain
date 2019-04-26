@@ -19,120 +19,72 @@ public class DegreeRecord extends Record implements Serializable {
      * 学校信息
      */
     private SchoolInfo schoolInfo;
-
+    
     /**
-     * 学位属性
-     */
-    private String degree;
-
+	 * 学院信息
+	 */
+	private FacultyInfo facultyInfo;
+    
     /**
-     * 学生信息
+     * 学位信息
      */
-    private StudentInfo studentInfo;
-
-    /**
-     * 开题情况
-     */
-    private String gradDesignStartState;
-
-    /**
-     * 中期情况
-     */
-    private String gradDesignMidState;
-
-    /**
-     * 最终论文答辩情况
-     */
-    private String gradDesignFinState;
-
-    /**
-     * 学位证书编号
-     */
-    private long degreeId;
+    private DegreeInfo degreeInfo;
 
     /**
      * 学校签名
      */
     private String schoolSign;
-
+   
     public DegreeRecord(){}
 
-    public DegreeRecord(String degree, String gradDesignStartState, String gradDesignMidState,
-                        String gradDesignFinState, long degreeId){
-        this.degree = degree;
-        this.degreeId = degreeId;
-        this.gradDesignStartState = gradDesignStartState;
-        this.gradDesignMidState = gradDesignMidState;
-        this.gradDesignFinState = gradDesignFinState;
-    }
-
-    public String getDegree() {
-        return degree;
-    }
-
-    public void setDegree(String degree) {
-        this.degree = degree;
-    }
-
-    public StudentInfo getStudentInfo() {
-        return studentInfo;
-    }
-
-    public void setStudentInfo(StudentInfo studentInfo) {
-        this.studentInfo = studentInfo;
-    }
-
-    public String getGradDesignStartState() {
-        return gradDesignStartState;
-    }
-
-    public void setGradDesignStartState(String gradDesignStartState) { this.gradDesignStartState = gradDesignStartState; }
-
-    public String getGradDesignMidState() {
-        return gradDesignMidState;
-    }
-
-    public void setGradDesignMidState(String gradDesignMidState) {
-        this.gradDesignMidState = gradDesignMidState;
-    }
-
-    public String getGradDesignFinState() {
-        return gradDesignFinState;
-    }
-
-    public void setGradDesignFinState(String gradDesignFinState) {
-        this.gradDesignFinState = gradDesignFinState;
-    }
-
-    public long getDegreeId() {
-        return degreeId;
-    }
-
-    public void setDegreeId(long degreeId) {
-        this.degreeId = degreeId;
-    }
-
-    public String getSchoolSign() {
-        return schoolSign;
-    }
-
-    public void setSchoolSign(String schoolSign) {
-        this.schoolSign = schoolSign;
-    }
-
-    public SchoolInfo getSchoolInfo() {
-        return schoolInfo;
-    }
-
-    public void setSchoolInfo(SchoolInfo schoolInfo) {
-        this.schoolInfo = schoolInfo;
-    }
-
-    @Override
-	public String toString() {
-		return "DegreeRecord [schoolInfo=" + schoolInfo + ", degree=" + degree + ", studentInfo=" + studentInfo
-				+ ", gradDesignStartState=" + gradDesignStartState + ", gradDesignMidState=" + gradDesignMidState
-				+ ", gradDesignFinState=" + gradDesignFinState + ", degreeId=" + degreeId + ", schoolSign=" + schoolSign
-				+ "]";
+	public DegreeRecord(SchoolInfo schoolInfo, FacultyInfo facultyInfo, DegreeInfo degreeInfo, String schoolSign) {
+		super();
+		this.schoolInfo = schoolInfo;
+		this.facultyInfo = facultyInfo;
+		this.degreeInfo = degreeInfo;
+		this.schoolSign = schoolSign;
 	}
+
+	public SchoolInfo getSchoolInfo() {
+		return schoolInfo;
+	}
+
+	public void setSchoolInfo(SchoolInfo schoolInfo) {
+		this.schoolInfo = schoolInfo;
+	}
+
+	public FacultyInfo getFacultyInfo() {
+		return facultyInfo;
+	}
+
+	public void setFacultyInfo(FacultyInfo facultyInfo) {
+		this.facultyInfo = facultyInfo;
+	}
+
+	public DegreeInfo getDegreeInfo() {
+		return degreeInfo;
+	}
+
+	public void setDegreeInfo(DegreeInfo degreeInfo) {
+		this.degreeInfo = degreeInfo;
+	}
+
+	public String getSchoolSign() {
+		return schoolSign;
+	}
+
+	public void setSchoolSign(String schoolSign) {
+		this.schoolSign = schoolSign;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "DegreeRecord [schoolInfo=" + schoolInfo + ", facultyInfo=" + facultyInfo + ", degreeInfo=" + degreeInfo
+				+ ", schoolSign=" + schoolSign + "]";
+	}
+
 }

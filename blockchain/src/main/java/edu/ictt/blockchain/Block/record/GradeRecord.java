@@ -105,9 +105,4 @@ public class GradeRecord extends Record implements Serializable {
 				+ ", teacherSign=" + teacherSign + ", facultySign=" + facultySign + "]";
 	}
 
-	
-
-	
-
-
 }
