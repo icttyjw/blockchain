@@ -26,7 +26,7 @@ public class CheckerManager {
 			 return new RpcCheckBlockBody(-3, "Block hash errror", block);
 		 }else if(dbBlockChecker.checkTime(block) != 0){
 			 return new RpcCheckBlockBody(-4, "Block time errror", block);
-		 }else if(dbBlockChecker.checkMerkleRoot(block) !=0){
+		 }else if(dbBlockChecker.checkNewRecordMR(block)!=0){
 			 return new RpcCheckBlockBody(-10, "Illeagl Block ", block); 
 		 }else {
 			 return new RpcCheckBlockBody(0, "OK", block);

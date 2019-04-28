@@ -56,6 +56,11 @@ public class Block {
 
 		this.blockHash = blockHash;
 	}
+	
+	public void setBlockHash() {
+
+		this.blockHash = calculateHash();
+	}
 
 	@Override
 	public String toString(){

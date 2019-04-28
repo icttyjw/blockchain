@@ -4,15 +4,19 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.check.GRecordChecker;
+import edu.ictt.blockchain.Block.check.NewRecordChecker;
 import edu.ictt.blockchain.Block.db.ConnectRocksDB;
 import edu.ictt.blockchain.Block.record.DegreeRecord;
 import edu.ictt.blockchain.Block.record.GradeRecord;
+import edu.ictt.blockchain.Block.record.NewRecord;
 import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import org.rocksdb.RocksDBException;
 import org.rocksdb.RocksIterator;
 
 import javax.persistence.criteria.CriteriaBuilder;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -29,7 +33,7 @@ public class RecoverLocalRecord {
 
     ConnectRocksDB rocksDB;
 
-    public void recoverRecord() throws RocksDBException {
+    public void recoverRecord() throws RocksDBException, UnsupportedEncodingException {
         rocksDB = new ConnectRocksDB(3);
 
         /*读出课程的各自的记录队列
@@ -40,7 +44,7 @@ public class RecoverLocalRecord {
         /*key:课程; value: 课程对应的记录列表
          *
          */
-        ConcurrentHashMap<String, List<GradeRecord>> recordConcurrentHashMap=new ConcurrentHashMap<String, List<GradeRecord>>();
+        ConcurrentHashMap<String, List<NewRecord>> recordConcurrentHashMap=new ConcurrentHashMap<String, List<NewRecord>>();
         /*
          * key:课程hash; value: 课程记录的数量
          */
@@ -55,18 +59,19 @@ public class RecoverLocalRecord {
         recordCountList = FastJsonUtil.toList(recordCount, Integer.class);
 
         //记录校验器
-        GRecordChecker gRecordChecker = new GRecordChecker();
+        //GRecordChecker gRecordChecker = new GRecordChecker();
+        NewRecordChecker newRecordChecker = new NewRecordChecker();
 
         //先恢复
         for(String course : courseList) {
             String records = rocksDB.getRocksDbStore().get(course);
             System.out.println(records);
-            List<GradeRecord> recordList = FastJsonUtil.toList(records, GradeRecord.class);
-            for(GradeRecord gradeRecord:recordList){
-                if(gRecordChecker.checkRecord(gradeRecord) == 0)
+            List<NewRecord> recordList = FastJsonUtil.toList(records, NewRecord.class);
+            for(NewRecord record:recordList){
+                if(newRecordChecker.checkNewRecord(record) == 0)
                     recordConcurrentHashMap.put(course, recordList);
                 else{
-                    System.out.println("此记录出错:" + gradeRecord.toString());
+                    System.out.println("此记录出错:" + record.toString());
                 }
             }
 

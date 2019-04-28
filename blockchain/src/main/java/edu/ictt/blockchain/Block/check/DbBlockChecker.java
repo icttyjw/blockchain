@@ -3,6 +3,7 @@ package edu.ictt.blockchain.Block.check;
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.block.BlockHeader;
 import edu.ictt.blockchain.Block.me.MerkleTree;
+import edu.ictt.blockchain.Block.record.NewRecord;
 import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.SHA256;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.Null;
 
 import cn.hutool.core.util.StrUtil;
 
@@ -38,10 +40,16 @@ public class DbBlockChecker implements BlockChecker {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    //检查区块的time,hash,sign和num;
+    //检查区块的time,hash,sign,num,merkleroot;
     public int checkAll(Block block){
-        if (checkNum(block)+checkHash(block)+checkSign(block)+checkTime(block) != 0)
-            return -1;
+        //if (checkNum(block)+checkHash(block)+checkSign(block)+checkTime(block) + checkMerkleRoot(block)!= 0)
+          //  return -1;
+    	//newRecord完整校验用这个
+    	if (checkNum(block)+checkHash(block)+checkSign(block)+checkTime(block) + checkNewRecordMR(block)!= 0)
+              return -1;
+    	//单测试用这个
+        //if (checkSign(block) + checkNewRecordMR(block)!= 0)
+       //     return -1;
         return 0;
     }
 
@@ -70,17 +78,31 @@ public class DbBlockChecker implements BlockChecker {
     @Override
     public int checkHash(Block block) {
         Block localLast = getLastBlock();
+        //logger.info("[校验]：本地的最后一个区块是：" + localLast);
         //创世块可以，或者新块的prev等于本地的last hash也可以
-        if (localLast == null && block.getBlockHeader().getHashPreviousBlock() == null) {
-        	logger.info("[校验]：本地无前续区块");
-            return 0;
-        }
-        if (localLast != null && StrUtil.equals(localLast.getBlockHash(), block.getBlockHeader().getHashPreviousBlock())) {
+        /*if (localLast.equals(null) && block.getBlockHeader().getHashPreviousBlock().equals(null)) {
+        	logger.info("[校验]：本地无前续区块，当前区块为第一个区块");
         	logger.info("[校验]：区块哈希正确，进行下一步校验");
         	return 0;
+        }else if (StrUtil.equals(localLast.getBlockHash(), block.getBlockHeader().getHashPreviousBlock())) {
+        	logger.info("[校验]：区块哈希正确，进行下一步校验");
+        	return 0;
+        }else {
+        	logger.info("[校验]：区块哈希不正确，拒绝区块");
+            return -1;
+        }   }*/
+        if (localLast != null) {
+        	if (StrUtil.equals(localLast.getBlockHash(), block.getBlockHeader().getHashPreviousBlock())) {
+            	logger.info("[校验]：区块哈希正确，进行下一步校验");
+            	return 0;
+        }else {
+        	logger.info("[校验]：区块哈希不正确，拒绝区块");
+        	return -1;
+        	}
+        }else {
+        	logger.info("[校验]：本地无前续区块，当前区块为第一个区块");
+        	return 0;
         }
-        logger.info("[校验]：区块哈希不正确，拒绝区块");
-        return -1;
     }
 
     
@@ -120,9 +142,9 @@ public class DbBlockChecker implements BlockChecker {
     		//签名校验应当是此处的部分
     		try {
     		  	BlockHeader blockHeader = block.getBlockHeader();
-    		 	String blockStr = blockHeader.getHashPreviousBlock()+blockHeader.getHashMerkleRoot()+
-    				 blockHeader.getNonce()+blockHeader.getDifficultGoal()+blockHeader.getBlockTimeStamp()
-    				 +blockHeader.getRecordCount()+blockHeader.getPublicKey();
+    		  	String blockStr = blockHeader.getHashPreviousBlock()+blockHeader.getHashMerkleRoot()+blockHeader.getBlockNumber()+
+    	        		blockHeader.getBlockTimeStamp()+blockHeader.getRecordCount()+blockHeader.getNonce()+
+    	        		blockHeader.getDifficultGoal()+ +blockHeader.getRecordCount()+blockHeader.getPublicKey();
 				if(ECDSAAlgorithm.verify(blockStr, block.getBlockHeader().getBlockHeaderSign(), block.getBlockHeader().getPublicKey())) {
 					logger.info("[校验]：区块签名正确，进行下一步校验");
 				}
@@ -157,10 +179,13 @@ public class DbBlockChecker implements BlockChecker {
         	 records.addAll(block.getBlockBody().getGrecordsList());
         }else if(block.getBlockBody().getDrecordsList()!=null){
         	records.addAll(block.getBlockBody().getDrecordsList());
+        }else if(block.getBlockBody().getRecordList() != null){
+        	return checkNewRecordMR(block);
         }else {
         	logger.info("[校验]：区块体为空");
         	return -1;
-        }
+		}
+        
        
        // List<String> recordsHash = block.getBlockHeader().getHashList();
        // System.out.println(recordsHash);
@@ -198,6 +223,30 @@ public class DbBlockChecker implements BlockChecker {
     	return -1;
     }
 
+    /**
+     * 校验用新记录格式的merkleroot
+     * @param block
+     * @return
+     */
+    public int checkNewRecordMR(Block block) {
+    	List<String> recordsHash=new ArrayList<String>();
+    	List<NewRecord> newRecords = block.getBlockBody().getRecordList();
+    	
+    	for (NewRecord record:newRecords){
+        	String str=FastJsonUtil.toJSONString(record);
+        	logger.info("record hash:"+str);
+        	recordsHash.add(SHA256.sha256(str));
+        }
+
+        String merkle=new MerkleTree(recordsHash).build().getRoot();
+        
+        if(merkle.equals(block.getBlockHeader().getHashMerkleRoot()) ){
+        	logger.info("[校验]：区块MerkleRoot和记录校验成功");
+            return 0;
+        }
+        logger.info("[校验]：区块MerkleRoot和记录校验失败，拒绝区块");
+    	return -1;
+    }
     /**
      * 检测区块签名是否符合
      * @param block

@@ -8,11 +8,14 @@ import edu.ictt.blockchain.Block.block.BlockBody;
 import edu.ictt.blockchain.Block.block.BlockHeader;
 import edu.ictt.blockchain.Block.check.DbBlockChecker;
 import edu.ictt.blockchain.Block.check.GRecordChecker;
+import edu.ictt.blockchain.Block.check.NewRecordChecker;
 import edu.ictt.blockchain.Block.db.ConnectRocksDB;
 import edu.ictt.blockchain.Block.db.DbInitConfig;
 import edu.ictt.blockchain.Block.db.RecoverLocalRecord;
 import edu.ictt.blockchain.Block.db.RocksDbStoreImpl;
 import edu.ictt.blockchain.Block.generatorUtil.GenerateBlock;
+import edu.ictt.blockchain.Block.generatorUtil.GenerateNewBlock;
+import edu.ictt.blockchain.Block.generatorUtil.GenerateNewRecord;
 import edu.ictt.blockchain.Block.generatorUtil.GenerateRecord;
 import edu.ictt.blockchain.Block.me.MerkleTree;
 import edu.ictt.blockchain.Block.merkle.MerkleHash;
@@ -42,11 +45,15 @@ import edu.ictt.blockchain.socket.pbft.queue.CommitMsgQueue;
 import edu.ictt.blockchain.socket.record.queue.GRecordQueue;
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
 
+import org.apache.coyote.http11.filters.VoidInputFilter;
 import org.junit.Test;
 import org.rocksdb.Options;
 import org.rocksdb.RocksDB;
 import org.rocksdb.RocksDBException;
 import org.tio.utils.json.Json;
+
+import static edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm.generatePrivateKey;
+import static edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm.generatePublicKey;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -57,6 +64,51 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PartTest {
 
+	//生成并校验nerrecord
+	@Test
+	public void NewRCTest() throws UnsupportedEncodingException {
+		GenerateNewRecord geneRecord = new GenerateNewRecord();
+		NewRecord record = geneRecord.GenerateNewRecord();
+ 		System.out.println("生成的记录为：" + record.toString());
+		
+		NewRecordChecker nChecker = new NewRecordChecker();
+		if(nChecker.checkNewRecord(record)==0) System.out.println("记录校验成功");;
+		
+	};
+	
+	//newRecord生成区块并校验
+	@Test
+	public void NewBlockTest() throws UnsupportedEncodingException {
+		GenerateNewBlock generateNewBlock = new GenerateNewBlock();
+		Block block = generateNewBlock.GenerateNewBlock();
+		System.out.println("生成的区块为：" + block);
+		
+		DbBlockChecker dChecker = new DbBlockChecker();
+		//此处checkAll只校验了sign和merkelroot
+		if(dChecker.checkAll(block)==0) System.out.println("区块校验成功");;
+		
+	}
+	
+	@Test
+	public void saveNewBlock() throws UnsupportedEncodingException, RocksDBException {
+		
+		GenerateNewBlock generateNewBlock = new GenerateNewBlock();
+		Block block = generateNewBlock.GenerateNewBlock();
+		String jsonStr = JSON.toJSONString(block);
+		
+		ConnectRocksDB rocksDB = new ConnectRocksDB(1);
+		rocksDB.getRocksDbStore().put("0", jsonStr);
+		rocksDB.getRocksDbStore().put("key_first_block", jsonStr);
+		rocksDB.getRocksDbStore().put("key_last_block", jsonStr);
+		System.out.println(jsonStr);
+		System.out.println("save this block success");
+	}
+	@Test
+	public void readNewBlock() throws RocksDBException {
+		ConnectRocksDB rocksDB = new ConnectRocksDB(1);
+		System.out.println("read block" + 0 + " : " +
+				JSON.parseObject(rocksDB.getRocksDbStore().get("0"), new TypeReference<Block>(){}));
+	}
 	@Test
 	public void newmerkle(){
 		Block block=GenerateBlock.generateBlock(1);
@@ -156,9 +208,10 @@ public class PartTest {
 
 	/**
 	 * 读记录(读的时候会校验记录
+	 * @throws UnsupportedEncodingException 
 	 */
 	@Test
-	public void readrecordtest(){
+	public void readrecordtest() throws UnsupportedEncodingException{
 		try {
 			RecoverLocalRecord recoverLocalRecord = new RecoverLocalRecord();
 			recoverLocalRecord.recoverRecord();
@@ -185,7 +238,7 @@ public class PartTest {
 		//创建一个数据库操作对象，并与数据库建立连接
 
         ConnectRocksDB rocksDB = new ConnectRocksDB(1);
-
+        
 		//写入10个区块
 		for(int i=0; i<100; i++){
 			BlockHeader blockHeader = new BlockHeader();
