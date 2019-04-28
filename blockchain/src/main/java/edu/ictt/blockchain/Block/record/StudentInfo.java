@@ -8,7 +8,11 @@ package edu.ictt.blockchain.Block.record;
  */
 public class StudentInfo {
 
-    /**
+	/**
+     * 专业
+     */
+    private MajorInfo majorInfo;
+	/**
      * 学生学号
      */
     private int studentId;
@@ -32,10 +36,7 @@ public class StudentInfo {
      * 籍贯
      */
     //private String nativePalce;
-    /**
-     * 专业
-     */
-    private MajorInfo majorInfo;
+    
 
     /**
      * 学制
@@ -79,7 +80,7 @@ public class StudentInfo {
 		this.gradDate = gradDate;
 	}*/
    
-
+    
 	public int getStudentId() {
 		return studentId;
 	}

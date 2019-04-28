@@ -9,6 +9,10 @@ import edu.ictt.blockchain.common.PairKey;
 public class TeacherInfo{
 
     /**
+     * 所属学院
+     */
+	private FacultyInfo facultyInfo;
+	/**
      * 任课教师工号
      */
     private int teacherId;
@@ -17,6 +21,11 @@ public class TeacherInfo{
      * 任课教师姓名
      */
     private String teacherName;
+    
+    /**
+     * 任课教师性别
+     */
+    private char teacherSex;
 
     /**
      * 任课教师属性
@@ -37,15 +46,35 @@ public class TeacherInfo{
 
     public TeacherInfo(){}
 
-    public TeacherInfo(int teacherId, String teacherName, String teacherPro, String teacherPubKey){
-        this.teacherId = teacherId;
-        this.teacherName = teacherName;
-        this.teacherPro = teacherPro;
-        this.teacherPubKey = teacherPubKey;
-    }
+    public TeacherInfo(FacultyInfo facultyInfo, int teacherId, String teacherName, char teacherSex, String teacherPro,
+			String teacherPubKey) {
+		super();
+		this.facultyInfo = facultyInfo;
+		this.teacherId = teacherId;
+		this.teacherName = teacherName;
+		this.teacherSex = teacherSex;
+		this.teacherPro = teacherPro;
+		this.teacherPubKey = teacherPubKey;
+	}
 
 
-    public int getTeacherId() {
+	public FacultyInfo getFacultyInfo() {
+		return facultyInfo;
+	}
+
+	public void setFacultyInfo(FacultyInfo facultyInfo) {
+		this.facultyInfo = facultyInfo;
+	}
+
+	public String getTeacherPro() {
+		return teacherPro;
+	}
+
+	public void setTeacherPro(String teacherPro) {
+		this.teacherPro = teacherPro;
+	}
+
+	public int getTeacherId() {
 
         return teacherId;
     }
@@ -84,15 +113,25 @@ public class TeacherInfo{
     public void setTeacherTitle(String teacherTitle) {
         this.teacherPro = teacherTitle;
     }
+    
 
     /*public void setTeacherPairKey(PairKey teacherPairKey) {
         this.teacherPubKey = teacherPairKey;
     }*/
 
 
-    @Override
+    public char getTeacherSex() {
+		return teacherSex;
+	}
+
+	public void setTeacherSex(char teacherSex) {
+		this.teacherSex = teacherSex;
+	}
+
+	@Override
 	public String toString() {
-		return "TeacherInfo [teacherId=" + teacherId + ", teacherName=" + teacherName + ", teacherPro=" + teacherPro
-				+ ", teacherPubKey=" + teacherPubKey + "]";
+		return "TeacherInfo [facultyInfo=" + facultyInfo + ", teacherId=" + teacherId + ", teacherName=" + teacherName
+				+ ", teacherSex=" + teacherSex + ", teacherPro=" + teacherPro + ", teacherPubKey=" + teacherPubKey
+				+ "]";
 	}
 }

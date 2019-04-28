@@ -1,11 +1,17 @@
 package edu.ictt.blockchain.Block.record;
 
+import java.util.Arrays;
+
 /**
  * 记录中课程信息类
  */
 
 public class CourseInfo{
 
+	/**
+	 * 所属学院
+	 */
+	private FacultyInfo facultyInfo;
     /**
      * 课程id
      */
@@ -25,6 +31,11 @@ public class CourseInfo{
      * 开课学期
      */
     private String courseDate;
+    
+    /**
+     * 授课教师
+     */
+    private TeacherInfo[] teacherInfo = new TeacherInfo[3];
 
     /**
      * 课程属性:必修学位，必修非学位等等
@@ -32,16 +43,31 @@ public class CourseInfo{
     private String coursePro;
 
     public CourseInfo(){}
+    
+    public CourseInfo(FacultyInfo facultyInfo, int courseId, String courseName, int courseCredit, String courseDate,
+			TeacherInfo[] teacherInfo, String coursePro) {
+		super();
+		this.facultyInfo = facultyInfo;
+		this.courseId = courseId;
+		this.courseName = courseName;
+		this.courseCredit = courseCredit;
+		this.courseDate = courseDate;
+		this.teacherInfo = teacherInfo;
+		this.coursePro = coursePro;
+	}
 
-    public CourseInfo(int courseId, String courseName, int courseCredit, String courseDate, String coursePro){
-        this.courseId = courseId;
-        this.courseName = courseName;
-        this.courseCredit = courseCredit;
-        this.courseDate = courseDate;
-        this.coursePro = coursePro;
-    }
 
-    public int getCourseId() {
+
+
+	public FacultyInfo getFacultyInfo() {
+		return facultyInfo;
+	}
+
+	public void setFacultyInfo(FacultyInfo facultyInfo) {
+		this.facultyInfo = facultyInfo;
+	}
+
+	public int getCourseId() {
 
         return courseId;
     }
@@ -85,9 +111,18 @@ public class CourseInfo{
         this.coursePro = coursePro;
     }
     
+    public TeacherInfo[] getTeacherInfo() {
+        return teacherInfo;
+    }
+
+    public void setTeacherInfo(TeacherInfo[] teacherInfo) {
+        this.teacherInfo = teacherInfo;
+    }
+    
 	@Override
 	public String toString() {
-		return "CourseInfo [courseId=" + courseId + ", courseName=" + courseName + ", courseCredit=" + courseCredit
-				+ ", courseDate=" + courseDate + ", coursePro=" + coursePro + "]";
+		return "CourseInfo [facultyInfo=" + facultyInfo + ", courseId=" + courseId + ", courseName=" + courseName
+				+ ", courseCredit=" + courseCredit + ", courseDate=" + courseDate + ", teacherInfo="
+				+ Arrays.toString(teacherInfo) + ", coursePro=" + coursePro + "]";
 	}
 }

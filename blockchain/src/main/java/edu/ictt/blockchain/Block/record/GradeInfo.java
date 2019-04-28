@@ -16,11 +16,6 @@ public class GradeInfo {
     private CourseInfo courseInfo;
 
     /**
-     * 任课教师信息,每门课程最多三个老师 
-     */
-    private TeacherInfo[] teacherInfo = new TeacherInfo[3];
-
-    /**
      * 学生信息
      */
     private StudentInfo studentInfo;
@@ -32,28 +27,20 @@ public class GradeInfo {
 
     public GradeInfo(){}
 
-    public GradeInfo(CourseInfo courseInfo, TeacherInfo[] teacherInfo, StudentInfo studentInfo, double grade){
-        this.courseInfo = courseInfo;
-        this.teacherInfo = teacherInfo;
-        this.studentInfo = studentInfo;
-        this.grade = grade;
-    }
+    public GradeInfo(CourseInfo courseInfo, StudentInfo studentInfo, double grade) {
+		super();
+		this.courseInfo = courseInfo;
+		this.studentInfo = studentInfo;
+		this.grade = grade;
+	}
 
-    public CourseInfo getCourseInfo() {
+	public CourseInfo getCourseInfo() {
         return courseInfo;
     }
 
     public void setCourseInfo(CourseInfo courseInfo) {
         this.courseInfo = courseInfo;
-    }
-
-    public TeacherInfo[] getTeacherInfo() {
-        return teacherInfo;
-    }
-
-    public void setTeacherInfo(TeacherInfo[] teacherInfo) {
-        this.teacherInfo = teacherInfo;
-    }
+    }    
 
     public StudentInfo getStudentInfo() {
         return studentInfo;
@@ -73,8 +60,7 @@ public class GradeInfo {
 
     @Override
 	public String toString() {
-		return "GradeInfo [courseInfo=" + courseInfo + ", teacherInfo=" + Arrays.toString(teacherInfo)
-				+ ", studentInfo=" + studentInfo + ", grade=" + grade + "]";
+		return "GradeInfo [courseInfo=" + courseInfo + ", studentInfo=" + studentInfo + ", grade=" + grade + "]";
 	}
 
 }

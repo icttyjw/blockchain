@@ -28,14 +28,24 @@ public class DegreeInfo {
     private long degreeId;
 
     public DegreeInfo() {}
-    
-	public DegreeInfo(String gradDesignStartState, String gradDesignMidState, String gradDesignFinState,
-			long degreeId) {
+
+	public DegreeInfo(StudentInfo studentInfo, String gradDesignStartState, String gradDesignMidState,
+			String gradDesignFinState, long degreeId) {
 		super();
+		this.studentInfo = studentInfo;
 		this.gradDesignStartState = gradDesignStartState;
 		this.gradDesignMidState = gradDesignMidState;
 		this.gradDesignFinState = gradDesignFinState;
 		this.degreeId = degreeId;
+	}
+
+	
+	public StudentInfo getStudentInfo() {
+		return studentInfo;
+	}
+
+	public void setStudentInfo(StudentInfo studentInfo) {
+		this.studentInfo = studentInfo;
 	}
 
 	public String getGradDesignStartState() {
@@ -72,8 +82,9 @@ public class DegreeInfo {
 
 	@Override
 	public String toString() {
-		return "DegreeInfo [gradDesignStartState=" + gradDesignStartState + ", gradDesignMidState=" + gradDesignMidState
-				+ ", gradDesignFinState=" + gradDesignFinState + ", degreeId=" + degreeId + "]";
+		return "DegreeInfo [studentInfo=" + studentInfo + ", gradDesignStartState=" + gradDesignStartState
+				+ ", gradDesignMidState=" + gradDesignMidState + ", gradDesignFinState=" + gradDesignFinState
+				+ ", degreeId=" + degreeId + "]";
 	}
 
 }

@@ -12,6 +12,10 @@ import edu.ictt.blockchain.common.PairKey;
 public class FacultyInfo {
 
     /**
+     * 学校
+     */
+	private SchoolInfo schoolInfo;
+	/**
      * 学院id
      */
     private  int facultyId;
@@ -40,7 +44,16 @@ public class FacultyInfo {
         this.facultyPubKey = facultyPubKey;
     }
 
-    public int getFacultyId() {
+    
+    public SchoolInfo getSchoolInfo() {
+		return schoolInfo;
+	}
+
+	public void setSchoolInfo(SchoolInfo schoolInfo) {
+		this.schoolInfo = schoolInfo;
+	}
+
+	public int getFacultyId() {
 
         return facultyId;
     }
@@ -89,12 +102,8 @@ public class FacultyInfo {
 	}
 
 	@Override
-    public String toString() {
-        return "FacultyInfo{" +
-                "facultyId=" + facultyId +
-                ", facultyName='" + facultyName + '\'' +
-                ", facultyPro='" + facultyPro + '\'' +
-                ", facultyPubKey=" + facultyPubKey +
-                '}';
-    }
+	public String toString() {
+		return "FacultyInfo [schoolInfo=" + schoolInfo + ", facultyId=" + facultyId + ", facultyName=" + facultyName
+				+ ", facultyPro=" + facultyPro + ", facultyPubKey=" + facultyPubKey + "]";
+	}
 }
