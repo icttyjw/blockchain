@@ -68,10 +68,13 @@ public class BlockBody {
 
 	@Override
 	public String toString() {
-		return "BlockBody [grecordsList=" + grecordsList + ", drecordsList=" + drecordsList + "]";
+		return "BlockBody [grecordsList=" + grecordsList + ", drecordsList=" + drecordsList + ", recordList="
+				+ recordList + "]";
 	}
 
-
-   
-
+	/*@Override
+	public String toString() {
+		return "BlockBody [grecordsList=" + grecordsList + ", drecordsList=" + drecordsList + "]";
+	}*/
+  
 }

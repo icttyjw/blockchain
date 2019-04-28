@@ -54,11 +54,11 @@ public class NewRecord {
 	/*
 	 * 成绩记录构建
 	 */
-	public NewRecord(int record_type, String sign, NewGradeInfo gradeInfo, NewDegreeInfo degreeInfo,
+	public NewRecord(int record_type, NewGradeInfo gradeInfo, NewDegreeInfo degreeInfo,
 			NewOperaInfo operationInfo, long timeStamp, String comment) {
 		super();
 		this.record_type = record_type;
-		this.sign = sign;
+		//this.sign = sign;
 		this.gradeInfo = gradeInfo;
 		this.degreeInfo = degreeInfo;
 		this.operationInfo = operationInfo;
@@ -97,7 +97,7 @@ public class NewRecord {
 		// TODO Auto-generated method stub
 		String degree = record_type + FastJsonUtil.toJSONString(degreeInfo) + timeStamp + comment;
 		String degreeSign = ECDSAAlgorithm.sign(degreeInfo.getSchoolInfo().getSchoolPubKey(), degree);
-		return null;
+		return degreeSign;
 	}
 	
 	private String getTeacherSign() throws UnsupportedEncodingException {
@@ -112,7 +112,7 @@ public class NewRecord {
 	//教师签名的基础上再签
 	private String getFacultySign() {
 		// TODO Auto-generated method stub
-		String faculty = getTeacherSign() + gradeInfo.getTeacherPubkey() + gradInfo.getFacultyPubkey();
+		String faculty = getTeacherSign() + gradeInfo.getTeacherPubkey() + gradeInfo.getFacultyPubkey();
 		String facultySign = ECDSAAlgorithm.sign(gradeInfo.getFacultyPubkey(), faculty);
 		String signSring = record_type + facultySign + timeStamp + comment;
 		String sign = ECDSAAlgorithm.sign(gradeInfo.getFacultyPubkey(), signSring);

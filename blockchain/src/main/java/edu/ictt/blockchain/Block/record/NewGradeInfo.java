@@ -52,6 +52,8 @@ public class NewGradeInfo {
 	 */
 	private String teacherPubkey;
 	
+	private String teacherSign;
+	
 	public NewGradeInfo() {}
 
 	public NewGradeInfo(SchoolInfo schoolInfo, int faculthId, int majorId, int courseId, int teacherId, long studentId,
@@ -66,6 +68,14 @@ public class NewGradeInfo {
 		this.grade = grade;
 		this.facultyPubkey = facultyPubkey;
 		this.teacherPubkey = teacherPubkey;
+	}
+
+	public String getTeacherSign() {
+		return teacherSign;
+	}
+
+	public void setTeacherSign(String teacherSign) {
+		this.teacherSign = teacherSign;
 	}
 
 	public SchoolInfo getSchoolInfo() {
@@ -144,7 +154,8 @@ public class NewGradeInfo {
 	public String toString() {
 		return "NewGradeInfo [schoolInfo=" + schoolInfo + ", faculthId=" + faculthId + ", majorId=" + majorId
 				+ ", courseId=" + courseId + ", teacherId=" + teacherId + ", studentId=" + studentId + ", grade="
-				+ grade + ", facultyPubkey=" + facultyPubkey + ", teacherPubkey=" + teacherPubkey + "]";
+				+ grade + ", facultyPubkey=" + facultyPubkey + ", teacherPubkey=" + teacherPubkey + ", teacherSign="
+				+ teacherSign + "]";
 	}
 	
 }

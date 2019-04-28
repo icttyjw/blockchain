@@ -74,7 +74,7 @@ public class GRecordChecker implements RecordChecker {
         		 + gradeRecord.getRecordTimeStamp(); // +gradeRecord.getGradeInfo().toString() + gradeRecord.getRecordTimeStamp();
 
 
-        TeacherInfo[] teacherInfos = gradeRecord.getGradeInfo().getTeacherInfo();
+        TeacherInfo[] teacherInfos = gradeRecord.getGradeInfo().getCourseInfo().getTeacherInfo();
 
         int checkFlag = -1;
 

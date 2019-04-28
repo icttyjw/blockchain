@@ -83,7 +83,7 @@ public class GenerateRecord {
         StudentInfo studentInfo = new StudentInfo();
         studentInfo.setStudentId(170112111);
         studentInfo.setStudentName("张三");
-        studentInfo.setStudentPro("本科");
+        //studentInfo.setStudentPro("本科");
 
         return studentInfo;
     }
@@ -116,7 +116,7 @@ public class GenerateRecord {
             //System.out.println("教师信息" + teacherInfos[i].getTeacherPubKey());
             //System.out.println("教师信息" + teacherInfos[i].toString());
         }
-        gradeInfo.setTeacherInfo(teacherInfos);
+        gradeInfo.getCourseInfo().setTeacherInfo(teacherInfos);
 
         return gradeInfo;
     }
@@ -132,7 +132,7 @@ public class GenerateRecord {
         record.setRecordTimeStamp(System.currentTimeMillis());//System.currentTimeMillis()
 
 
-        TeacherInfo[] teacherInfos = record.getGradeInfo().getTeacherInfo();
+        TeacherInfo[] teacherInfos = record.getGradeInfo().getCourseInfo().getTeacherInfo();
         
         
         //^^^^^^^^^^^^^^^^^^^^此处有问题，私钥需存到数据库

@@ -289,7 +289,7 @@ public class QueryInfromController {
         		blockProperty.setSchoolName(record.getSchoolInfo().getSchoolName());
         		blockProperty.setFacultyName(record.getFacultyInfo().getFacultyName());
         		blockProperty.setCourseName(record.getGradeInfo().getCourseInfo().getCourseName());
-        		TeacherInfo[] teacherInfo =record.getGradeInfo().getTeacherInfo();
+        		TeacherInfo[] teacherInfo =record.getGradeInfo().getCourseInfo().getTeacherInfo();
         		blockProperty.setTeacherName(teacherInfo[0].getTeacherName());
         		blockProperty.setStudent(record.getGradeInfo().getStudentInfo().getStudentName());
         		blockProperty.setGrade(record.getGradeInfo().getGrade());
