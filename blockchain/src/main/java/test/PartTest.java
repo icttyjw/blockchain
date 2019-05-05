@@ -46,10 +46,12 @@ import edu.ictt.blockchain.socket.record.queue.GRecordQueue;
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
 
 import org.apache.coyote.http11.filters.VoidInputFilter;
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.rocksdb.Options;
 import org.rocksdb.RocksDB;
 import org.rocksdb.RocksDBException;
+import org.slf4j.LoggerFactory;
 import org.tio.utils.json.Json;
 
 import static edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm.generatePrivateKey;
@@ -63,18 +65,73 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 public class PartTest {
-
-	//生成并校验nerrecord
+	
+	//生成并校验nerrecord：成绩记录
 	@Test
 	public void NewRCTest() throws UnsupportedEncodingException {
 		GenerateNewRecord geneRecord = new GenerateNewRecord();
-		NewRecord record = geneRecord.GenerateNewRecord();
+		NewRecord record = geneRecord.generateNewGRecord();
  		System.out.println("生成的记录为：" + record.toString());
 		
 		NewRecordChecker nChecker = new NewRecordChecker();
-		if(nChecker.checkNewRecord(record)==0) System.out.println("记录校验成功");;
+		if(nChecker.checkNewRecord(record)==0) System.out.println("记录校验成功");
+		
+		//对记录进行修改并再次校验
+		/*record.setComment("我被修改过了");
+		record.getGradeInfo().setGrade(95);
+		
+		if(nChecker.checkNewRecord(record)==0) {
+			System.out.println("记录校验成功");
+		}else {
+			System.out.println("校验结果为：" + nChecker.checkNewRecord(record));
+			System.out.println("记录校验失败，记录失效");
+		}*/
+		
+		//记录进一步篡改：教师级别的篡改，将公钥和签名全都换成自己的
+		String tPriKey = generatePrivateKey();
+		String tPubKey = generatePublicKey(tPriKey,true);
+		record.getGradeInfo().setGrade(96);
+		String grade = FastJsonUtil.toJSONString(record.getGradeInfo().getSchoolInfo()) + record.getGradeInfo().getFaculthId()
+		+ record.getGradeInfo().getMajorId() + record.getGradeInfo().getCourseId() + record.getGradeInfo().getTeacherId()+record.getGradeInfo().getStudentId()
+		+ record.getGradeInfo().getGrade();
+		String teacherSign = ECDSAAlgorithm.sign(tPriKey, grade);
+		record.getGradeInfo().setTeacherSign(teacherSign);
+		record.getGradeInfo().setTeacherPubkey(tPubKey);
+		System.out.println("篡改后的记录为:" + record);
+		if(nChecker.checkNewRecord(record)==0) {
+			System.out.println("记录校验成功");
+		}else {
+			System.out.println("校验结果为：" + nChecker.checkNewRecord(record));
+			System.out.println("记录校验失败，记录失效");
+		}
+		
+		//更进一步，如果学院级别的进行了如上教师级别的修改，那么目前的校验是无法校验出来的。需要在校验前加一些课程和教师及教师和公钥的对照检查。
 		
 	};
+	
+	//生成并校验nerrecord：学位记录
+		@Test
+		public void NewRCTest2() throws UnsupportedEncodingException {
+			GenerateNewRecord geneRecord = new GenerateNewRecord();
+			NewRecord record = geneRecord.generateNewDRecord();
+	 		System.out.println("生成的记录为：" + record.toString());
+			
+			NewRecordChecker nChecker = new NewRecordChecker();
+			if(nChecker.checkNewRecord(record)==0) System.out.println("记录校验成功");
+			
+			//对记录进行修改并再次校验
+			record.setComment("我被修改过了");
+
+			if(nChecker.checkNewRecord(record)==0) {
+				System.out.println("记录校验成功");
+			}else {
+				System.out.println("校验结果为：" + nChecker.checkNewRecord(record));
+				System.out.println("记录校验失败，记录失效");
+			}
+			
+			//更进一步，如果学校级别的进行了别的修改，那么目前的校验是无法校验出来的。需要在校验前加一些对照检查。
+			
+		};
 	
 	//newRecord生成区块并校验
 	@Test
@@ -85,8 +142,20 @@ public class PartTest {
 		
 		DbBlockChecker dChecker = new DbBlockChecker();
 		//此处checkAll只校验了sign和merkelroot
-		if(dChecker.checkAll(block)==0) System.out.println("区块校验成功");;
+		if(dChecker.checkAll(block)==0) System.out.println("区块校验成功");
 		
+		//对区块修改并再次校验
+		List<NewRecord> records = block.getBlockBody().getRecordList();
+		records.get(0).getGradeInfo().setGrade(100);
+		if(dChecker.checkAll(block)==0) {
+			System.out.println("区块校验成功");
+		}else {
+			System.out.println("校验结果为：" + dChecker.checkAll(block));
+			System.out.println("区块校验失败，区块失效");
+		}
+		
+		//更进一步，如果学校级别的进行了别的修改，那么目前的校验是无法校验出来的。需要在校验前加一些对照检查。
+	
 	}
 	
 	@Test

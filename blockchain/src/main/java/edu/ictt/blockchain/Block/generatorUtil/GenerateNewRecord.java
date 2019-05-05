@@ -5,6 +5,7 @@ import static edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm.generatePublic
 
 import java.io.UnsupportedEncodingException;
 
+import edu.ictt.blockchain.Block.record.NewDegreeInfo;
 import edu.ictt.blockchain.Block.record.NewGradeInfo;
 import edu.ictt.blockchain.Block.record.NewRecord;
 import edu.ictt.blockchain.Block.record.SchoolInfo;
@@ -25,7 +26,7 @@ public class GenerateNewRecord {
 	String tPriKey = generatePrivateKey();
 	String tPubKey = generatePublicKey(tPriKey,true);
 			
-	public NewRecord GenerateNewRecord() throws UnsupportedEncodingException {
+	public NewRecord generateNewGRecord() throws UnsupportedEncodingException {
 		
 		SchoolInfo schoolInfo = new SchoolInfo(10001,"西电",sPubKey,"211");
 		NewGradeInfo gradeInfo = new NewGradeInfo(schoolInfo,1000103,1000103001,19040001,000001,1703121,85,fPubKey,tPubKey);
@@ -46,6 +47,23 @@ public class GenerateNewRecord {
 		
 		return record;
 	}
+	
+	//顺序要和生成时保持一致！！！
+	public NewRecord generateNewDRecord() throws UnsupportedEncodingException {
+		
+		SchoolInfo schoolInfo = new SchoolInfo(10001,"西电",sPubKey,"211");
+		NewDegreeInfo degreeInfo = new NewDegreeInfo(schoolInfo,1000103,1000103001,1703121,298798475);
+		
+		NewRecord record = new NewRecord(2,null,degreeInfo,null,System.currentTimeMillis(),"我是一条学位记录");
+		
+		String degree = record.getRecord_type() + FastJsonUtil.toJSONString(record.getDegreeInfo()) + record.getTimeStamp() + record.getComment();
+		String sign = ECDSAAlgorithm.sign(sPriKey, degree);
+		
+		record.setSign(sign);
+		
+		return record;
+	}
+	
 
 	public String getsPriKey() {
 		return sPriKey;

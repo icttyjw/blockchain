@@ -19,7 +19,7 @@ public class GenerateNewBlock {
 	public Block GenerateNewBlock() throws UnsupportedEncodingException {
 		
 		GenerateNewRecord geneRecord = new GenerateNewRecord();
-		NewRecord record = geneRecord.GenerateNewRecord();
+		NewRecord record = geneRecord.generateNewGRecord();
 		
 		List<NewRecord> newRecords = new ArrayList<>();
 		newRecords.add(record);
