@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import cn.hutool.core.util.StrUtil;
 import edu.ictt.blockchain.Block.db.DbStore;
+import edu.ictt.blockchain.Block.record.NewRecord;
 import edu.ictt.blockchain.Block.record.Record;
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.common.Constants;
@@ -118,6 +119,16 @@ public class DbBlockManager {
 	    public List<Record> getRecordList(String hash){
 	    	String listjaso=dbStore.get(hash);
 	    	return FastJsonUtil.toList(listjaso, Record.class);
+	    }
+	    
+	    public List<NewRecord> getNewRecordList(String hash){
+	    	String listjaso=dbStore.get(hash);
+	    	return FastJsonUtil.toList(listjaso, NewRecord.class);
+	    }
+	    
+	    public List<String> getCourse(String hash){
+	    	String list=dbStore.get(hash);
+	    	return FastJsonUtil.toList(list, String.class);
 	    }
 	 
 	//getter和setter供测试方便，可删除

@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 
@@ -120,6 +121,31 @@ public class RecordQueue {
 			//System.out.println("备份课程的记录数量" + hash + ":" + "记录数量" + recordCount);
 		}
 	}
+	
+	@PostConstruct
+	private void recover(){
+		course=dbBlockManager.getCourse("course");
+		for(String str:course){
+			List<NewRecord> ls=dbBlockManager.getNewRecordList(str);
+			recordConcurrentHashMap.put(str, ls);
+			recordcountConcurrentHashMap.put(str, ls.size());
+		}
+		
+	}
+	
+	//存在因区块号冲突上链失败的记录，需要周期检索重新上链
+	
+	private void periodsend(){
+		for(ConcurrentHashMap.Entry<String, Integer> msi:recordcountConcurrentHashMap.entrySet()){
+			if(msi.getValue()==100){
+				String coursehash=msi.getKey();
+				List<NewRecord> lnr=recordConcurrentHashMap.get(coursehash);
+				BlockBody blockbody=new BlockBody(lnr);
+				BlockRequesbody blockRequesbody=new BlockRequesbody(blockbody);
+				blockService.addBlock(blockRequesbody);
+			}
+		}
+	}
 
 	//判断是否有
 
@@ -133,6 +159,21 @@ public class RecordQueue {
 			dbBlockManager.getDbStore().remove(hash);
 			return null;
 		},2000);
+		/*
+		 * 上链失败的记录重新上链
+		 * 不确定应该放置在哪里执行
+		 */
+		/*
+		for(ConcurrentHashMap.Entry<String, Integer> msi:recordcountConcurrentHashMap.entrySet()){
+			if(msi.getValue()==100){
+				String coursehash=msi.getKey();
+				List<NewRecord> lnr=recordConcurrentHashMap.get(coursehash);
+				BlockBody blockbody=new BlockBody(lnr);
+				BlockRequesbody blockRequesbody=new BlockRequesbody(blockbody);
+				blockService.addBlock(blockRequesbody);
+				break;
+			}
+		}*/
 	}
 
 	public DbBlockManager getDbBlockManager() {
