@@ -1,7 +1,7 @@
 <?xml version="1.0"  encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
-
+	<property name="LOG_HOME" value="logs1/log" />
 
     <!-- 本地日志文件 -->
     <appender name="MY_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -17,7 +17,7 @@
             <Pattern>%d{yyyy-MM-dd HH:mm:ss} -%msg%n</Pattern>
         </layout>
         <encoder>
-            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
     </appender> 
     

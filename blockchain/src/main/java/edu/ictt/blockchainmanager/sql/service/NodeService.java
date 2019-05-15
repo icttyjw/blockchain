@@ -45,4 +45,8 @@ public class NodeService {
 	public NodeState queryByName(String name) {
 		return nodeRepositroy.queryByName(name);
 	}
+	
+	public void deleteByName(String name){
+		nodeRepositroy.deleteByName(name);
+	}
 }

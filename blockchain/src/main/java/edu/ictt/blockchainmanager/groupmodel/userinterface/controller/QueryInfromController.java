@@ -16,7 +16,7 @@ import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchainmanager.groupmodel.BlockInfo;
 import edu.ictt.blockchainmanager.groupmodel.BlockProperty;
 import edu.ictt.blockchainmanager.sql.service.BlockInfoService;
-import edu.ictt.blockchainmanager.sql.service.FindBlockService;
+import edu.ictt.blockchainmanager.sql.service.FindBLockService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -72,7 +72,7 @@ public class QueryInfromController {
 	BlockInfoService blockInfoService;
 	
 	@Resource
-	FindBlockService findBlockService;
+	FindBLockService findBlockService;
 	
 	@FXML
 	private TextField schoolName;

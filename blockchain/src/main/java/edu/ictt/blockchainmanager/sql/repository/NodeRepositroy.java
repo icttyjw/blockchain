@@ -6,8 +6,10 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
 @Repository
@@ -28,5 +30,10 @@ public interface NodeRepositroy extends JpaRepository<NodeState, String>{
 	 */
 	@Query(value="SELECT * FROM node_state WHERE name=?1",nativeQuery=true)
 	public NodeState queryByName(@Param("name") String name);
+	
+	@Transactional
+	@Modifying
+	@Query(value="DELETE FROM node_state WHERE name=?1",nativeQuery=true)
+	public void deleteByName(@Param("name") String name);
 	
 }
