@@ -2,6 +2,7 @@ package edu.ictt.blockchain.socket.client;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tio.client.ClientGroupContext;
 import org.tio.client.intf.ClientAioListener;
 import org.tio.core.Tio;
 import org.tio.core.ChannelContext;
@@ -31,6 +32,14 @@ public class BlockClientAioListener implements ClientAioListener {
         } else {
             logger.info("[启动]：连接失败：server地址为-" + channelContext.getServerNode());
         }
+        ClientGroupContext groupContext=(ClientGroupContext)channelContext.getGroupContext();
+        if(groupContext.getReconnConf().getRetryCount()<channelContext.getReconnCount()){
+			
+   		 Tio.remove(channelContext, "false");
+   		 System.out.println("remark "+channelContext.closeMeta.getRemark());
+   		 System.out.println("close: "+channelContext.isClosed);
+   		 }
+        else
         ApplicationContextProvider.publishEvent(new NodesConnectedEvent(channelContext));
     }
 
