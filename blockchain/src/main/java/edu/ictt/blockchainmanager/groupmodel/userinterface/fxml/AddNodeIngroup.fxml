@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="388.0" prefWidth="297.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="AddSchoolNodeController">
+   <children>
+      <TextField fx:id="name" layoutX="125.0" layoutY="81.0" />
+      <TextField fx:id="ip" layoutX="125.0" layoutY="194.0" />
+      <Button fx:id="add" layoutX="105.0" layoutY="320.0" mnemonicParsing="false" onAction="#addnode" text="添加" />
+      <TextField fx:id="main" layoutX="125.0" layoutY="135.0" />
+      <TextField fx:id="type" layoutX="125.0" layoutY="251.0" />
+      <Label layoutX="45.0" layoutY="194.0" prefHeight="23.0" prefWidth="47.0" text="ip" />
+      <Label layoutX="45.0" layoutY="135.0" prefHeight="23.0" prefWidth="47.0" text="main" />
+      <Label layoutX="45.0" layoutY="81.0" prefHeight="23.0" prefWidth="47.0" text="name" />
+      <Label layoutX="45.0" layoutY="251.0" prefHeight="23.0" prefWidth="47.0" text="type" />
+      <Label layoutX="45.0" layoutY="26.0" prefHeight="23.0" prefWidth="47.0" text="id" />
+      <TextField fx:id="id" layoutX="125.0" layoutY="26.0" />
+   </children>
+</AnchorPane>
