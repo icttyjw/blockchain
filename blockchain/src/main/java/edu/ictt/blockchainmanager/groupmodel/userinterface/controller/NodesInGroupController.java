@@ -23,8 +23,10 @@ import com.fasterxml.jackson.core.sym.Name;
 import com.google.common.collect.Table.Cell;
 
 import de.felixroske.jfxsupport.FXMLController;
+import edu.ictt.BlockChainApplication;
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
 import edu.ictt.blockchainmanager.sql.service.NodeService;
+import edu.ictt.blockchainmanager.view.AddSchoolNodeView;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,6 +44,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
@@ -76,6 +79,12 @@ public class NodesInGroupController implements Initializable{
     
     @FXML
     private Label lastConnect;
+    
+    @FXML
+    private Button add;
+    
+    @FXML
+    private Button del;
     
     
     ObservableList<String> nodeLists = FXCollections.observableArrayList();
@@ -176,7 +185,7 @@ public class NodesInGroupController implements Initializable{
 	//暂时无用
 	@FXML
 	void refresh(ActionEvent event) {
-		
+		/*
 		//获取当前连接的节点，设置列表和圆的显示
 		SetWithLock<ChannelContext> setWithLock = Tio.getAllChannelContexts(clientGroupContext);
         Set<ChannelContext> set = setWithLock.getObj();
@@ -188,9 +197,28 @@ public class NodesInGroupController implements Initializable{
             if (!connectedNodes.contains(node)) {
                 circlePane.setVisible(false);
                 }
-            }
+            }*/
+		nodeLists.clear();
+		List<NodeState> nodeStates = nodeService.queryAllNodes();
+		for(NodeState nodeState:nodeStates) {
+			nodeLists.add(nodeState.getName());
+			//这个暂时不能用同时根据节点个数生成圆
+			
+		}
     }
     
-    
+	  @FXML
+	    void delete(ActionEvent event) {
+		  	String name=nodesList.getSelectionModel().selectedItemProperty().get();
+		  	nodeService.deleteByName(name);
+		  	nodeLists.remove(name);
+	    }
+
+
+
+	    @FXML
+	    void addnode(ActionEvent event) {
+	    	BlockChainApplication.showView(AddSchoolNodeView.class, Modality.APPLICATION_MODAL);
+	    }
 	
 }

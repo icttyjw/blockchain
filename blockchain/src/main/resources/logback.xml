@@ -1,23 +1,44 @@
 <?xml version="1.0"  encoding="UTF-8"?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
-
-
+    <include resource="org/springframework/boot/logging/logback/base.xml"/> 
+	<property name="LOG_HOME" value="logs1/log" />
+	<property name="ERROR_HOME" value="logs1/error" />
+<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">  
+        <encoder>  
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>  
+        </encoder>  
+        <!-- 此日志文件只记录info级别的 ThresholdFilter是临界值过滤器 过滤掉低于指定临界值的日志。 -->
+        <!-- 
+		 <filter class="edu.ictt.blockchain.config.LogFilterConfig">
+        <exceptionClassName>java.nio.channels.ClosedChannelException</exceptionClassName>
+        </filter> -->
+    <filter class="edu.ictt.blockchain.config.LogFilterConfig">
+        <exceptionClassName>java.io.IOException</exceptionClassName>
+        <onMatch>DENY</onMatch>
+        </filter>
+    </appender>  
     <!-- 本地日志文件 -->
     <appender name="MY_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <Prudent>true</Prudent>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_HOME}/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
 
             <maxHistory>30</maxHistory>
             <totalSizeCap>3GB</totalSizeCap>
 
         </rollingPolicy>
+  
+
+    <filter class="edu.ictt.blockchain.config.LogFilterConfig">
+        <exceptionClassName>java.io.IOException</exceptionClassName>
+        <onMatch>DENY</onMatch>
+        </filter>
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%d{yyyy-MM-dd HH:mm:ss} -%msg%n</Pattern>
         </layout>
+        
         <encoder>
-            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
     </appender> 
     
@@ -38,8 +59,29 @@
         <!--  <appender-ref ref="CONSOLE"/>-->
      <!--   <appender-ref ref="MyLogback"/>
     </logger> -->   
+     <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 过滤日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+            
+        </filter>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} -%msg%n</Pattern>
+        </layout>
+        <encoder>
+            <pattern>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{35} - %msg%n</pattern>
+            </pattern>
+        </encoder>
+        <!-- 滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 设置error日志路径 -->
+            <fileNamePattern>${ERROR_HOME}/errorFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
     <root level="INFO">
          <appender-ref ref="CONSOLE"/>
+         <appender-ref ref="fileErrorLog"/>
         <appender-ref ref="MY_FILE"/>
     </root>
 </configuration>

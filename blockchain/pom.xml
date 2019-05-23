@@ -29,16 +29,25 @@
   <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
+			
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+    </exclusions>
+		</dependency>
+		<dependency>
+		 <groupId>org.springframework.boot</groupId>
+                   <artifactId>spring-boot-starter-logging</artifactId>
+                   
 		</dependency>
 		<dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>1.3.0</version>
         </dependency>
+
         <dependency>
     <groupId>mysql</groupId>
     <artifactId>mysql-connector-java</artifactId>
@@ -51,7 +60,23 @@
 		  <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-data-jpa</artifactId>
+    <exclusions>
+    <exclusion>
+			<groupId>org.slf4j</groupId>
+	<artifactId>slf4j-api</artifactId>
+	</exclusion>
+    </exclusions>
 </dependency>      
+<dependency>
+<groupId>org.springframework.data</groupId>
+<artifactId>spring-data-commons</artifactId>
+<exclusions>
+    <exclusion>
+			<groupId>org.slf4j</groupId>
+	<artifactId>slf4j-api</artifactId>
+	</exclusion>
+    </exclusions>
+</dependency>
  <dependency>
             <groupId>de.roskenet</groupId>
             <artifactId>springboot-javafx-support</artifactId>
@@ -61,12 +86,19 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
-	  <version>4.12</version>
+	  
     </dependency>
     
     <dependency>
     <groupId>org.t-io</groupId>
     <artifactId>tio-core</artifactId>
+    <version>3.2.0.v20180918-RELEASE</version>
+    <exclusions>
+    <exclusion>
+			<groupId>org.slf4j</groupId>
+	<artifactId>slf4j-api</artifactId>
+	</exclusion>
+    </exclusions>
 	</dependency>
 	
 	<dependency>
@@ -76,7 +108,8 @@
 	<dependency>
 		<groupId>com.alibaba</groupId>
 		<artifactId>fastjson</artifactId>
-	</dependency><dependency>
+	</dependency>
+	<dependency>
 		  <groupId>net.sf.json-lib</groupId>
 		  <artifactId>json-lib</artifactId>
 		  <version>2.4</version>
@@ -95,6 +128,11 @@
 
 
 	<!- https://mvnrepository.com/artifact/com.lmax/disruptor -->
+
+<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+
+
 <dependency>
     <groupId>com.lmax</groupId>
     <artifactId>disruptor</artifactId>
@@ -130,11 +168,7 @@
 	
   	<!-- https://mvnrepository.com/artifact/log4j/log4j -->
 
-  	<dependency>
-  		<groupId>org.slf4j</groupId>
-  		<artifactId>slf4j-nop</artifactId>
-  		<version>1.8.0-beta2</version>
-  	</dependency>
+
       <dependency>
           <groupId>junit</groupId>
           <artifactId>junit</artifactId>
@@ -144,6 +178,12 @@
 		  <groupId>org.t-io</groupId>
 		  <artifactId>tio-utils</artifactId>
 		  <version>3.2.1.v20181024-RELEASE</version>
+		  <exclusions>
+    <exclusion>
+			<groupId>org.slf4j</groupId>
+	<artifactId>slf4j-api</artifactId>
+	</exclusion>
+    </exclusions>
 	  </dependency>
 
 	  <dependency>
@@ -155,6 +195,12 @@
 		  <groupId>org.apache.commons</groupId>
 		  <artifactId>commons-collections4</artifactId>
 		  <version>4.3</version>
+		  <exclusions>
+    <exclusion>
+			<groupId>org.slf4j</groupId>
+	<artifactId>slf4j-api</artifactId>
+	</exclusion>
+    </exclusions>
 	  </dependency>
 	  <dependency>
 		  <groupId>org.apache.commons</groupId>
@@ -177,6 +223,19 @@
           <artifactId>spring-boot-test</artifactId>
       </dependency>
 
+        <dependency>
+    <groupId>org.apache.servicemix.bundles</groupId>
+    <artifactId>org.apache.servicemix.bundles.janino</artifactId>
+    <version>2.6.1_1</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+
+<dependency>
+    <groupId>org.codehaus.janino</groupId>
+    <artifactId>janino</artifactId>
+</dependency>
+
   </dependencies>
   <dependencyManagement>
   	<dependencies>
@@ -186,12 +245,7 @@
   			<version>4.12</version>
   			<scope>import</scope>
   		</dependency>
-  		<dependency>
-  			<groupId>org.t-io</groupId>
-  			<artifactId>tio-core</artifactId>
-  			<version>3.2.0.v20180918-RELEASE</version>
-  			<scope>import</scope>
-  		</dependency>
+
   		<dependency>
   			<groupId>org.rocksdb</groupId>
   			<artifactId>rocksdbjni</artifactId>

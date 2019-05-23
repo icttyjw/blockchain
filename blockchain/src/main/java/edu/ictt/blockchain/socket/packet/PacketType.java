@@ -62,4 +62,7 @@ public interface PacketType {
      */
     byte PBFT_VOTE = 10;
 	byte RECEIVE_RECORD = 7;
+	
+	byte BLOCK_RECOVER_REQUEST=8;
+	byte BLOCK_RECOVER_RESPONSE=-8;
 }
