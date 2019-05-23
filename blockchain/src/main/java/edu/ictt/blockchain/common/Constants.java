@@ -44,4 +44,23 @@ public interface Constants {
 	 * 每个表的权限存储key
 	 */
 	String KEY_PERMISSION = "key_permission_";
+	
+	/**
+	 * 最后一个区块hash的key，value就是最后一个区块的hash
+	 */
+	String U_KEY_LAST_BLOCK = "u_key_last_block";
+    /**
+     * 第一个区块hash的key，value就是第一个区块的hash
+     */
+    String U_KEY_FIRST_BLOCK = "u_key_first_block";
+	/**
+	 * 区块hash与区块本身的key value映射，key的前缀，如{key_block_xxxxxxx -> blockJson}
+	 */
+	String U_KEY_BLOCK_HASH_PREFIX = "u_key_block_";
+
+	String U_KEY_REQUEST_PREFIX = "u_key_request_";
+    /**
+     * 保存区块的hash和下一区块hash，key为hash，value为下一区块hash
+     */
+	String U_KEY_BLOCK_NEXT_PREFIX = "u_key_next_";
 }
