@@ -32,5 +32,17 @@ public class CheckerManager {
 			 return new RpcCheckBlockBody(0, "OK", block);
 		 }	
 		
-	 }					
+	 }
+	
+	public int periodcheck(Block block){
+		  if (dbBlockChecker.checkHash(block) != 0) {
+			 return -3;
+		 }else if(dbBlockChecker.checkTime(block) != 0){
+			 return -4;
+		 }else if(dbBlockChecker.checkNewRecordMR(block)!=0){
+			 return -10; 
+		 }else {
+			 return 0;
+		 }	
+	}
 }
