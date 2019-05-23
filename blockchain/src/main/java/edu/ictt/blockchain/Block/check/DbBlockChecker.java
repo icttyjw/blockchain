@@ -2,6 +2,7 @@ package edu.ictt.blockchain.Block.check;
 
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.block.BlockHeader;
+import edu.ictt.blockchain.Block.block.UpperBlock;
 import edu.ictt.blockchain.Block.me.MerkleTree;
 import edu.ictt.blockchain.Block.record.NewRecord;
 import edu.ictt.blockchain.Block.record.Record;
@@ -20,11 +21,13 @@ import javax.validation.constraints.Null;
 
 import cn.hutool.core.util.StrUtil;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 使用本地Block信息对新来的block进行校验,暂时没有考虑权限
+ * 使用本地Block信息对新来的block进行校验,暂时没有考虑权限。
+ * 如果是学校私钥持有者对记录进行修改，会保留操作记录但是目前的校验依然会判定正确而不是被修改过。
  * @author wuweifeng wrote on 2018/3/13.
  */
 @Component
@@ -40,17 +43,18 @@ public class DbBlockChecker implements BlockChecker {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
+
     //检查区块的time,hash,sign,num,merkleroot;
-    public int checkAll(Block block){
-        //if (checkNum(block)+checkHash(block)+checkSign(block)+checkTime(block) + checkMerkleRoot(block)!= 0)
-          //  return -1;
+    public int checkBlock(Block block){
+        //if ((checkNum(block)==0) && (checkHash(block)==0) && (checkSign(block)==0) &&(checkTime(block)==0) && (checkMerkleRoot(block)== 0))
+          //  return 0;
     	//newRecord完整校验用这个
-    	if (checkNum(block)+checkHash(block)+checkSign(block)+checkTime(block) + checkNewRecordMR(block)!= 0)
-              return -1;
+    	//if (checkNum(block)+checkHash(block)+checkSign(block)+checkTime(block) + checkNewRecordMR(block)!= 0)
+       //       return -1;
     	//单测试用这个
-        //if (checkSign(block) + checkNewRecordMR(block)!= 0)
-       //     return -1;
-        return 0;
+        if ((checkSign(block)==0) && (checkNewRecordMR(block)==0))
+            return 0;
+        return -1;
     }
 
     //校验区块号
@@ -110,10 +114,10 @@ public class DbBlockChecker implements BlockChecker {
     @Override
     public int checkTime(Block block) {
         Block localBlock = getLastBlock();
-        //新区块的生成时间比本地的还小
+        //新区块的生成时间比本地的还早
         if (localBlock != null && block.getBlockHeader().getBlockTimeStamp() <= localBlock.getBlockHeader().getBlockTimeStamp()) {
             //拒绝
-        	logger.info("[校验]：区块时间不正确，拒绝区块");
+        	logger.info("[校验]：区块时间有误，拒绝区块");
             return -1;
         }
         logger.info("[校验]：区块时间正确，进行下一步校验");
