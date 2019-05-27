@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.deser.Deserializers.Base;
 
 import edu.ictt.blockchain.socket.body.common.BaseBody;
 
+
+
 public class URpcNextBlockBody extends BaseBody{
 	
 	/**

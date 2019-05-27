@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.core.event.AddBlockEvent;
-import edu.ictt.blockchain.socket.body.RpcSimpleBlockBody;
+import edu.ictt.blockchain.socket.body.lowerbody.RpcSimpleBlockBody;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.PacketBuilder;
 import edu.ictt.blockchain.socket.packet.PacketType;

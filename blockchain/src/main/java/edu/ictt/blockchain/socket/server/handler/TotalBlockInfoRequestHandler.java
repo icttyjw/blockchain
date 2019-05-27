@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
 import org.tio.utils.json.Json;
 
-import edu.ictt.blockchain.socket.body.RpcBlockBody;
+import edu.ictt.blockchain.socket.body.lowerbody.RpcBlockBody;
 import edu.ictt.blockchain.socket.common.intf.AbstractBlockHandler;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 

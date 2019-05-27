@@ -40,10 +40,10 @@ public class RecoverLocalBlock extends DbBlockChecker {
         for(iter.seekToFirst();iter.isValid(); iter.next()) {
             Block block = JSON.parseObject(rocksDB.getRocksDbStore().get("i"), new TypeReference<Block>(){});
             System.out.println("read block: " + block);
-
+/*
             if(blockChecker.checkAll(block) == 0){
                 blockList.add(block);
-            }
+            }*/
         }
         System.out.println("本地区块恢复完毕");
     }

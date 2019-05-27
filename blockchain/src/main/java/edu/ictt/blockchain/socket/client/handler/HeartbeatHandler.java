@@ -6,8 +6,8 @@ import org.tio.core.ChannelContext;
 import org.tio.utils.json.Json;
 
 import edu.ictt.blockchain.common.FastJsonUtil;
-import edu.ictt.blockchain.socket.body.BaseBody;
-import edu.ictt.blockchain.socket.body.StateBody;
+import edu.ictt.blockchain.socket.body.common.BaseBody;
+import edu.ictt.blockchain.socket.body.common.StateBody;
 import edu.ictt.blockchain.socket.common.intf.AbstractBlockHandler;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 

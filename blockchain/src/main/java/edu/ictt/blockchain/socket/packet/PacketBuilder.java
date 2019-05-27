@@ -3,7 +3,7 @@ package edu.ictt.blockchain.socket.packet;
 import org.tio.utils.json.Json;
 
 import edu.ictt.blockchain.common.FastJsonUtil;
-import edu.ictt.blockchain.socket.body.BaseBody;
+import edu.ictt.blockchain.socket.body.common.BaseBody;
 
 public class PacketBuilder<T extends BaseBody> {
 	/**

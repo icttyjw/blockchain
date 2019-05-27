@@ -1,9 +1,9 @@
 <?xml version="1.0"  encoding="UTF-8"?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml"/> 
+    <!--  <include resource="org/springframework/boot/logging/logback/base.xml"/> -->
 	<property name="LOG_HOME" value="logs1/log" />
 	<property name="ERROR_HOME" value="logs1/error" />
-<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">  
+	 <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">  
         <encoder>  
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>  
         </encoder>  
@@ -80,7 +80,7 @@
         </rollingPolicy>
     </appender>
     <root level="INFO">
-         <appender-ref ref="CONSOLE"/>
+         <appender-ref ref="STDOUT"/>
          <appender-ref ref="fileErrorLog"/>
         <appender-ref ref="MY_FILE"/>
     </root>

@@ -31,6 +31,8 @@ public interface NodeRepositroy extends JpaRepository<NodeState, String>{
 	@Query(value="SELECT * FROM node_state WHERE name=?1",nativeQuery=true)
 	public NodeState queryByName(@Param("name") String name);
 	
+	
+	
 	@Transactional
 	@Modifying
 	@Query(value="DELETE FROM node_state WHERE name=?1",nativeQuery=true)

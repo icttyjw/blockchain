@@ -18,8 +18,8 @@ import com.google.common.collect.Lists;
 
 import cn.hutool.core.util.StrUtil;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
-import edu.ictt.blockchain.socket.body.BlockHash;
-import edu.ictt.blockchain.socket.body.RpcSimpleBlockBody;
+import edu.ictt.blockchain.socket.body.lowerbody.BlockHash;
+import edu.ictt.blockchain.socket.body.lowerbody.RpcSimpleBlockBody;
 import edu.ictt.blockchain.socket.client.ClientStarter;
 import edu.ictt.blockchain.socket.client.PacketSender;
 import edu.ictt.blockchain.socket.packet.BlockPacket;

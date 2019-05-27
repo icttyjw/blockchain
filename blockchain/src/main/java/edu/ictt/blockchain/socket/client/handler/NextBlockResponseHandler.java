@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
 
 import edu.ictt.blockchain.ApplicationContextProvider;
-import edu.ictt.blockchain.socket.body.BlockHash;
-import edu.ictt.blockchain.socket.body.RpcNextBlockBody;
+import edu.ictt.blockchain.socket.body.lowerbody.BlockHash;
+import edu.ictt.blockchain.socket.body.lowerbody.RpcNextBlockBody;
 import edu.ictt.blockchain.socket.common.intf.AbstractBlockHandler;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.pbft.queue.NextBlockQueue;

@@ -11,7 +11,7 @@ import org.tio.core.*;
 
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.core.event.AddBlockEvent;
-import edu.ictt.blockchain.socket.body.lowerbody.RpcSimpleBlockBody;
+
 import edu.ictt.blockchain.socket.body.upperbody.UBlockBody;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.PacketBuilder;

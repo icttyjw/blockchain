@@ -9,7 +9,7 @@ import edu.ictt.blockchain.socket.packet.PacketType;
 import edu.ictt.blockchain.ApplicationContextProvider;
 import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.common.FastJsonUtil;
-import edu.ictt.blockchain.socket.body.StateBody;
+import edu.ictt.blockchain.socket.body.common.StateBody;
 import edu.ictt.blockchain.socket.client.handler.HeartbeatHandler;
 
 import java.io.UnsupportedEncodingException;

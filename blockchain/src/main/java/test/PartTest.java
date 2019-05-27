@@ -30,10 +30,10 @@ import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
 import edu.ictt.blockchain.common.util.DerbyDBUtil;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.manager.ManageMessage;
-import edu.ictt.blockchain.socket.body.BaseBody;
-import edu.ictt.blockchain.socket.body.RecordBody;
-import edu.ictt.blockchain.socket.body.RpcBlockBody;
-import edu.ictt.blockchain.socket.body.StateBody;
+import edu.ictt.blockchain.socket.body.common.BaseBody;
+import edu.ictt.blockchain.socket.body.common.StateBody;
+import edu.ictt.blockchain.socket.body.lowerbody.RecordBody;
+import edu.ictt.blockchain.socket.body.lowerbody.RpcBlockBody;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.PacketBuilder;
 import edu.ictt.blockchain.socket.packet.PacketType;
@@ -142,17 +142,17 @@ public class PartTest {
 		
 		DbBlockChecker dChecker = new DbBlockChecker();
 		//此处checkAll只校验了sign和merkelroot
-		if(dChecker.checkAll(block)==0) System.out.println("区块校验成功");
+		//if(dChecker.checkAll(block)==0) System.out.println("区块校验成功");
 		
 		//对区块修改并再次校验
 		List<NewRecord> records = block.getBlockBody().getRecordList();
 		records.get(0).getGradeInfo().setGrade(100);
-		if(dChecker.checkAll(block)==0) {
-			System.out.println("区块校验成功");
-		}else {
-			System.out.println("校验结果为：" + dChecker.checkAll(block));
-			System.out.println("区块校验失败，区块失效");
-		}
+		//if(dChecker.checkAll(block)==0) {
+		//	System.out.println("区块校验成功");
+		//}else {
+		//	System.out.println("校验结果为：" + dChecker.checkAll(block));
+		//	System.out.println("区块校验失败，区块失效");
+		//}
 		
 		//更进一步，如果学校级别的进行了别的修改，那么目前的校验是无法校验出来的。需要在校验前加一些对照检查。
 	
@@ -358,7 +358,7 @@ public class PartTest {
 
 
 		DbBlockChecker dbBlockChecker = new DbBlockChecker();
-		System.out.println("当前区块校验结果"+ dbBlockChecker.checkAll(JSON.parseObject(rocksDB.getRocksDbStore().get("i"), new TypeReference<Block>(){})));
+		//System.out.println("当前区块校验结果"+ dbBlockChecker.checkAll(JSON.parseObject(rocksDB.getRocksDbStore().get("i"), new TypeReference<Block>(){})));
 	}
 
 

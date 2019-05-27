@@ -4,7 +4,7 @@ package edu.ictt.blockchain.socket.pbft.listener;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import edu.ictt.blockchain.socket.body.VoteBody;
+import edu.ictt.blockchain.socket.body.lowerbody.VoteBody;
 import edu.ictt.blockchain.socket.client.PacketSender;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.PacketBuilder;

@@ -4,6 +4,7 @@ import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.block.UpperBlock;
 import edu.ictt.blockchain.socket.body.common.BaseBody;
 
+
 /**
  * 上层节点用到的基本body：BlockBody，此时对于上层节点来说，block就相当于校内的record。不过是不需要后续数量的
  * @author zoe

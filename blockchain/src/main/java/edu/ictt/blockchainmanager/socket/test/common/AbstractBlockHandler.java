@@ -1,7 +1,7 @@
 package edu.ictt.blockchainmanager.socket.test.common;
 
 import edu.ictt.blockchain.common.Const;
-import edu.ictt.blockchain.socket.body.BaseBody;
+import edu.ictt.blockchain.socket.body.common.BaseBody;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 
 import org.slf4j.Logger;

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.check.CheckerManager;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
-import edu.ictt.blockchain.socket.body.RecBlockReqBody;
+import edu.ictt.blockchain.socket.body.lowerbody.RecBlockReqBody;
 import edu.ictt.blockchain.socket.client.PacketSender;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.PacketBuilder;

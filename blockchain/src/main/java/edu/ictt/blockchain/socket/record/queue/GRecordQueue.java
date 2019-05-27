@@ -29,7 +29,7 @@ import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.requestbody.BlockRequesbody;
 import edu.ictt.blockchain.core.service.BlockService;
-import edu.ictt.blockchain.socket.body.RecordBody;
+import edu.ictt.blockchain.socket.body.lowerbody.RecordBody;
 /*
  * 接收记录的队列，目前只考虑成绩记录
  */

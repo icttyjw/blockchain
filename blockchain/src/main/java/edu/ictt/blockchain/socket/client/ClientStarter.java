@@ -38,8 +38,8 @@ import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.core.event.NodesConnectedEvent;
 import edu.ictt.blockchain.core.requestbody.BlockRequesbody;
 import edu.ictt.blockchain.core.service.BlockService;
-import edu.ictt.blockchain.socket.body.BaseBody;
-import edu.ictt.blockchain.socket.body.RecordBody;
+import edu.ictt.blockchain.socket.body.common.BaseBody;
+import edu.ictt.blockchain.socket.body.lowerbody.RecordBody;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.NextBlockPacketBuilder;
 import edu.ictt.blockchain.socket.packet.PacketBuilder;
@@ -102,7 +102,7 @@ public class ClientStarter {
      * 通过数据库获取其他服务器信息
      * 隔5分钟去获取一次
      */
-    @Scheduled(fixedRate = 300000)
+    @Scheduled(initialDelay=5000,fixedRate = 300000)
     public void fetchOtherServer() {
         String localIp = CommonUtil.getLocalIp();
         logger.info("[启动]：本机IP：{}",localIp);
@@ -133,7 +133,7 @@ public class ClientStarter {
     /**
      * 每30秒群发一次消息，和别人对比最新的Block
      */
-    @Scheduled(initialDelay=5000,fixedDelay = 60000)
+    //@Scheduled(initialDelay=5000,fixedDelay = 60000)
     public void heartBeat() {
     	if(!isNodesReady)return;
         logger.info("---------开始心跳包--------");
@@ -201,7 +201,7 @@ public class ClientStarter {
         try {
             TioClient tioClient = new TioClient(clientGroupContext);
             logger.info("[启动]：开始绑定" + ":" + serverNode.toString());
-            tioClient.asynConnect(serverNode);
+            tioClient.connect(serverNode);
         } catch (Exception e) {
             logger.info("[启动]：异常");
         }

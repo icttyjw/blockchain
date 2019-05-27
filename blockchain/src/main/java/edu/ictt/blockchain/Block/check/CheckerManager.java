@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import edu.ictt.blockchain.Block.block.Block;
-import edu.ictt.blockchain.socket.body.RpcCheckBlockBody;
+import edu.ictt.blockchain.socket.body.lowerbody.RpcCheckBlockBody;
 
 /**
  * 暂时没有加权限校验

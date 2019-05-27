@@ -2,7 +2,7 @@ package edu.ictt.blockchain.socket.common.intf;
 
 import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.common.FastJsonUtil;
-import edu.ictt.blockchain.socket.body.BaseBody;
+import edu.ictt.blockchain.socket.body.common.BaseBody;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 
 import org.slf4j.Logger;

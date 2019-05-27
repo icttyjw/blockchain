@@ -21,7 +21,7 @@ import edu.ictt.blockchain.core.event.DelRecordEvent;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.requestbody.BlockRequesbody;
 import edu.ictt.blockchain.core.service.BlockService;
-import edu.ictt.blockchain.socket.body.RecordBody;
+import edu.ictt.blockchain.socket.body.lowerbody.RecordBody;
 
 public class DRecordQueue {
 

@@ -3,7 +3,7 @@ package edu.ictt.blockchain.socket.client.handler;
 import org.tio.core.ChannelContext;
 import org.tio.core.Tio;
 
-import edu.ictt.blockchain.socket.body.StateBody;
+import edu.ictt.blockchain.socket.body.common.StateBody;
 import edu.ictt.blockchain.socket.common.intf.AbstractBlockHandler;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 

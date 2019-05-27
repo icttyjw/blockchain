@@ -9,7 +9,7 @@ import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.check.CheckerManager;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
-import edu.ictt.blockchain.socket.body.RpcBlockBody;
+import edu.ictt.blockchain.socket.body.lowerbody.RpcBlockBody;
 import edu.ictt.blockchain.socket.common.intf.AbstractBlockHandler;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 

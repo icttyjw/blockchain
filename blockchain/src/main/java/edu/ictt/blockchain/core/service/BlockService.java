@@ -20,7 +20,7 @@ import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.SHA256;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.requestbody.BlockRequesbody;
-import edu.ictt.blockchain.socket.body.RpcBlockBody;
+import edu.ictt.blockchain.socket.body.lowerbody.RpcBlockBody;
 import edu.ictt.blockchain.socket.client.PacketSender;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.PacketBuilder;

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
 
 import edu.ictt.blockchain.ApplicationContextProvider;
-import edu.ictt.blockchain.socket.body.VoteBody;
+import edu.ictt.blockchain.socket.body.lowerbody.VoteBody;
 import edu.ictt.blockchain.socket.common.intf.AbstractBlockHandler;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.pbft.msg.VoteMsg;
