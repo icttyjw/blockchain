@@ -38,4 +38,11 @@ public interface NodeRepositroy extends JpaRepository<NodeState, String>{
 	@Query(value="DELETE FROM node_state WHERE name=?1",nativeQuery=true)
 	public void deleteByName(@Param("name") String name);
 	
+	/**
+	 * 根据ip查找节点
+	 * @param Ip
+	 */
+	@Query(value="SELECT * FROM node_state WHERE Ip=?1",nativeQuery=true)
+	public NodeState queryByIp(@Param("Ip") String Ip);
+	
 }
