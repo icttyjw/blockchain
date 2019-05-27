@@ -46,6 +46,14 @@ public class NodeService {
 		return nodeRepositroy.queryByName(name);
 	}
 	
+	/**
+	 * 根据ip查找节点
+	 * @param name
+	 */
+	public NodeState queryByIp(String Ip) {
+		return nodeRepositroy.queryByIp(Ip);
+	}
+	
 	public void deleteByName(String name){
 		nodeRepositroy.deleteByName(name);
 	}
