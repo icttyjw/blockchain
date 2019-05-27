@@ -1,10 +1,8 @@
-package edu.ictt.blockchain.socket.body;
+package edu.ictt.blockchain.socket.body.common;
 
 public class StateBody extends BaseBody {
 
-	public static void main(String args[]){
-		
-	}
+
 	private String id;
 	/**
 	 * 自命名节点名

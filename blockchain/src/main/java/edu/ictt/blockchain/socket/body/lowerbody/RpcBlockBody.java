@@ -1,6 +1,7 @@
-package edu.ictt.blockchain.socket.body;
+package edu.ictt.blockchain.socket.body.lowerbody;
 
-import edu.ictt.blockchain.Block.block.Block;;
+import edu.ictt.blockchain.Block.block.Block;
+import edu.ictt.blockchain.socket.body.common.BaseBody;;
 
 public class RpcBlockBody extends BaseBody{
 

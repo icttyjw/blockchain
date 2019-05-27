@@ -1,4 +1,4 @@
-package edu.ictt.blockchain.socket.body;
+package edu.ictt.blockchain.socket.body.common;
 
 
 

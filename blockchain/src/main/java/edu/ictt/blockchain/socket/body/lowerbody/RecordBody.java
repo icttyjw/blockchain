@@ -1,9 +1,10 @@
-package edu.ictt.blockchain.socket.body;
+package edu.ictt.blockchain.socket.body.lowerbody;
 
 import edu.ictt.blockchain.Block.record.DegreeRecord;
 import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.Block.record.NewRecord;
 import edu.ictt.blockchain.Block.record.Record;
+import edu.ictt.blockchain.socket.body.common.BaseBody;
 
 public class RecordBody extends BaseBody{
 
