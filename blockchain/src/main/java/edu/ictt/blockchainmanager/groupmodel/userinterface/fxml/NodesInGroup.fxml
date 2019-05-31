@@ -54,12 +54,17 @@
                                        </StackPane.margin></Button>
                                     <Button id="refreshButton" fx:id="refresh" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#refresh" prefHeight="22.0" prefWidth="40.0" text="刷新" textAlignment="CENTER" StackPane.alignment="CENTER">
                                        <StackPane.margin>
-                                          <Insets right="-90.0" />
+                                          <Insets right="-180.0" />
                                        </StackPane.margin>
                                     </Button>
                                     <Button id="refreshButton" fx:id="add" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addnode" prefHeight="22.0" prefWidth="40.0" text="添加" textAlignment="CENTER" StackPane.alignment="CENTER">
                                        <StackPane.margin>
                                           <Insets right="90.0" />
+                                       </StackPane.margin>
+                                    </Button>
+                                    <Button id="refreshButton" fx:id="sel" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#select" prefHeight="22.0" prefWidth="40.0" text="选择" textAlignment="CENTER">
+                                       <StackPane.margin>
+                                          <Insets right="-90.0" />
                                        </StackPane.margin>
                                     </Button>
                                  </children>

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="388.0" prefWidth="297.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="edu.ictt.blockchainmanager.groupmodel.userinterface.controller.AddSchoolNodeController">
+<AnchorPane prefHeight="388.0" prefWidth="297.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="edu.ictt.blockchainmanager.groupmodel.userinterface.controller.UpdateSchoolNodeController">
    <children>
       <TextField fx:id="name" layoutX="125.0" layoutY="81.0" />
       <TextField fx:id="ip" layoutX="125.0" layoutY="194.0" />

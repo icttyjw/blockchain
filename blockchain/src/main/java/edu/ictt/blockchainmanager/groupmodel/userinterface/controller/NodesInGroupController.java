@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
+import org.apache.catalina.core.ApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.client.ClientGroupContext;
@@ -24,9 +25,12 @@ import com.google.common.collect.Table.Cell;
 
 import de.felixroske.jfxsupport.FXMLController;
 import edu.ictt.BlockChainApplication;
+import edu.ictt.blockchain.ApplicationContextProvider;
+import edu.ictt.blockchain.core.event.ChangeEvent;
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
 import edu.ictt.blockchainmanager.sql.service.NodeService;
 import edu.ictt.blockchainmanager.view.AddSchoolNodeView;
+import edu.ictt.blockchainmanager.view.UpdateSchoolNodeView;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -86,6 +90,11 @@ public class NodesInGroupController implements Initializable{
     @FXML
     private Button del;
     
+    @FXML
+    private Button sel;
+    
+    @Resource
+    AddSchoolNodeController addSchoolNodeController;
     
     ObservableList<String> nodeLists = FXCollections.observableArrayList();
     
@@ -214,10 +223,19 @@ public class NodesInGroupController implements Initializable{
 		  	nodeLists.remove(name);
 	    }
 
+	  @FXML
+	  void select(ActionEvent event){
+		  String name=nodesList.getSelectionModel().selectedItemProperty().get();
+		  //ApplicationContextProvider.getBean(AddSchoolNodeController.class).namemodel.setText(name);
+		  ApplicationContextProvider.publishEvent(new ChangeEvent(name));
+		  //addSchoolNodeController.namemodel.setText(name);
+		  BlockChainApplication.showView(UpdateSchoolNodeView.class, Modality.APPLICATION_MODAL);
+	  }
 
 
 	    @FXML
 	    void addnode(ActionEvent event) {
+	    	
 	    	BlockChainApplication.showView(AddSchoolNodeView.class, Modality.APPLICATION_MODAL);
 	    }
 	

@@ -20,7 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 @FXMLController
-public class AddSchoolNodeController implements Initializable{
+public class UpdateSchoolNodeController implements Initializable{
 	
 	public static NameModel namemodel=new NameModel();
 
@@ -50,11 +50,11 @@ public class AddSchoolNodeController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // update text area if text in model changes:
-    	//System.out.println("load controller");
-    	//System.out.println(""+namemodel.getText());
-    	//NodeState nodeState=nodeService.queryByName(namemodel.getText());
-    	//id.setText(nodeState.getId()+"");
-    	//ip.setText(nodeState.getIp());
+    	System.out.println("load controller");
+    	System.out.println(""+namemodel.getText());
+    	NodeState nodeState=nodeService.queryByName(namemodel.getText());
+    	id.setText(nodeState.getId()+"");
+    	ip.setText(nodeState.getIp());
     	/*
         namemodel.textProperty().addListener((obs, oldText, newText) -> {
         	System.out.println(oldText);

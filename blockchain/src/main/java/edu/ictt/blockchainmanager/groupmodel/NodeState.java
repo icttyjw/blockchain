@@ -7,8 +7,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 @Entity
+@DynamicInsert
+@DynamicUpdate
 @Table
 public class NodeState implements Serializable{
 

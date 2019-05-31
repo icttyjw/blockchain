@@ -32,7 +32,7 @@ public abstract  class AbstractAioHandler implements AioHandler {
 		//position的值不一定是0，但是
 		//消息类型
 		byte type = buffer.get();
-
+		logger.info("type="+type);
 		int bodyLength = buffer.getInt();
 
 		if (bodyLength < 0) {
