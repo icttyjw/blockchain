@@ -50,11 +50,14 @@ public class UpdateSchoolNodeController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // update text area if text in model changes:
-    	System.out.println("load controller");
-    	System.out.println(""+namemodel.getText());
+    	//System.out.println("load controller");
+    	//System.out.println(""+namemodel.getText());
     	NodeState nodeState=nodeService.queryByName(namemodel.getText());
     	id.setText(nodeState.getId()+"");
     	ip.setText(nodeState.getIp());
+    	name.setText(nodeState.getName());
+    	main.setText(nodeState.getMain());
+    	type.setText(nodeState.getNodetype());
     	/*
         namemodel.textProperty().addListener((obs, oldText, newText) -> {
         	System.out.println(oldText);
@@ -67,13 +70,16 @@ public class UpdateSchoolNodeController implements Initializable{
     
     @FXML
     public void change(){
-    	System.out.println("change");
+    	//System.out.println("change");
     	namemodel.textProperty().addListener((obs, oldText, newText) -> {
         	System.out.println(oldText);
         	System.out.println(obs.getValue());
         	NodeState nodeState=nodeService.queryByName(newText);
         	id.setText(nodeState.getId()+"");
         	ip.setText(nodeState.getIp());
+        	name.setText(nodeState.getName());
+        	main.setText(nodeState.getMain());
+        	type.setText(nodeState.getNodetype());
         });
     }
     @EventListener(ChangeEvent.class)
@@ -96,7 +102,7 @@ public class UpdateSchoolNodeController implements Initializable{
     	String nodeip=ip.getText();
     	String nodename=name.getText();
     	String nodemain=main.getText();
-    	String nodetype=main.getText();
+    	String nodetype=type.getText();
     	NodeState nodestate=new NodeState(Integer.valueOf(nodeid), nodename, nodeip, null, null, nodemain, nodetype, null, null, null);
     	nodeService.saveLocalNode(nodestate);
     	Stage st=(Stage)add.getScene().getWindow();

@@ -123,13 +123,17 @@ public class NodesInGroupController implements Initializable{
 		nodesList.setItems(nodeLists);
 		nodesList.getSelectionModel().selectedItemProperty().addListener
 		((ObservableValue<? extends String> Observable, String oldValue, String newValue) ->{
-			String nodeName = nodesList.getSelectionModel().selectedItemProperty().get();
-			NodeState nodeState = nodeService.queryByName(nodeName);
+			System.out.println(newValue);
+			//String nodeName = nodesList.getSelectionModel().selectedItemProperty().get();
+			if(newValue!=null){
+			NodeState nodeState = nodeService.queryByName(newValue);
+			System.out.println(nodeState);
 			name.setText(nodeState.getName());
 			nodeType.setText(nodeState.getNodetype());
 			state.setText(nodeState.getState());
 			connectState.setText(nodeState.getConnectstate());
 			lastConnect.setText(nodeState.getLastConnect());
+			}
 		}
 		);
 		//事件处理，点击节点显示节点详细信息
