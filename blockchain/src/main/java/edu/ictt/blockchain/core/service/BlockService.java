@@ -44,12 +44,13 @@ public class BlockService {
 		block.setBlockHeader(blockHeader);
 		block.setBlockBody(blockbody);
 		block.setBlockHash(SHA256.sha256(blockHeader.toString())+SHA256.sha256(blockbody.toString()));
-		logger.info("block"+block);
+		logger.info("[本地生成新区块]："+block);
 		RpcBlockBody rpcBlockBody=new RpcBlockBody(block);
 		BlockPacket blockPacket=new PacketBuilder<>().setType(PacketType.GENERATE_BLOCK_REQUEST).setBody(
 				rpcBlockBody).build();
 		logger.info(rpcBlockBody.toString());
 		packetSender.sendGroup(blockPacket);
+		logger.info("[本地新区块已发送到group]");
 		return block;
 	}
 	//收到远程blockrequesbody生成区块并发送到群组
@@ -71,12 +72,13 @@ public class BlockService {
 		block.setBlockBody(blockBody);
 		block.setBlockHeader(blockHeader);
 		block.setBlockHash(SHA256.sha256(FastJsonUtil.toJSONString(blockHeader)+FastJsonUtil.toJSONString(blockBody)));
-		logger.info("block"+block);
+		logger.info("[本地根据远程blockrequesbody生成新区块]："+block);
 		RpcBlockBody rpcBlockBody=new RpcBlockBody(block);
 		BlockPacket blockPacket=new PacketBuilder<>().setType(PacketType.GENERATE_BLOCK_REQUEST).setBody(
 				rpcBlockBody).build();
 		logger.info(rpcBlockBody.toString());
 		packetSender.sendGroup(blockPacket);
+		logger.info("[该新区块已发送到group]");
 		return block;
 	}
 }

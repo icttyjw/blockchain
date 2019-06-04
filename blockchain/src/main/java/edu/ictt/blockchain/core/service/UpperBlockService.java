@@ -51,10 +51,10 @@ public class UpperBlockService {
 		logger.info("[本地产块]：uBlock信息为：[" + uBlock + "]");
 		URpcBlockBody uRpcBlockBody = new URpcBlockBody(uBlock);
 		
-		BlockPacket blockPacket = new PacketBuilder<>().setType(UPacketType.GENERATE_BLOCK_REQUEST).setBody(uRpcBlockBody).build();
-		logger.info("[校间通信]：向组内其他节点广播该新区块：["+ blockPacket + "]");
-		packetSender.sendGroup(blockPacket);
-		//打包区块发送到群组
+		//TODO Delete 校间并不需要这一步打包区块发送到群组
+		//BlockPacket blockPacket = new PacketBuilder<>().setType(UPacketType.GENERATE_BLOCK_REQUEST).setBody(uRpcBlockBody).build();
+		//logger.info("[校间通信]：向组内其他节点广播该新区块：["+ blockPacket + "]");
+		//packetSender.sendGroup(blockPacket);
 		return uBlock;
 	}
 	
@@ -67,19 +67,21 @@ public class UpperBlockService {
 		UpperBlockBody uBlockBody = uBlockRequestBody.getuBlockBody();
 		//TODO 生成区块头,目前有些字段未设置，包括签名等
 		UpperBlockHeader uBlockHeader = new UpperBlockHeader();
-		uBlockHeader.setUhashPreviousBlock(uDbBlockManager.getLastBlockHash());
+		uBlockHeader.setUhashPreviousBlock("0000");
+		//uBlockHeader.setUhashPreviousBlock(uDbBlockManager.getLastBlockHash());
 		uBlockHeader.setBhash(uBlockBody.getBlock().getBlockHash());
 		uBlockHeader.setUblockTimeStamp(CommonUtil.getNow());
-		uBlockHeader.setUblockNumber(uDbBlockManager.getLastBlockNumber()+1);
+		uBlockHeader.setUblockNumber(1);
+		//uBlockHeader.setUblockNumber(uDbBlockManager.getLastBlockNumber()+1);
 		
 		//生成区块
 		UpperBlock uBlock = new UpperBlock(uBlockHeader, uBlockRequestBody.getuBlockBody());
 		logger.info("[收到远程产块消息]：uBlock信息为：[" + uBlock + "]");
 		URpcBlockBody uRpcBlockBody = new URpcBlockBody(uBlock);		
-		//打包区块发送到群组
-		BlockPacket blockPacket = new PacketBuilder<>().setType(UPacketType.GENERATE_BLOCK_REQUEST).setBody(uRpcBlockBody).build();
-		logger.info("[校间通信]：向组内其他节点广播该新区块：["+ blockPacket + "]");
-		packetSender.sendGroup(blockPacket);
+		//TODO Delete 校间并不需要这一步打包区块发送到群组
+		//BlockPacket blockPacket = new PacketBuilder<>().setType(UPacketType.GENERATE_BLOCK_REQUEST).setBody(uRpcBlockBody).build();
+		//logger.info("[校间通信]：向组内其他节点广播该新区块：["+ blockPacket + "]");
+		//packetSender.sendGroup(blockPacket);
 		return uBlock;
 	}
 	

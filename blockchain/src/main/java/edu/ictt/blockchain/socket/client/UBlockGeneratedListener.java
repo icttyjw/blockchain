@@ -44,7 +44,7 @@ public class UBlockGeneratedListener {
     @EventListener(AddBlockEvent.class)
     public void blockGenerated(AddBlockEvent addBlockEvent) {
         Block block = (Block) addBlockEvent.getSource();
-        BlockPacket blockPacket = new PacketBuilder<>().setType(UPacketType.GENERATE_COMPLETE_REQUEST).
+        BlockPacket blockPacket = new PacketBuilder<>().setType(UPacketType.RECEIVE_BLOCK).
         		setBody(new UBlockBody(block, block.getBlockHash())).build();
         logger.info("[Client校内-校间通信]：发送区块给校级节点，当前时间为" + System.currentTimeMillis());
         

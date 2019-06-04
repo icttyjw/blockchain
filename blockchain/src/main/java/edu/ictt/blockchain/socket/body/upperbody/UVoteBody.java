@@ -15,6 +15,10 @@ public class UVoteBody extends BaseBody{
 	public UVoteBody() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public UVoteBody(UVoteMsg uVoteMsg) {
+		this.uVoteMsg = uVoteMsg;
+	}
 
 	public UVoteMsg getuVoteMsg() {
 		return uVoteMsg;

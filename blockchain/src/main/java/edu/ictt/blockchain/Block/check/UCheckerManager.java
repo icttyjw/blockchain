@@ -22,11 +22,12 @@ public class UCheckerManager {
 			 return new URpcCheckBlockBody(-3, "uBlock hash error", uBlock);
 		 }else if(uBlockChecker.checkTime(uBlock) != 0){
 			 return new URpcCheckBlockBody(-4, "uBlock time error", uBlock);	 
-		 }else if(uBlockChecker.checkBlockHash(uBlock) != 0){
-			 return new URpcCheckBlockBody(-5, "uBlock bhash error", uBlock);
-		 }else if(uBlockChecker.checkBlockSign(uBlock)!=0){
-			 return new URpcCheckBlockBody(-6, "uBlock Sign error ", uBlock); 
-		 }else {
+		 }//else if(uBlockChecker.checkBlockHash(uBlock) != 0){
+			 //return new URpcCheckBlockBody(-5, "uBlock bhash error", uBlock);
+		 //}else if(uBlockChecker.checkBlockSign(uBlock)!=0){
+			// return new URpcCheckBlockBody(-6, "uBlock Sign error ", uBlock); 
+		 //}
+		 else {
 			 return new URpcCheckBlockBody(0, "OK", uBlock);
 		 }	
 		
