@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
 
+import edu.ictt.blockchain.ApplicationContextProvider;
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.block.UpperBlock;
 import edu.ictt.blockchain.Block.block.UpperBlockBody;
@@ -16,6 +17,7 @@ import edu.ictt.blockchain.Block.block.UpperBlockHeader;
 import edu.ictt.blockchain.Block.generatorUtil.GenerateRecord;
 import edu.ictt.blockchain.common.CommonUtil;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
+import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.manager.UDbBlockManager;
 
 /**
@@ -27,11 +29,13 @@ import edu.ictt.blockchain.core.manager.UDbBlockManager;
 public class UCreateGenesisBlock {
 	
 	//@Resource
-	UDbBlockManager uBlockManager;
+	UDbBlockManager uBlockManager = ApplicationContextProvider.getBean(UDbBlockManager.class);
 	
 	
 	static String privateKey = generatePrivateKey();
     static String  publicKey = generatePublicKey(privateKey, true);
+    
+    
 	
 	public UCreateGenesisBlock(Block block) {
 		UpperBlockHeader uBlockHeader = new UpperBlockHeader();
@@ -58,11 +62,16 @@ public class UCreateGenesisBlock {
 				
 		//生成区块
 		UpperBlock uBlock = new UpperBlock(uBlockHeader, uBlockBody);
+		System.out.println("创世U块已生成" + block.toString());
+		System.out.println("hash:"+ uBlock.getUpperBlockHash());
+		String hash = uBlock.getUpperBlockHash();
 		
 		//存入数据库
+		
+		uBlockManager.put("u_key_last_block",hash);
+		uBlockManager.put("u_key_first_block",hash);
+		uBlockManager.put("U_GENESIS_BLOCK",hash);
 		uBlockManager.put(uBlock.getUpperBlockHash(), JSON.toJSONString(uBlock));
-		uBlockManager.put("u_key_last_block", uBlock.getUpperBlockHash());
-		uBlockManager.put("u_key_first_block", uBlock.getUpperBlockHash());
 	}
 		
 }

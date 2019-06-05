@@ -29,6 +29,7 @@ public class Block {
 	public Block(BlockHeader blockHeader, BlockBody blockBody){
 		this.blockHeader = blockHeader;
 		this.blockBody = blockBody;
+		this.blockHash = calculateHash();
 	}
 
 	public BlockHeader getBlockHeader() {
