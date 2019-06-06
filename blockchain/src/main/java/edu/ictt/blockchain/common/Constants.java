@@ -23,6 +23,14 @@ public interface Constants {
 	String INFO_SHARE_PUBKEY = "BC8s/4qEAvVl4Sv0LwQOWJcVU6Q5hBd+7LlJeEivVmUbdtwP4RTfN8x/G+muMhN8SrweyyVVMIcIrnMWoFqGfIA=";
 
 	/**
+	 * 校内级别的创世块
+	 */
+	String GENESIS_BLOCK = "genesis_block";
+	/**
+	 * 校间级别的创世块
+	 */
+	String U_GENESIS_BLOCK = "u_genesis_block";
+	/**
 	 * 最后一个区块hash的key，value就是最后一个区块的hash
 	 */
 	String KEY_LAST_BLOCK = "key_last_block";
@@ -57,6 +65,10 @@ public interface Constants {
 	 * 区块hash与区块本身的key value映射，key的前缀，如{key_block_xxxxxxx -> blockJson}
 	 */
 	String U_KEY_BLOCK_HASH_PREFIX = "u_key_block_";
+	/**
+	 *保存区块的bhash和uhash的映射
+	 */
+	String U_KEY_IN_BLOCK_PREFIX = "key_in_";
 
 	String U_KEY_REQUEST_PREFIX = "u_key_request_";
     /**

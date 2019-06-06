@@ -5,7 +5,10 @@ import static edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm.generatePublic
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.tio.utils.json.Json;
 
 import com.alibaba.fastjson.JSON;
 
@@ -16,6 +19,7 @@ import edu.ictt.blockchain.Block.block.UpperBlockBody;
 import edu.ictt.blockchain.Block.block.UpperBlockHeader;
 import edu.ictt.blockchain.Block.generatorUtil.GenerateRecord;
 import edu.ictt.blockchain.common.CommonUtil;
+import edu.ictt.blockchain.common.Constants;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.manager.UDbBlockManager;
@@ -28,6 +32,7 @@ import edu.ictt.blockchain.core.manager.UDbBlockManager;
 //@Component
 public class UCreateGenesisBlock {
 	
+	private Logger logger=LoggerFactory.getLogger(getClass());
 	//@Resource
 	UDbBlockManager uBlockManager = ApplicationContextProvider.getBean(UDbBlockManager.class);
 	
@@ -62,16 +67,18 @@ public class UCreateGenesisBlock {
 				
 		//生成区块
 		UpperBlock uBlock = new UpperBlock(uBlockHeader, uBlockBody);
-		System.out.println("创世U块已生成" + block.toString());
-		System.out.println("hash:"+ uBlock.getUpperBlockHash());
-		String hash = uBlock.getUpperBlockHash();
+		logger.info("[创世]：创世U块已生成" + block.toString());
+		//logger.info("hash:"+ uBlock.getUpperBlockHash());
+		String uhash = uBlock.getUpperBlockHash();
+		String bhash = uBlock.getuBlockBody().getBlock().getBlockHash();
 		
 		//存入数据库
-		
-		uBlockManager.put("u_key_last_block",hash);
-		uBlockManager.put("u_key_first_block",hash);
-		uBlockManager.put("U_GENESIS_BLOCK",hash);
-		uBlockManager.put(uBlock.getUpperBlockHash(), JSON.toJSONString(uBlock));
+		uBlockManager.put(Constants.U_KEY_LAST_BLOCK,uhash);
+		uBlockManager.put(Constants.U_KEY_FIRST_BLOCK,uhash);
+		uBlockManager.put(Constants.U_GENESIS_BLOCK,uhash);
+		uBlockManager.put(Constants.U_KEY_IN_BLOCK_PREFIX + bhash,uhash);
+		uBlockManager.put(Constants.U_KEY_BLOCK_HASH_PREFIX + uhash, Json.toJson(uBlock));
+		logger.info("[创世]：创世U区块已存入");
 	}
 		
 }

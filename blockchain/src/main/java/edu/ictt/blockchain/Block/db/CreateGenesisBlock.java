@@ -7,6 +7,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
@@ -17,6 +19,7 @@ import edu.ictt.blockchain.Block.block.BlockBody;
 import edu.ictt.blockchain.Block.block.BlockHeader;
 import edu.ictt.blockchain.Block.me.MerkleTree;
 import edu.ictt.blockchain.Block.record.NewRecord;
+import edu.ictt.blockchain.common.Constants;
 import edu.ictt.blockchain.common.FastJsonUtil;
 import edu.ictt.blockchain.common.SHA256;
 import edu.ictt.blockchain.common.algorithm.ECDSAAlgorithm;
@@ -32,6 +35,8 @@ public class CreateGenesisBlock {
 	
 	//@Resource
 	//DbBlockManager dbBlockManager;
+	private Logger logger=LoggerFactory.getLogger(getClass());
+	
 	DbBlockManager dbBlockManager = ApplicationContextProvider.getBean(DbBlockManager.class);
 	
 	private String privateKey = generatePrivateKey();
@@ -74,15 +79,15 @@ public class CreateGenesisBlock {
         BlockBody blockBody = new BlockBody(nRecords);
         //生成区块
         Block block = new Block(blockHeader,blockBody);
-        System.out.println("创世块已生成" + block.toString());
-        System.out.println("hash:"+ block.getBlockHash());
+        logger.info("[创世]：创世块已生成" + block.toString());
+        logger.info("hash:"+ block.getBlockHash());
         
-      //存入数据库
-      	dbBlockManager.put(block.getBlockHash(), JSON.toJSONString(block));
-      	dbBlockManager.put("key_last_block", block.getBlockHash());
-      	dbBlockManager.put("key_first_block", block.getBlockHash());
-      	dbBlockManager.put("GENESIS_BLOCK",block.getBlockHash());
-      	System.out.println("创世区块已存入");
+        //存入数据库
+      	dbBlockManager.put(Constants.KEY_BLOCK_HASH_PREFIX+block.getBlockHash(), JSON.toJSONString(block));
+      	dbBlockManager.put(Constants.KEY_LAST_BLOCK, block.getBlockHash());
+      	dbBlockManager.put(Constants.KEY_FIRST_BLOCK, block.getBlockHash());
+      	dbBlockManager.put(Constants.GENESIS_BLOCK,block.getBlockHash());
+      	logger.info("[创世]：创世区块已存入");
 
 	}
 }

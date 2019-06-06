@@ -94,8 +94,16 @@ public class UDbBlockManager {
 	 */
 	public UpperBlock getBlockByHash(String uhash) {
 		// TODO Auto-generated method stub
-		String blockJson = dbStore.get(uhash);
+		String blockJson = dbStore.get(Constants.U_KEY_BLOCK_HASH_PREFIX+uhash);
         return FastJsonUtil.toBean(blockJson, UpperBlock.class);
+	}
+	
+	/**
+	 * 根据bhash找uhash及其代表的uBlock
+	 */
+	public UpperBlock getUBlockByBhash(String bhash) {
+		String uhash = dbStore.get(Constants.U_KEY_IN_BLOCK_PREFIX + bhash);
+		return getBlockByHash(uhash);
 	}
 
 	/**

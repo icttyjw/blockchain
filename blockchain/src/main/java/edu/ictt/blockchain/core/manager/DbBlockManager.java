@@ -79,7 +79,7 @@ public class DbBlockManager {
 	    }
 
 	    /**
-	     * 获取某一个block的下一个Block
+	     * 根据block：获取某一个block的下一个Block
 	     *
 	     * @param block
 	     *         block
@@ -96,6 +96,11 @@ public class DbBlockManager {
 	        return getBlockByHash(nextHash);
 	    }
 
+	    /**
+	     * 根据hash：获取某一个block的下一个Block
+	     * @param hash
+	     * @return
+	     */
 	    public Block getNextBlockByHash(String hash) {
 	        if (hash == null) {
 	            return getFirstBlock();
@@ -107,8 +112,13 @@ public class DbBlockManager {
 	        return getBlockByHash(nextHash);
 	    }
 
+	    /**
+	     * 根据hash找区块
+	     * @param hash
+	     * @return
+	     */
 	    public Block getBlockByHash(String hash) {
-	        String blockJson = dbStore.get(hash);
+	        String blockJson = dbStore.get(Constants.KEY_BLOCK_HASH_PREFIX+hash);
 	        return FastJsonUtil.toBean(blockJson, Block.class);
 	    }
 	    

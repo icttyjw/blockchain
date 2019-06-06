@@ -6,6 +6,7 @@ import edu.ictt.blockchain.Block.check.CheckerManager;
 import edu.ictt.blockchain.Block.db.DbStore;
 import edu.ictt.blockchain.Block.record.DegreeRecord;
 import edu.ictt.blockchain.Block.record.GradeRecord;
+import edu.ictt.blockchain.Block.record.NewRecord;
 import edu.ictt.blockchain.common.Constants;
 import edu.ictt.blockchain.core.event.AddBlockEvent;
 import edu.ictt.blockchainmanager.groupmodel.BlockInfo;
@@ -60,18 +61,19 @@ public class DbBlockGenerator {
             return;
         }
 
-        //如果没有上一区块，说明该块就是创世块
+        //加上创世块后就不需要这个判断了（如果没有上一区块，说明该块就是创世块）
         if (block.getBlockHeader().getHashPreviousBlock() == null) {
-            dbStore.put(Constants.KEY_FIRST_BLOCK, hash);
+         dbStore.put(Constants.KEY_FIRST_BLOCK, hash);
         } else {
-            //保存上一区块对该区块的key value映射
-            dbStore.put(Constants.KEY_BLOCK_NEXT_PREFIX + block.getBlockHeader().getHashPreviousBlock(), hash);
+        //保存上一区块对该区块的key value映射
+        dbStore.put(Constants.KEY_BLOCK_NEXT_PREFIX + block.getBlockHeader().getHashPreviousBlock(), hash);
         }
-        //存入rocksDB
-        dbStore.put(hash, Json.toJson(block));
+        //存入rocksDB，该区块hash与区块自身的映射
+        dbStore.put(Constants.KEY_BLOCK_HASH_PREFIX + hash, Json.toJson(block));
         //设置最后一个block的key value
         dbStore.put(Constants.KEY_LAST_BLOCK, hash);
 
+        //TODO this part is going to be redesign for the newRecord type
         logger.info("[本地生成区块]：本地已生成新的Block");
         List<GradeRecord> lg=new ArrayList<GradeRecord>();
         List<DegreeRecord> ld=new ArrayList<DegreeRecord>();
@@ -93,6 +95,20 @@ public class DbBlockGenerator {
         }*/
         //同步到sqlite
        // sqliteSync();
+        
+        
+        //TODO save block with newRecord
+       /* List<NewRecord> records = block.getBlockBody().getRecordList();
+        NewRecord record = records.get(0);
+        if(record.getGradeInfo()!=null) {
+        	
+        }else if(record.getDegreeInfo()!=null) {
+        	
+        }else if(record.getOperationInfo()!=null) {
+        	
+        }else {
+        	
+        }*/
     }
 
     public DbStore getDbStore() {
