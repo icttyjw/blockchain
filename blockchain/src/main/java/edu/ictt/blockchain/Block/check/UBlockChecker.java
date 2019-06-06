@@ -38,6 +38,7 @@ public class UBlockChecker {
 	 
 	 @Resource
 	 private UpperBlockService uBlockService;
+	 
 
 	 /**
 	  * 校验所有字段
@@ -55,6 +56,24 @@ public class UBlockChecker {
 			 return 0;
 		 }
 		 return -1;
+	 }
+	 
+	 /**
+	  * 校验所封装的校内块
+	  */
+	 public int checkBlock(Block block) {
+		//校验校间区块封装的校内区块时，先在本地找是否存在当前校内块的前续校内，如果不存在则拒绝
+		if(uDbBlockManager.getUBlockByBhash(block.getBlockHeader().getHashPreviousBlock())!=null) {
+			Block pblock = uDbBlockManager.getUBlockByBhash(block.getBlockHeader().getHashPreviousBlock()).getuBlockBody().getBlock();
+			if(checkBlock(pblock,block)==0) {
+				logger.info("[校间校验]：区块内容校验正确，进行下一步校验");
+				return 0;
+			}
+		}else {
+			logger.info("[校间校验]：本地不存在当前校内区块的前续区块");
+			return -1;
+		} 
+		return -1;
 	 }
 	 
 	 
@@ -137,28 +156,50 @@ public class UBlockChecker {
 	}
 	
 	/**
-	 * 校验UpperBlock内的blockhash：需要先校验block，然后重新生成blockhash比较
+	 * 校验UpperBlock内的uhash与bhash是否对应
 	 * @param uBlock
 	 * @return
 	 */
 	int checkBlockHash(UpperBlock uBlock) {
-		//先校验uBlock内的block
+		Block block = uBlock.getuBlockBody().getBlock();
 		if(uBlock != null) {
-			Block block = uBlock.getuBlockBody().getBlock();
-			//校验成功后将blockhash和区块头中blockhash比对
-			if(dbBlockChecker.checkBlock(block) == 0 && block.getBlockHash().equals(uBlock.getuBlockHeader().getBhash())) {
-				logger.info("[校间校验]：区块内容校验正确，进行下一步校验");
-				return 0;
+			if(block.getBlockHash().equals(uBlock.getuBlockHeader().getBhash())) {
+				return checkBlock(block);
 			}else {
-	        	logger.info("[校间校验]：区块哈希不正确，拒绝区块");
-	        	return -1;
-	        }
+		        logger.info("[校间校验]：区块的uhash与bhash映射错误，拒绝区块");
+		        return -1;
+		    }	
 		}else {
         	logger.info("[校间校验]：本地无前续区块，当前区块为第一个区块");
         	return 0;
         }
 	}
 	
+	/**
+	 * 校验封装区块与其前一区块是否能连接的上，以及该区块本身内容
+	 * @param pblock
+	 * @param block
+	 * @return
+	 */
+	int checkBlock(Block pblock, Block block) {
+		//if(pblock.getBlockHeader().getBlockNumber()+1 != block.getBlockHeader().getBlockNumber()) {
+		//	logger.info("[校间校验]:该校内区块的区块号不正确！");
+		//	return -1;
+		//}else 
+		if(pblock.getBlockHeader().getBlockTimeStamp()>= block.getBlockHeader().getBlockTimeStamp()) {
+			logger.info("[校间校验]:该校内区块的时间不正确！");
+			return -1;
+		}else if(dbBlockChecker.checkSign(block)!=0) {
+			logger.info("[校间校验]:该校内区块的签名不正确！");
+			return -1;
+		}else if(dbBlockChecker.checkMerkleRoot(block)!=0) {
+			logger.info("[校间校验]:该校内区块的MerkleRoot不正确！");
+			return -1;
+		}
+		return 0;
+	}
+
+
 	/**
 	 * 校验区块头的签名
 	 */
@@ -190,14 +231,7 @@ public class UBlockChecker {
 			logger.info("[创世块校验]"); 
 			return checkBlockSign(upperBlock);
 		}
-		
 		logger.info("[创世块校验失败]");
 		return -1;
 	}
-
-	public void setDbBlockChecker(DbBlockChecker dbBlockChecker) {
-		this.dbBlockChecker = dbBlockChecker;
-	}
-	
-	
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.block.UpperBlockBody;
 import edu.ictt.blockchain.Block.check.DbBlockChecker;
+import edu.ictt.blockchain.Block.check.UBlockChecker;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.manager.UDbBlockManager;
 import edu.ictt.blockchain.core.requestbody.UpperBlockRequestBody;
@@ -31,6 +32,9 @@ public class BlockQueue {
 	
 	@Resource
 	DbBlockChecker dbBlockChecker;
+	
+	@Resource
+	UBlockChecker uBlockChecker; 
 	
 	@Resource
 	DbBlockManager dbBlockManager;
@@ -69,7 +73,7 @@ public class BlockQueue {
 		 * 校验成功，则将区块放入队列，并在本地备份
 		 */
 		//TODO ublock中block的校验
-		//if(dbBlockChecker.checkBlock(block) == 0) {
+		if(uBlockChecker.checkBlock(block)==0) {
 			blockConcurrentHashMap.put(bhash, block);
 			dbBlockManager.put(bhash, toString());
 			logger.info("[校内-校级]:该区块校验成功,已放入本地区块队列和本地缓存");
@@ -78,9 +82,9 @@ public class BlockQueue {
 			UpperBlockBody uBlockBody = new UpperBlockBody(block);
 			UpperBlockRequestBody uBlockRequestBody = new UpperBlockRequestBody(uBlockBody);
 			uBlockService.addBlock(uBlockRequestBody);		
-		//}else {
-			//logger.info("[校内-校级]:收到的区块有误，请重新接收");
-		//}
+		}else {
+			logger.info("[校内-校级]:收到的区块有误，请重新接收");
+		}
 		
 		/**
 		 * 是否需要删除区块
