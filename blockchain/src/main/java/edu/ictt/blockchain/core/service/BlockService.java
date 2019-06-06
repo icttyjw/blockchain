@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.block.BlockBody;
 import edu.ictt.blockchain.Block.block.BlockHeader;
+import edu.ictt.blockchain.Block.generatorUtil.GenerateBlock;
 import edu.ictt.blockchain.Block.me.MerkleTree;
 import edu.ictt.blockchain.Block.record.GradeRecord;
 import edu.ictt.blockchain.Block.record.Record;
@@ -36,14 +37,16 @@ public class BlockService {
 	Logger logger=LoggerFactory.getLogger(getClass());
 	//从本地生成新区块并发送到群组
 	public Block addBlock(BlockBody blockbody){
-		BlockHeader blockHeader=new BlockHeader();
+		/*BlockHeader blockHeader=new BlockHeader();
 		blockHeader.setBlockTimeStamp(CommonUtil.getNow());		
 		blockHeader.setBlockNumber(dbBlockManager.getLastBlockNumber()+1);
 		blockHeader.setHashPreviousBlock(dbBlockManager.getLastBlockHash());
 		Block block=new Block(); 
 		block.setBlockHeader(blockHeader);
 		block.setBlockBody(blockbody);
-		block.setBlockHash(SHA256.sha256(blockHeader.toString())+SHA256.sha256(blockbody.toString()));
+		block.setBlockHash(SHA256.sha256(blockHeader.toString())+SHA256.sha256(blockbody.toString()));*/
+		GenerateBlock generateBlock = new GenerateBlock();
+		Block block = generateBlock.generateBlock(blockbody);
 		logger.info("[本地生成新区块]："+block);
 		RpcBlockBody rpcBlockBody=new RpcBlockBody(block);
 		BlockPacket blockPacket=new PacketBuilder<>().setType(PacketType.GENERATE_BLOCK_REQUEST).setBody(
@@ -56,7 +59,7 @@ public class BlockService {
 	//收到远程blockrequesbody生成区块并发送到群组
 	public Block addBlock(BlockRequesbody blockrequesbody){
 		BlockBody blockBody=blockrequesbody.getBlockBody();
-		List<GradeRecord> lr=blockBody.getGrecordsList();
+		/*List<GradeRecord> lr=blockBody.getGrecordsList();
 		List<String> hashlist=new ArrayList<>();
 		for(Record r:lr){
 			String hash=SHA256.sha256(FastJsonUtil.toJSONString(r));
@@ -71,7 +74,9 @@ public class BlockService {
 		Block block=new Block();
 		block.setBlockBody(blockBody);
 		block.setBlockHeader(blockHeader);
-		block.setBlockHash(SHA256.sha256(FastJsonUtil.toJSONString(blockHeader)+FastJsonUtil.toJSONString(blockBody)));
+		block.setBlockHash(SHA256.sha256(FastJsonUtil.toJSONString(blockHeader)+FastJsonUtil.toJSONString(blockBody)));*/
+		GenerateBlock generateBlock = new GenerateBlock();
+		Block block = generateBlock.generateBlock(blockBody);
 		logger.info("[本地根据远程blockrequesbody生成新区块]："+block);
 		RpcBlockBody rpcBlockBody=new RpcBlockBody(block);
 		BlockPacket blockPacket=new PacketBuilder<>().setType(PacketType.GENERATE_BLOCK_REQUEST).setBody(
