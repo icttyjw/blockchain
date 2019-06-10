@@ -125,10 +125,12 @@ public class RecordQueue {
 	@PostConstruct
 	private void recover(){
 		course=dbBlockManager.getCourse("course");
+		if(!(null==course||course.size()==0)){
 		for(String str:course){
 			List<NewRecord> ls=dbBlockManager.getNewRecordList(str);
 			recordConcurrentHashMap.put(str, ls);
 			recordcountConcurrentHashMap.put(str, ls.size());
+		}
 		}
 		
 	}
