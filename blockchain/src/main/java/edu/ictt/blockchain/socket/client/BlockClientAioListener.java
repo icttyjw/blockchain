@@ -41,7 +41,7 @@ public class BlockClientAioListener implements ClientAioListener {
     @Override
     public void onAfterConnected(ChannelContext channelContext, boolean isConnected, boolean isReconnect) throws Exception {
     	
-        if (isConnected) {
+        /*if (isConnected) {
         	NodeService nodeService = ApplicationContextProvider.getBean(NodeService.class);
         	//排查service 空指针用
         	//List<NodeState> nodelist=nodeService.queryAllNodes();
@@ -68,7 +68,7 @@ public class BlockClientAioListener implements ClientAioListener {
             	  
         } else {
             logger.info("[Client启动]：连接失败：server地址为-" + channelContext.getServerNode());
-        }
+        }*/
         ClientGroupContext groupContext=(ClientGroupContext)channelContext.getGroupContext();
         if(groupContext.getReconnConf().getRetryCount()<channelContext.getReconnCount()){
 			
