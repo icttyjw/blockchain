@@ -51,7 +51,7 @@ public class UBlockGeneratedListener {
 
         //目前先做简单处理：即每落地一个区块，就发送给校间
         //单节点sendGroup
-        packetSender.sendGroup(blockPacket);
+        packetSender.sendUGroup(blockPacket);
         //packetSender.sendMainNode(blockPacket);
     }
 }

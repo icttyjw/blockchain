@@ -52,10 +52,12 @@ public class BlockClientAioListener implements ClientAioListener {
             NodeState nodeType = nodeService.queryByIp(channelContext.getServerNode().getIp());
             logger.info("[Client]：当前连接的节点类型为：" + nodeType.getNodetype());
             
-            if(nodeType.getNodetype().equals(2)) {
+            if(Integer.parseInt(nodeType.getNodetype())==2) {
             	logger.info("[Client]:绑定进block_group组");
             	Tio.bindGroup(channelContext, Const.GROUP_NAME);
-            }else if(nodeType.getNodetype().equals(3)){
+            }else if(Integer.parseInt(nodeType.getNodetype())==3){
+            	logger.info("[Client]:绑定进block_group组");
+            	Tio.bindGroup(channelContext, Const.GROUP_NAME);
             	logger.info("[Client]:绑定进school_group组");
             	Tio.bindGroup(channelContext, Const.GROUP_SCHOOL);
             }else {

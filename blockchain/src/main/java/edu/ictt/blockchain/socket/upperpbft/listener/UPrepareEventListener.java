@@ -30,6 +30,6 @@ public class UPrepareEventListener {
 		//缇ゅ彂娑堟伅锛岄�氱煡鍒殑鑺傜偣锛屾垜宸插璇lock prepare
 		BlockPacket blockPacket = new PacketBuilder<>().setType(UPacketType.PBFT_VOTE).setBody(new UVoteBody(uVoteMsg)).build();
 		
-		packetSender.sendGroup(blockPacket);
+		packetSender.sendUGroup(blockPacket);
 	}
 }

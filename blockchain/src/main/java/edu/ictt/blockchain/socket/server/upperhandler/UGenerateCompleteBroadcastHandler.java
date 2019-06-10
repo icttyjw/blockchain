@@ -47,7 +47,7 @@ public class UGenerateCompleteBroadcastHandler  extends AbstractBlockHandler<URp
 			if(upperBlock == null) {
 				logger.info("[Server校内校间通信]：本地没有该新区块，开始去获取别人的新区块");
 				BlockPacket blockPacket = UNextBlockPacketBuilder.build();
-				ApplicationContextProvider.getBean(PacketSender.class).sendGroup(blockPacket);
+				ApplicationContextProvider.getBean(PacketSender.class).sendUGroup(blockPacket);
 				
 			}
 			return null;

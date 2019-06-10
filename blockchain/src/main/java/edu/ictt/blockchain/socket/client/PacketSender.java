@@ -2,6 +2,7 @@ package edu.ictt.blockchain.socket.client;
 
 
 import edu.ictt.blockchain.ApplicationContextProvider;
+import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.core.event.ClientRequestEvent;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 
@@ -33,6 +34,15 @@ public class PacketSender {
         ApplicationContextProvider.publishEvent(new ClientRequestEvent(blockPacket));
         //发送到一个group
         Tio.sendToGroup(clientGroupContext, GROUP_NAME, blockPacket);
+    }
+    
+    public void sendUGroup(BlockPacket blockPacket) {
+        //对外发出client请求事件
+    	logger.info("[通信]：send group");
+    	
+        ApplicationContextProvider.publishEvent(new ClientRequestEvent(blockPacket));
+        //发送到一个group
+        Tio.sendToGroup(clientGroupContext, Const.GROUP_SCHOOL, blockPacket);
     }
 
 }

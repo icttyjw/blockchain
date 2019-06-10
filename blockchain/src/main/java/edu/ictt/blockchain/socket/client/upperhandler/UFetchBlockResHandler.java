@@ -59,7 +59,7 @@ public class UFetchBlockResHandler extends AbstractBlockHandler<URpcBlockBody>{
 				 ApplicationContextProvider.publishEvent(new UAddBlockEvent(uBlock));
 				 //继续请求下一块
 				BlockPacket blockPacket = UNextBlockPacketBuilder.build();
-				ApplicationContextProvider.getBean(PacketSender.class).sendGroup(blockPacket);
+				ApplicationContextProvider.getBean(PacketSender.class).sendUGroup(blockPacket);
 			 }
 		}
 		return null;

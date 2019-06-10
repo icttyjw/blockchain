@@ -55,7 +55,7 @@ public class UpperBlockService {
 		//TODO sendgroup
 		BlockPacket blockPacket = new PacketBuilder<>().setType(UPacketType.GENERATE_BLOCK_REQUEST).setBody(uRpcBlockBody).build();
 		logger.info("[校间通信]：向组内其他节点广播该新区块：["+ blockPacket + "]");
-		packetSender.sendGroup(blockPacket);
+		packetSender.sendUGroup(blockPacket);
 		return uBlock;
 	}
 	
@@ -82,7 +82,7 @@ public class UpperBlockService {
 		//TODO sendgroup
 		BlockPacket blockPacket = new PacketBuilder<>().setType(UPacketType.GENERATE_BLOCK_REQUEST).setBody(uRpcBlockBody).build();
 		logger.info("[校间通信]：向组内其他节点广播该新区块：["+ blockPacket + "]");
-		packetSender.sendGroup(blockPacket);
+		packetSender.sendUGroup(blockPacket);
 		return uBlock;
 	}
 	
