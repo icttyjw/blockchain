@@ -19,7 +19,7 @@ import edu.ictt.blockchainmanager.sql.service.NodeService;
  * @author zoe
  *
  */
-@Component
+//@Component
 public class CheckGenesis {
 	//@Resource
 	//DbStore dbStore;
