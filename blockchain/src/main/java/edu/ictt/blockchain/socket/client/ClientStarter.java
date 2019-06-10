@@ -226,7 +226,16 @@ public class ClientStarter {
         	logger.info("[启动]：连接" + node.toString() + "成功");
         	nodesStatus.put(node.getIp(), 1);
         	//绑group是将要连接的各个服务器节点做为一个group
-        	Tio.bindGroup(channelContext, Const.GROUP_NAME);
+        	NodeState nodestate = nodeService.queryByIp(node.getIp());
+        	if(Integer.parseInt(nodestate.getNodetype())==2 || Integer.parseInt(nodestate.getNodetype())==1) {
+        		Tio.bindGroup(channelContext, Const.GROUP_NAME);
+        		logger.info("[Client]:默认绑定进block_group组");
+        	}else if(Integer.parseInt(nodestate.getMain())==3){
+        		Tio.bindGroup(channelContext, Const.GROUP_NAME);
+        		Tio.bindGroup(channelContext, Const.GROUP_SCHOOL);
+        		logger.info("[Client]:绑定进block_group组和block_school组");
+        	}
+        	//Tio.bindGroup(channelContext, Const.GROUP_NAME);
 
         	int csize = Tio.getAllChannelContexts(clientGroupContext).size();
         	if(csize >= pbftAgreeCount()){
