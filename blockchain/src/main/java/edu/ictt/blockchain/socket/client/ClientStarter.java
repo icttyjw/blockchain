@@ -1,45 +1,36 @@
 package edu.ictt.blockchain.socket.client;
 
-import static edu.ictt.blockchain.common.Const.GROUP_NAME;
-
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
-import edu.ictt.blockchain.Block.block.BlockBody;
-import edu.ictt.blockchain.Block.db.RecoverLocalBlock;
-import edu.ictt.blockchain.Block.generatorUtil.GenerateRecord;
-import edu.ictt.blockchain.Block.merkle.MerkleHash;
-import edu.ictt.blockchain.Block.record.GradeRecord;
-import edu.ictt.blockchain.Block.record.Record;
-
-import org.rocksdb.RocksDBException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.tio.client.TioClient;
 import org.tio.client.ClientGroupContext;
-import org.tio.core.Tio;
+import org.tio.client.TioClient;
 import org.tio.core.ChannelContext;
 import org.tio.core.Node;
+import org.tio.core.Tio;
 import org.tio.utils.lock.SetWithLock;
 
 import com.google.common.collect.Maps;
 
+import edu.ictt.blockchain.Block.block.Block;
+import edu.ictt.blockchain.Block.db.CreateGenesisBlock;
 import edu.ictt.blockchain.common.CommonUtil;
 import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.core.event.NodesConnectedEvent;
-import edu.ictt.blockchain.core.requestbody.BlockRequesbody;
 import edu.ictt.blockchain.core.service.BlockService;
 import edu.ictt.blockchain.socket.body.common.BaseBody;
-import edu.ictt.blockchain.socket.body.lowerbody.RecordBody;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.NextBlockPacketBuilder;
 import edu.ictt.blockchain.socket.packet.PacketBuilder;
@@ -85,6 +76,8 @@ public class ClientStarter {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     private Set<Node> nodes = new HashSet<>();
+    //创世块
+    //public static final CreateGenesisBlock GENESIS_BLCOK = new CreateGenesisBlock();
     
     //尝试从本地恢复
     //{try {
@@ -102,7 +95,7 @@ public class ClientStarter {
      * 通过数据库获取其他服务器信息
      * 隔5分钟去获取一次
      */
-    //@Scheduled(initialDelay=5000,fixedRate = 300000)
+    @Scheduled(initialDelay=5000,fixedRate = 300000)
     public void fetchOtherServer() {
         String localIp = CommonUtil.getLocalIp();
         logger.info("[启动]：本机IP：{}",localIp);
@@ -124,7 +117,7 @@ public class ClientStarter {
         //nodes.add(node);
         
         //Node node=new Node(localIp,Const.PORT);
-        //Node node2=new  Node("192.168.137.1", Const.PORT);
+        //Node node2=new  Node(localIp, Const.PORT);
         //nodes.add(node);
         //nodes.add(node2);
         bindServerGroup(nodes);
@@ -152,7 +145,7 @@ public class ClientStarter {
         //blockService.addBlock(blockRequesbody);
         //RecordBody recordBody=new RecordBody(record, "test");
         //BlockPacket blockPacket=new PacketBuilder<>().setType(PacketType.RECEIVE_RECORD).setBody(recordBody).build();
-        packetSender.sendGroup(blockPacket);
+        sendType(blockPacket);
         //Tio.sendToGroup(clientGroupContext, GROUP_NAME, blockPacket);
     }
 
@@ -160,7 +153,21 @@ public class ClientStarter {
         logger.info("[]开始群发信息获取next Block");
         //在这里发请求，去获取group别人的新区块
         BlockPacket nextBlockPacket = NextBlockPacketBuilder.build();
-        packetSender.sendGroup(nextBlockPacket);
+        sendType(nextBlockPacket);
+        
+    }
+    
+    /**
+     * 根据节点类型发送到对应组
+     * @param blockPacket
+     */
+    public void sendType(BlockPacket blockPacket) {
+    	NodeState nodestate = nodeService.queryByIp(CommonUtil.getLocalIp());
+    	if(Integer.parseInt(nodestate.getMain())==0) {
+    		packetSender.sendGroup(blockPacket);
+    	}else if(Integer.parseInt(nodestate.getMain())==1){
+    		packetSender.sendUGroup(blockPacket);
+    	}
     }
 
     /**
@@ -234,7 +241,14 @@ public class ClientStarter {
     }
 
     public int halfGroupSize() {
-        SetWithLock<ChannelContext> setWithLock = clientGroupContext.groups.clients(clientGroupContext, Const.GROUP_NAME);
+    	SetWithLock<ChannelContext> setWithLock = null;
+    	NodeState nodestate = nodeService.queryByIp(CommonUtil.getLocalIp());
+    	if(Integer.parseInt(nodestate.getMain())==0) {
+    		setWithLock = clientGroupContext.groups.clients(clientGroupContext, Const.GROUP_NAME);
+    	}else if(Integer.parseInt(nodestate.getMain())==1){
+    		setWithLock = clientGroupContext.groups.clients(clientGroupContext, Const.GROUP_SCHOOL);
+    	}
+        
         return setWithLock.getObj().size() / 2;
     }
 
