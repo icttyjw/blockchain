@@ -28,6 +28,7 @@ import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.db.CreateGenesisBlock;
 import edu.ictt.blockchain.common.CommonUtil;
 import edu.ictt.blockchain.common.Const;
+import edu.ictt.blockchain.core.event.NodeDisconnectedEvent;
 import edu.ictt.blockchain.core.event.NodesConnectedEvent;
 import edu.ictt.blockchain.core.service.BlockService;
 import edu.ictt.blockchain.socket.body.common.BaseBody;
@@ -90,6 +91,10 @@ public class ClientStarter {
     // 节点连接状态
     private Map<String,Integer> nodesStatus = Maps.newConcurrentMap();
     private volatile boolean isNodesReady = false; // 节点是否已准备好
+    //校内节点计数
+    private volatile int gcount=0;
+    //校间节点计数
+    private volatile int scount=0;
     
     /**
      * 通过数据库获取其他服务器信息
@@ -229,12 +234,17 @@ public class ClientStarter {
         	NodeState nodestate = nodeService.queryByIp(node.getIp());
         	if(Integer.parseInt(nodestate.getNodetype())==2 ) {
         		Tio.bindGroup(channelContext, Const.GROUP_NAME);
+        		gcount++;
         		logger.info("[Client]:绑定进block_group组");
-        	}else if(Integer.parseInt(nodestate.getMain())==3){
+        	}else if(Integer.parseInt(nodestate.getNodetype())==3){
         		Tio.bindGroup(channelContext, Const.GROUP_SCHOOL);
+        		scount++;
         		logger.info("[Client]:block_school组");
         	}else if(Integer.parseInt(nodestate.getNodetype())==1) {
         		Tio.bindGroup(channelContext, Const.GROUP_SCHOOL);
+        		Tio.bindGroup(channelContext, Const.GROUP_NAME);
+        		gcount++;
+        		scount++;
         	}
         	//Tio.bindGroup(channelContext, Const.GROUP_NAME);
 
@@ -248,6 +258,22 @@ public class ClientStarter {
 				}
         	}
         }
+    }
+    
+    @EventListener(NodeDisconnectedEvent.class)
+    public void onDisConnect(NodeDisconnectedEvent nodeDisconnectedEvent){
+    	String ip=(String)nodeDisconnectedEvent.getSource();
+    	NodeState nodestate = nodeService.queryByIp(ip);
+    	if(Integer.parseInt(nodestate.getNodetype())==2 ) {
+    		gcount--;
+    		logger.info("[Client]:绑定进block_group组");
+    	}else if(Integer.parseInt(nodestate.getNodetype())==3){
+    		scount--;
+    		logger.info("[Client]:block_school组");
+    	}else if(Integer.parseInt(nodestate.getNodetype())==1) {
+    		gcount--;
+    		scount--;
+    	}
     }
 
     public int halfGroupSize() {
