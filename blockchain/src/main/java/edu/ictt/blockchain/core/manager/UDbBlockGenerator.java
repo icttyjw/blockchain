@@ -15,7 +15,7 @@ import edu.ictt.blockchain.Block.db.DbStore;
 import edu.ictt.blockchain.common.Constants;
 import edu.ictt.blockchain.core.event.UAddBlockEvent;
 import edu.ictt.blockchainmanager.sql.service.BlockInfoService;
-import edu.ictt.blockchainmanager.sql.service.UBlockInfoService;
+//import edu.ictt.blockchainmanager.sql.service.UBlockInfoService;
 
 /**
  * uBlock的本地存储

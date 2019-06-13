@@ -19,6 +19,7 @@ import org.tio.utils.json.Json;
 
 import edu.ictt.blockchain.ApplicationContextProvider;
 import edu.ictt.blockchain.common.Const;
+import edu.ictt.blockchain.core.event.NodeDisconnectedEvent;
 import edu.ictt.blockchain.core.event.NodesConnectedEvent;
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
 import edu.ictt.blockchainmanager.sql.service.NodeService;
@@ -83,7 +84,9 @@ public class BlockClientAioListener implements ClientAioListener {
     @Override
     public void onBeforeClose(ChannelContext channelContext, Throwable throwable, String s, boolean b) {
         logger.info("[启动]：连接关闭：server地址为-" + channelContext.getServerNode());
+        String ip=channelContext.getClientNode().getIp();
         Tio.unbindGroup(channelContext);
+        ApplicationContextProvider.publishEvent(new NodeDisconnectedEvent(ip));
     }
 
     @Override
