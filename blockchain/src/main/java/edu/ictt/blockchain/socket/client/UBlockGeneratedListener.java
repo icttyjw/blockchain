@@ -9,9 +9,10 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.tio.core.*;
 
+import edu.ictt.blockchain.ApplicationContextProvider;
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.core.event.AddBlockEvent;
-
+import edu.ictt.blockchain.core.event.BlockInformEvent;
 import edu.ictt.blockchain.socket.body.upperbody.UBlockBody;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.PacketBuilder;
@@ -48,10 +49,10 @@ public class UBlockGeneratedListener {
         		setBody(new UBlockBody(block, block.getBlockHash())).build();
         logger.info("[Client校内-校间通信]：发送区块给校级节点，当前时间为" + System.currentTimeMillis());
         
-
+        ApplicationContextProvider.publishEvent(new BlockInformEvent(block.getBlockHash()));
         //目前先做简单处理：即每落地一个区块，就发送给校间
         //单节点sendGroup
-        packetSender.sendUGroup(blockPacket);
+        //packetSender.sendUGroup(blockPacket);
         //packetSender.sendMainNode(blockPacket);
     }
 }

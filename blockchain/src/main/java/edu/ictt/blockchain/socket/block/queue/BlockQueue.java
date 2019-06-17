@@ -7,12 +7,14 @@ import javax.annotation.Resource;
 import org.apache.derby.impl.sql.execute.CountAggregator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import edu.ictt.blockchain.Block.block.Block;
 import edu.ictt.blockchain.Block.block.UpperBlockBody;
 import edu.ictt.blockchain.Block.check.DbBlockChecker;
 import edu.ictt.blockchain.Block.check.UBlockChecker;
+import edu.ictt.blockchain.core.event.BlockInformEvent;
 import edu.ictt.blockchain.core.manager.DbBlockManager;
 import edu.ictt.blockchain.core.manager.UDbBlockManager;
 import edu.ictt.blockchain.core.requestbody.UpperBlockRequestBody;
@@ -90,6 +92,22 @@ public class BlockQueue {
 		 * 是否需要删除区块
 		 */
 	}
-
+	@EventListener(BlockInformEvent.class)
+	public void add(BlockInformEvent blockInformEvent) {
+		String hash=(String)blockInformEvent.getSource();
+		Block block=dbBlockManager.getBlockByHash(hash);
+		if(uBlockChecker.checkBlock(block)==0) {
+			blockConcurrentHashMap.put(hash, block);
+			dbBlockManager.put(hash, toString());
+			logger.info("[校内-校级]:该区块校验成功,已放入本地区块队列和本地缓存");
+			
+			//调用uBlockService生成并发布区块
+			UpperBlockBody uBlockBody = new UpperBlockBody(block);
+			UpperBlockRequestBody uBlockRequestBody = new UpperBlockRequestBody(uBlockBody);
+			uBlockService.addBlock(uBlockRequestBody);		
+		}else {
+			logger.info("[校内-校级]:收到的区块有误，请重新接收");
+		}
+	}
 
 }
