@@ -127,17 +127,17 @@ public class DbBlockManager {
 	    }
 
 	    public List<Record> getRecordList(String hash){
-	    	String listjaso=dbStore.get(hash);
+	    	String listjaso=dbStore.get(Constants.KEY_BLOCK_HASH_PREFIX+hash);
 	    	return FastJsonUtil.toList(listjaso, Record.class);
 	    }
 	    
 	    public List<NewRecord> getNewRecordList(String hash){
-	    	String listjaso=dbStore.get(hash);
+	    	String listjaso=dbStore.get(Constants.KEY_BLOCK_HASH_PREFIX+hash);
 	    	return FastJsonUtil.toList(listjaso, NewRecord.class);
 	    }
 	    
 	    public List<String> getCourse(String hash){
-	    	String list=dbStore.get(hash);
+	    	String list=dbStore.get(Constants.KEY_BLOCK_HASH_PREFIX+hash);
 	    	return FastJsonUtil.toList(list, String.class);
 	    }
 	 
