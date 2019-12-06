@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.collections.*?>
+
+<AnchorPane prefHeight="419.0" prefWidth="577.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ictt.blockchainmanager.groupmodel.userinterface.controller.LogController">
+   <children>
+      <TextArea fx:id="text" layoutY="61.0" prefHeight="347.0" prefWidth="568.0" />
+      <Button fx:id="refresh" layoutX="35.0" layoutY="24.0" mnemonicParsing="false" onAction="#refresh" text="refresh" />
+      <Pane layoutX="140.0" layoutY="21.0" prefHeight="29.0" prefWidth="289.0">
+         <children>
+            <Hyperlink fx:id="link1" layoutX="14.0" layoutY="5.0" onAction="#link1" text="Hyperlink" />
+            <Hyperlink fx:id="link2" layoutX="90.0" layoutY="4.0" onAction="#link2" text="Hyperlink" />
+            <Hyperlink fx:id="link3" layoutX="169.0" layoutY="4.0" onAction="#link3" text="Hyperlink" />
+         </children>
+      </Pane>
+      <ChoiceBox fx:id="choicebox" layoutX="394.0" layoutY="24.0" prefWidth="150.0" value="log">
+      <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="log" />
+                    <String fx:value="error" />
+                </FXCollections>
+            </items>
+        </ChoiceBox>
+   </children>
+</AnchorPane>

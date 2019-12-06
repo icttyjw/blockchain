@@ -81,7 +81,7 @@
             </Tab>
             <Tab text="运行日志">
                <content>
-                  <fx:include source="Textareasample.fxml" />
+                  <fx:include source="Log.fxml" />
                </content>
             </Tab>
             </tabs>
