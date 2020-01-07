@@ -1,6 +1,7 @@
 package edu.ictt.blockchain.socket.client;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,6 +37,7 @@ import edu.ictt.blockchain.socket.packet.BlockPacket;
 import edu.ictt.blockchain.socket.packet.NextBlockPacketBuilder;
 import edu.ictt.blockchain.socket.packet.PacketBuilder;
 import edu.ictt.blockchain.socket.packet.PacketType;
+import edu.ictt.blockchain.socket.packet.UPacketType;
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
 import edu.ictt.blockchainmanager.sql.service.NodeService;
 
@@ -112,31 +114,43 @@ public class ClientStarter {
         	 System.exit(0);
         }
         logger.info("共有" + nodelist.size() + "个成员需要连接：" + nodelist.toString());
-        nodes.clear();
-        for(NodeState nodestate:nodelist){
-        	 Node node = new Node(nodestate.getIp(), Const.PORT);
-             nodes.add(node);
-        }
-        //Node node=new Node(localIp,Const.PORT);
-        //Node node2=new Node("10.170.72.102",Const.PORT);
-        //nodes.add(node);
-        
-        //Node node=new Node(localIp,Const.PORT);
-        //Node node2=new  Node(localIp, Const.PORT);
-        //nodes.add(node);
-        //nodes.add(node2);
-        bindServerGroup(nodes);
+        synchronized (nodes) {
+        	 nodes.clear();
+             for(NodeState nodestate:nodelist){
+             	 Node node = new Node(nodestate.getIp(), Const.PORT);
+             	 if(nodestate.getConnectstate().equals("1"))
+                  nodes.add(node);
+             }
+             //Node node=new Node(localIp,Const.PORT);
+             //Node node2=new Node("10.170.72.102",Const.PORT);
+             //nodes.add(node);
+             
+             //Node node=new Node(localIp,Const.PORT);
+             //Node node2=new  Node(localIp, Const.PORT);
+             //nodes.add(node);
+             //nodes.add(node2);
+             bindServerGroup(nodes);
+		}
+       
     }
     
     /**
      * 每30秒群发一次消息，和别人对比最新的Block
      */
-    //@Scheduled(initialDelay=5000,fixedDelay = 60000)
+    @Scheduled(initialDelay=5000,fixedDelay = 60000)
     public void heartBeat() {
     	if(!isNodesReady)return;
         logger.info("---------开始心跳包--------");
+        NodeState nodestate = nodeService.queryByIp(CommonUtil.getLocalIp());
+    	if(Integer.parseInt(nodestate.getMain())==0) {
+    		BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.HEART_BEAT).setBody(new BaseBody()).build();
+    		packetSender.sendGroup(blockPacket);
+    	}else if(Integer.parseInt(nodestate.getMain())==1){
+    		BlockPacket blockPacket = new PacketBuilder<>().setType(UPacketType.HEART_BEAT).setBody(new BaseBody()).build();
+    		packetSender.sendUGroup(blockPacket);
+    	}
         //logger.info(""+clientGroupContext.getName());
-        BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.HEART_BEAT).setBody(new BaseBody()).build();//NextBlockPacketBuilder.build();
+       // BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.HEART_BEAT).setBody(new BaseBody()).build();//NextBlockPacketBuilder.build();
         //packetSender.sendGroup(blockPacket);
         //List<Record> records = new ArrayList<>();
         //GradeRecord record = GenerateRecord.geneGRecord();
@@ -150,7 +164,7 @@ public class ClientStarter {
         //blockService.addBlock(blockRequesbody);
         //RecordBody recordBody=new RecordBody(record, "test");
         //BlockPacket blockPacket=new PacketBuilder<>().setType(PacketType.RECEIVE_RECORD).setBody(recordBody).build();
-        sendType(blockPacket);
+        //sendType(blockPacket);
         //Tio.sendToGroup(clientGroupContext, GROUP_NAME, blockPacket);
     }
 
@@ -208,6 +222,30 @@ public class ClientStarter {
         }
 
     }
+    
+    
+    public void addNode(Node node){
+    	synchronized(nodes){
+    		nodes.add(node);
+    	}
+    	connect(node);
+    }
+    
+    public void removeNode(Node node){
+    	synchronized(nodes){
+    		Iterator<Node> it=nodes.iterator();
+    		while(it.hasNext()){
+    			Node n=it.next();
+    			if(n.getIp().equals(node.getIp()))
+    				{
+    					it.remove();
+    					
+    				}
+    		}
+    	}
+    	//connect(node);
+    	
+    }
 
     private void connect(Node serverNode) {
         try {
@@ -223,6 +261,9 @@ public class ClientStarter {
     public void onConnected(NodesConnectedEvent connectedEvent){
     	ChannelContext channelContext = connectedEvent.getSource();
     	Node node = channelContext.getServerNode();
+    	NodeState ns=nodeService.queryByIp(node.getIp());
+    	channelContext.setBsId("sss");
+    	Tio.bindBsId(channelContext, ns.getName()+" client");
     	if (channelContext.isClosed) {
             logger.info("[启动]：连接" + node.toString() + "失败");
             nodesStatus.put(node.getIp(), -1);
@@ -247,7 +288,7 @@ public class ClientStarter {
         		scount++;
         	}
         	//Tio.bindGroup(channelContext, Const.GROUP_NAME);
-
+        	
         	int csize = Tio.getAllChannelContexts(clientGroupContext).size();
         	if(csize >= pbftAgreeCount()){
         		synchronized (nodesStatus) {
@@ -264,6 +305,8 @@ public class ClientStarter {
     public void onDisConnect(NodeDisconnectedEvent nodeDisconnectedEvent){
     	String ip=(String)nodeDisconnectedEvent.getSource();
     	NodeState nodestate = nodeService.queryByIp(ip);
+    	nodestate.changestate(0);
+    	nodeService.saveLocalNode(nodestate);
     	if(Integer.parseInt(nodestate.getNodetype())==2 ) {
     		gcount--;
     		logger.info("[Client]:绑定进block_group组");

@@ -1,5 +1,7 @@
 package edu.ictt.blockchainmanager.groupmodel.userinterface.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
@@ -18,6 +20,7 @@ import org.tio.client.ClientGroupContext;
 import org.tio.core.ChannelContext;
 import org.tio.core.Node;
 import org.tio.core.Tio;
+import org.tio.utils.lock.MapWithLock;
 import org.tio.utils.lock.SetWithLock;
 
 import com.fasterxml.jackson.core.sym.Name;
@@ -26,7 +29,9 @@ import com.google.common.collect.Table.Cell;
 import de.felixroske.jfxsupport.FXMLController;
 import edu.ictt.BlockChainApplication;
 import edu.ictt.blockchain.ApplicationContextProvider;
+import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.core.event.ChangeEvent;
+import edu.ictt.blockchain.socket.client.ClientStarter;
 import edu.ictt.blockchainmanager.groupmodel.NodeState;
 import edu.ictt.blockchainmanager.sql.service.NodeService;
 import edu.ictt.blockchainmanager.view.AddSchoolNodeView;
@@ -93,6 +98,12 @@ public class NodesInGroupController implements Initializable{
     @FXML
     private Button sel;
     
+    @FXML
+    private Button connect;
+    
+    @FXML
+    private Button disconnect;
+    
     @Resource
     AddSchoolNodeController addSchoolNodeController;
     
@@ -103,7 +114,8 @@ public class NodesInGroupController implements Initializable{
     
     @Resource
     private ClientGroupContext clientGroupContext;
-    
+    @Resource
+    private ClientStarter clientStarter;
     
     private Logger logger=LoggerFactory.getLogger(getClass());
 
@@ -123,16 +135,23 @@ public class NodesInGroupController implements Initializable{
 		nodesList.setItems(nodeLists);
 		nodesList.getSelectionModel().selectedItemProperty().addListener
 		((ObservableValue<? extends String> Observable, String oldValue, String newValue) ->{
-			System.out.println(newValue);
+			
 			//String nodeName = nodesList.getSelectionModel().selectedItemProperty().get();
 			if(newValue!=null){
 			NodeState nodeState = nodeService.queryByName(newValue);
 			System.out.println(nodeState);
 			name.setText(nodeState.getName());
 			nodeType.setText(nodeState.getNodetype());
-			state.setText(nodeState.getState());
+			state.setText(nodeState.getIp());
+			//state.setText(nodeState.getState());
 			connectState.setText(nodeState.getConnectstate());
 			lastConnect.setText(nodeState.getLastConnect());
+			}else{
+				name.setText(null);
+				nodeType.setText(null);
+				state.setText(null);
+				connectState.setText(null);
+				lastConnect.setText(null);
 			}
 		}
 		);
@@ -234,6 +253,33 @@ public class NodesInGroupController implements Initializable{
 		  ApplicationContextProvider.publishEvent(new ChangeEvent(name));
 		  //addSchoolNodeController.namemodel.setText(name);
 		  BlockChainApplication.showView(UpdateSchoolNodeView.class, Modality.APPLICATION_MODAL);
+	  }
+	  
+	  @FXML
+	  void connect(ActionEvent event){
+		  String name=nodesList.getSelectionModel().selectedItemProperty().get();
+		  NodeState nodestate=nodeService.queryByName(name);
+		  nodestate.changestate(1);
+		  nodeService.saveLocalNode(nodestate);
+		  Node node=new Node(nodestate.getIp(), 6792);
+		  clientStarter.addNode(node);
+	  }
+	  
+	  @FXML
+	  void disconnect(ActionEvent event){
+		  System.out.println("dis");
+		  String name=nodesList.getSelectionModel().selectedItemProperty().get();
+		  NodeState nodestate=nodeService.queryByName(name);
+		  nodestate.changestate(0);
+		  nodeService.saveLocalNode(nodestate);
+		  System.out.println(nodestate.getName());
+		  ChannelContext channelContext=Tio.getChannelContextByBsId(clientGroupContext, nodestate.getName()+" client");
+		  logger.info(channelContext+"");
+		  //map.get(key)
+		  Tio.remove(channelContext, "remove");
+		  logger.info(channelContext+"");
+		  Node node=new Node(nodestate.getIp(), 6792);
+		  clientStarter.removeNode(node);
 	  }
 
 

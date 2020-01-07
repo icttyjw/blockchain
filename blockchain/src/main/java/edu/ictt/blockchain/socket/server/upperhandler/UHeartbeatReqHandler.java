@@ -11,7 +11,7 @@ public class UHeartbeatReqHandler extends AbstractBlockHandler<StateBody>{
 	@Override
 	public Class<StateBody> bodyClass() {
 		// TODO Auto-generated method stub
-		return null;
+		return StateBody.class;
 	}
 
 	@Override

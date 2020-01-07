@@ -29,7 +29,6 @@ public class BlockChainApplication {
 //@ComponentScan(basePackages = {"edu.ictt.blockchainmanager.sql.repository","edu.ictt.blockchainmanager.groupmodel",
 //		"edu.ictt.blockchainmanager.sql.service"})
 public class BlockChainApplication  extends AbstractJavaFxApplicationSupport {
-	private final TextArea loggingView = new TextArea(); 
 	
 	
 	@Override

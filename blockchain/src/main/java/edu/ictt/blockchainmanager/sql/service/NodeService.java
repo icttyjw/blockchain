@@ -20,6 +20,9 @@ public class NodeService {
 	public void saveLocalNode(NodeState node){ 
 		nodeRepositroy.save(node);
 	}
+	public void saveNode(NodeState node){ 
+		nodeRepositroy.save(node);
+	}
 	/*
 	 * 查询自己的信息
 	 */
@@ -53,6 +56,12 @@ public class NodeService {
 	public NodeState queryByIp(String Ip) {
 		return nodeRepositroy.queryByIp(Ip);
 	}
+	
+	public int isnull(String Ip){
+		return nodeRepositroy.isNull(Ip);
+	}
+	
+	
 	
 	public void deleteByName(String name){
 		nodeRepositroy.deleteByName(name);

@@ -10,6 +10,8 @@ import edu.ictt.blockchain.socket.body.common.BaseBody;
 import edu.ictt.blockchain.socket.body.common.StateBody;
 import edu.ictt.blockchain.socket.common.intf.AbstractBlockHandler;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
+import edu.ictt.blockchain.socket.packet.PacketBuilder;
+import edu.ictt.blockchain.socket.packet.PacketType;
 
 public class HeartbeatHandler extends AbstractBlockHandler<StateBody> {
 
@@ -48,7 +50,8 @@ public class HeartbeatHandler extends AbstractBlockHandler<StateBody> {
 		//心跳消息,啥也不用做
 		//System.out.println("ff");
 		//System.out.println(FastJsonUtil.toJSONString(bsBody));
-		return null;
+		BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.HEART_BEAT).setBody(new BaseBody()).build();
+		return blockPacket;
 	}
 
 	@Override

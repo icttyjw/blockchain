@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -22,9 +23,10 @@ public class NodeState implements Serializable{
 	private static final long serialVersionUID = 999611661446387109L;//程序的运行状态
 
 	/**
-	 * ID,String类型ID使用uuid由程序自动生成
+	 * ID
 	 */
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	/**
 	 * 自命名节点名
@@ -79,6 +81,18 @@ public class NodeState implements Serializable{
 		this.pubKey=pubKey;
 		this.priKey=priKey;
 	}
+	public NodeState(String name,String Ip,String state,String connectstate,String main,
+			String nodeType,String lastConnect,String pubKey,String priKey){
+		this.name=name;
+		this.Ip=Ip;
+		this.state=state;
+		this.connectstate =connectstate;
+		this.main=main;
+		this.lastConnect=lastConnect;
+		this.nodetype=nodeType;
+		this.pubKey=pubKey;
+		this.priKey=priKey;
+}
 	
 	public NodeState(){
 		super();
@@ -150,6 +164,17 @@ public class NodeState implements Serializable{
 
 	public void setPriKey(String priKey) {
 		this.priKey = priKey;
+	}
+	public void changestate(int i){
+		if(i==0)
+		{
+			this.state="0";
+			this.connectstate="0";
+		}else
+		{
+			this.state="1";
+			this.connectstate="1";
+		}
 	}
 	@Override
 	public String toString() {

@@ -39,12 +39,12 @@ public class ClientContextConfig {
         //事件监听器，可以为null，但建议自己实现该接口
         ClientAioListener clientAioListener = new BlockClientAioListener();
         //断链后自动连接的，不想自动连接请设为null
-        ReconnConf reconnConf = new ReconnConf(5000L, 2);
+        ReconnConf reconnConf = new ReconnConf(5000L,2);
         ClientGroupContext clientGroupContext = new ClientGroupContext(clientAioHandler, clientAioListener,
                 reconnConf);
         clientGroupContext.setName("blockgroup");
         logger.info("[启动阶段]：小组名称为blockgroup" );
-        //clientGroupContext.setHeartbeatTimeout(0);
+        clientGroupContext.setHeartbeatTimeout(5000L);
         return clientGroupContext;
     }
     /*

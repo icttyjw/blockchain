@@ -5,10 +5,12 @@ import edu.ictt.blockchain.socket.common.intf.AbstractBlockHandler;
 import edu.ictt.blockchain.socket.disruptor.base.BaseEvent;
 import edu.ictt.blockchain.socket.disruptor.base.MessageProducer;
 import edu.ictt.blockchain.socket.packet.BlockPacket;
+import edu.ictt.blockchain.socket.packet.PacketBuilder;
 import edu.ictt.blockchain.socket.packet.PacketType;
 import edu.ictt.blockchain.ApplicationContextProvider;
 import edu.ictt.blockchain.common.Const;
 import edu.ictt.blockchain.common.FastJsonUtil;
+import edu.ictt.blockchain.socket.body.common.BaseBody;
 import edu.ictt.blockchain.socket.body.common.StateBody;
 import edu.ictt.blockchain.socket.client.handler.HeartbeatHandler;
 
@@ -44,7 +46,8 @@ public class BlockClientAioHandler extends AbstractAioHandler implements ClientA
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        return null;
+		BlockPacket blockPacket = new PacketBuilder<>().setType(PacketType.HEART_BEAT).setBody(new BaseBody()).build();
+        return blockPacket;
     }
 
     /**

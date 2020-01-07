@@ -76,7 +76,7 @@ public class AddSchoolNodeController implements Initializable{
         	ip.setText(nodeState.getIp());
         });
     }
-    @EventListener(ChangeEvent.class)
+    //@EventListener(ChangeEvent.class)
     public void changename(ChangeEvent changeEvent){
     	
     	String name=(String)changeEvent.getSource();
@@ -96,11 +96,16 @@ public class AddSchoolNodeController implements Initializable{
     	String nodeip=ip.getText();
     	String nodename=name.getText();
     	String nodemain=main.getText();
-    	String nodetype=main.getText();
+    	String nodetype=type.getText();
     	NodeState nodestate=new NodeState(Integer.valueOf(nodeid), nodename, nodeip, null, null, nodemain, nodetype, null, null, null);
     	nodeService.saveLocalNode(nodestate);
     	Stage st=(Stage)add.getScene().getWindow();
     	st.close();
+    	id.setText(null);
+    	ip.setText(null);
+    	name.setText(null);
+    	main.setText(null);
+    	type.setText(null);
     			
     }
 	

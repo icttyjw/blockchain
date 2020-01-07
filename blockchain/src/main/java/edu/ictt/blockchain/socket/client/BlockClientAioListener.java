@@ -71,6 +71,7 @@ public class BlockClientAioListener implements ClientAioListener {
             logger.info("[Client启动]：连接失败：server地址为-" + channelContext.getServerNode());
         }*/
         ClientGroupContext groupContext=(ClientGroupContext)channelContext.getGroupContext();
+        logger.info(groupContext.getName());
         if(groupContext.getReconnConf().getRetryCount()<channelContext.getReconnCount()){
 			
    		 Tio.remove(channelContext, "false");
@@ -84,7 +85,8 @@ public class BlockClientAioListener implements ClientAioListener {
     @Override
     public void onBeforeClose(ChannelContext channelContext, Throwable throwable, String s, boolean b) {
         logger.info("[启动]：连接关闭：server地址为-" + channelContext.getServerNode());
-        String ip=channelContext.getClientNode().getIp();
+        String ip=channelContext.getServerNode().getIp();
+        System.out.println(ip);
         Tio.unbindGroup(channelContext);
         ApplicationContextProvider.publishEvent(new NodeDisconnectedEvent(ip));
     }

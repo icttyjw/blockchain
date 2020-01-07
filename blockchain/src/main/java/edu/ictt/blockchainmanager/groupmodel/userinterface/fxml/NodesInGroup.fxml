@@ -67,6 +67,16 @@
                                           <Insets right="-90.0" />
                                        </StackPane.margin>
                                     </Button>
+                                    <Button id="refreshButton" fx:id="connect" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#connect" prefHeight="22.0" prefWidth="40.0" text="连接" textAlignment="CENTER">
+                                       <StackPane.margin>
+                                          <Insets right="-270.0" />
+                                       </StackPane.margin>
+                                    </Button>
+                                    <Button id="refreshButton" fx:id="disconnect" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#disconnect" prefHeight="22.0" prefWidth="40.0" text="断开" textAlignment="CENTER">
+                                       <StackPane.margin>
+                                          <Insets right="-360.0" />
+                                       </StackPane.margin>
+                                    </Button>
                                  </children>
                               </StackPane>
                            </children>
@@ -93,8 +103,8 @@
                      <children>
                         <Label text="名称：" />
                         <Label text="节点类型：" GridPane.rowIndex="1" />
-                        <Label text="运行状态：" GridPane.rowIndex="2" />
-                        <Label text="通信状态：" GridPane.rowIndex="3" />
+                        <Label text="IP地址：" GridPane.rowIndex="2" />
+                        <Label text="运行状态：" GridPane.rowIndex="3" />
                         <Label text="最后一次通信时间：" GridPane.rowIndex="4" />
                         <Label fx:id="name" text="Label" GridPane.columnIndex="1" />
                         <Label fx:id="nodeType" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
